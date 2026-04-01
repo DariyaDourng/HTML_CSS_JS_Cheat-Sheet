@@ -1,0 +1,131 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>JS 01 – Variables & Data Types</title><link rel="stylesheet" href="shared.css"/></head>
+<body>
+<a href="index.html" class="back">← Back to Library</a>
+<div class="page-tag js">JS · 01</div>
+<h1>Variables & Data Types</h1>
+<p class="page-desc">var, let, const, all primitive types, typeof, and type coercion.</p>
+
+<h2>Variable Declarations</h2>
+<pre><code><span class="cmt">// var — function-scoped, hoisted, re-declarable (avoid)</span>
+<span class="kw">var</span> name = <span class="str">"Alice"</span>;
+<span class="kw">var</span> name = <span class="str">"Bob"</span>;   <span class="cmt">// OK (re-declaration)</span>
+
+<span class="cmt">// let — block-scoped, not hoisted (use for mutable values)</span>
+<span class="kw">let</span> score = <span class="num">0</span>;
+score = <span class="num">10</span>;          <span class="cmt">// OK (re-assignment)</span>
+<span class="cmt">// let score = 5;    // Error: already declared</span>
+
+<span class="cmt">// const — block-scoped, must be initialized, cannot reassign</span>
+<span class="kw">const</span> PI = <span class="num">3.14159</span>;
+<span class="cmt">// PI = 3;           // Error: assignment to constant</span>
+<span class="kw">const</span> user = { name: <span class="str">"Alice"</span> };
+user.name = <span class="str">"Bob"</span>; <span class="cmt">// OK — object contents can still change</span></code></pre>
+
+<h2>Primitive Data Types</h2>
+<pre><code><span class="cmt">// 1. String</span>
+<span class="kw">let</span> a = <span class="str">"double quotes"</span>;
+<span class="kw">let</span> b = <span class="str">'single quotes'</span>;
+<span class="kw">let</span> c = <span class="str">`template literal: ${a}`</span>;  <span class="cmt">// backticks, allows interpolation</span>
+<span class="kw">let</span> multi = <span class="str">`Line 1
+Line 2`</span>;  <span class="cmt">// multi-line</span>
+
+<span class="cmt">// 2. Number (64-bit float — covers integers too)</span>
+<span class="kw">let</span> int   = <span class="num">42</span>;
+<span class="kw">let</span> float = <span class="num">3.14</span>;
+<span class="kw">let</span> neg   = <span class="num">-7</span>;
+<span class="kw">let</span> hex   = <span class="num">0xFF</span>;       <span class="cmt">// 255</span>
+<span class="kw">let</span> bin   = <span class="num">0b1010</span>;    <span class="cmt">// 10</span>
+<span class="kw">let</span> oct   = <span class="num">0o17</span>;      <span class="cmt">// 15</span>
+<span class="kw">let</span> exp   = <span class="num">2e6</span>;       <span class="cmt">// 2000000</span>
+<span class="kw">let</span> sep   = <span class="num">1_000_000</span>; <span class="cmt">// numeric separator (ES2021)</span>
+
+<span class="cmt">// Special number values</span>
+Infinity;   <span class="cmt">// 1/0</span>
+-Infinity;
+NaN;        <span class="cmt">// Not a Number — result of invalid math</span>
+Number.MAX_SAFE_INTEGER;  <span class="cmt">// 9007199254740991</span>
+Number.MIN_SAFE_INTEGER;
+
+<span class="cmt">// 3. Boolean</span>
+<span class="kw">let</span> isOn  = <span class="kw">true</span>;
+<span class="kw">let</span> isOff = <span class="kw">false</span>;
+
+<span class="cmt">// 4. null — intentional absence of value</span>
+<span class="kw">let</span> empty = <span class="kw">null</span>;
+
+<span class="cmt">// 5. undefined — variable declared but not assigned</span>
+<span class="kw">let</span> x;
+console.<span class="fn">log</span>(x);  <span class="cmt">// undefined</span>
+
+<span class="cmt">// 6. Symbol — unique identifier</span>
+<span class="kw">const</span> sym1 = Symbol(<span class="str">"id"</span>);
+<span class="kw">const</span> sym2 = Symbol(<span class="str">"id"</span>);
+sym1 === sym2;  <span class="cmt">// false — always unique</span>
+Symbol.<span class="fn">for</span>(<span class="str">"shared"</span>);  <span class="cmt">// global symbol registry</span>
+
+<span class="cmt">// 7. BigInt — arbitrarily large integers</span>
+<span class="kw">const</span> big = <span class="num">9007199254740993n</span>;
+<span class="kw">const</span> big2 = <span class="fn">BigInt</span>(<span class="num">9007199254740993</span>);</code></pre>
+
+<h2>typeof Operator</h2>
+<pre><code><span class="kw">typeof</span> <span class="str">"hello"</span>     <span class="cmt">// "string"</span>
+<span class="kw">typeof</span> <span class="num">42</span>          <span class="cmt">// "number"</span>
+<span class="kw">typeof</span> <span class="num">3.14</span>        <span class="cmt">// "number"</span>
+<span class="kw">typeof</span> NaN         <span class="cmt">// "number" (quirk!)</span>
+<span class="kw">typeof</span> <span class="kw">true</span>        <span class="cmt">// "boolean"</span>
+<span class="kw">typeof</span> <span class="kw">undefined</span>   <span class="cmt">// "undefined"</span>
+<span class="kw">typeof</span> <span class="kw">null</span>        <span class="cmt">// "object" (famous bug — remains for compatibility)</span>
+<span class="kw">typeof</span> Symbol()    <span class="cmt">// "symbol"</span>
+<span class="kw">typeof</span> <span class="num">42n</span>         <span class="cmt">// "bigint"</span>
+<span class="kw">typeof</span> {}          <span class="cmt">// "object"</span>
+<span class="kw">typeof</span> []          <span class="cmt">// "object" (arrays are objects!)</span>
+<span class="kw">typeof</span> <span class="kw">function</span>(){} <span class="cmt">// "function"</span></code></pre>
+
+<h2>Type Conversion</h2>
+<pre><code><span class="cmt">// To String</span>
+<span class="fn">String</span>(<span class="num">42</span>);          <span class="cmt">// "42"</span>
+<span class="fn">String</span>(<span class="kw">true</span>);       <span class="cmt">// "true"</span>
+<span class="fn">String</span>(<span class="kw">null</span>);       <span class="cmt">// "null"</span>
+(<span class="num">42</span>).toString();    <span class="cmt">// "42"</span>
+(<span class="num">255</span>).toString(<span class="num">16</span>); <span class="cmt">// "ff" (hex)</span>
+(<span class="num">8</span>).toString(<span class="num">2</span>);   <span class="cmt">// "1000" (binary)</span>
+
+<span class="cmt">// To Number</span>
+<span class="fn">Number</span>(<span class="str">"42"</span>);       <span class="cmt">// 42</span>
+<span class="fn">Number</span>(<span class="str">""</span>);         <span class="cmt">// 0</span>
+<span class="fn">Number</span>(<span class="kw">true</span>);       <span class="cmt">// 1</span>
+<span class="fn">Number</span>(<span class="kw">false</span>);      <span class="cmt">// 0</span>
+<span class="fn">Number</span>(<span class="kw">null</span>);       <span class="cmt">// 0</span>
+<span class="fn">Number</span>(<span class="kw">undefined</span>);  <span class="cmt">// NaN</span>
+<span class="fn">Number</span>(<span class="str">"abc"</span>);      <span class="cmt">// NaN</span>
+<span class="fn">parseInt</span>(<span class="str">"42px"</span>);   <span class="cmt">// 42 (stops at non-digit)</span>
+<span class="fn">parseFloat</span>(<span class="str">"3.14m"</span>);<span class="cmt">// 3.14</span>
++<span class="str">"42"</span>;               <span class="cmt">// 42 (unary plus)</span>
+
+<span class="cmt">// To Boolean</span>
+<span class="fn">Boolean</span>(<span class="num">0</span>);         <span class="cmt">// false</span>
+<span class="fn">Boolean</span>(<span class="str">""</span>);        <span class="cmt">// false</span>
+<span class="fn">Boolean</span>(<span class="kw">null</span>);      <span class="cmt">// false</span>
+<span class="fn">Boolean</span>(<span class="kw">undefined</span>); <span class="cmt">// false</span>
+<span class="fn">Boolean</span>(NaN);       <span class="cmt">// false</span>
+<span class="cmt">// Everything else is truthy (including "0", [], {})</span>
+
+<span class="cmt">// Falsy values (only 6):</span>
+<span class="kw">false</span>, <span class="num">0</span>, <span class="num">-0</span>, <span class="num">0n</span>, <span class="str">""</span>, <span class="kw">null</span>, <span class="kw">undefined</span>, NaN</code></pre>
+
+<h2>Variable Scope & Hoisting</h2>
+<pre><code><span class="cmt">// var is function-scoped and hoisted</span>
+<span class="fn">greet</span>();  <span class="cmt">// works — function hoisted</span>
+console.<span class="fn">log</span>(x); <span class="cmt">// undefined — var declaration hoisted, not value</span>
+<span class="kw">var</span> x = <span class="num">5</span>;
+
+<span class="cmt">// let/const are block-scoped and NOT hoisted (Temporal Dead Zone)</span>
+{
+  <span class="kw">let</span> inner = <span class="str">"only here"</span>;
+  <span class="kw">const</span> also = <span class="str">"only here"</span>;
+}
+<span class="cmt">// console.log(inner); // ReferenceError</span>
+
+<span class="kw">function</span> <span class="fn">greet</span>() { return <span class="str">"hello"</span>; }</code></pre>
+</body></html>

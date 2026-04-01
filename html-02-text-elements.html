@@ -1,0 +1,91 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>HTML 02 – Text Elements</title><link rel="stylesheet" href="shared.css"/></head>
+<body>
+<a href="index.html" class="back">← Back to Library</a>
+<div class="page-tag html">HTML · 02</div>
+<h1>Text & Headings</h1>
+<p class="page-desc">All inline and block-level text elements — headings, paragraphs, emphasis, and more.</p>
+
+<h2>Headings h1–h6</h2>
+<pre><code><span class="tag">&lt;h1&gt;</span>Heading Level 1 — Main title (use once per page)<span class="tag">&lt;/h1&gt;</span>
+<span class="tag">&lt;h2&gt;</span>Heading Level 2 — Section title<span class="tag">&lt;/h2&gt;</span>
+<span class="tag">&lt;h3&gt;</span>Heading Level 3 — Sub-section<span class="tag">&lt;/h3&gt;</span>
+<span class="tag">&lt;h4&gt;</span>Heading Level 4<span class="tag">&lt;/h4&gt;</span>
+<span class="tag">&lt;h5&gt;</span>Heading Level 5<span class="tag">&lt;/h5&gt;</span>
+<span class="tag">&lt;h6&gt;</span>Heading Level 6 — Smallest<span class="tag">&lt;/h6&gt;</span></code></pre>
+
+<h2>Paragraphs & Line Breaks</h2>
+<pre><code><span class="tag">&lt;p&gt;</span>This is a paragraph. Browsers add space above and below automatically.<span class="tag">&lt;/p&gt;</span>
+
+<span class="tag">&lt;p&gt;</span>
+  Long text can be broken<span class="tag">&lt;br&gt;</span>
+  with a line break tag. br is a void element (no closing tag).
+<span class="tag">&lt;/p&gt;</span>
+
+<span class="cmt">&lt;!-- Horizontal rule — thematic break --&gt;</span>
+<span class="tag">&lt;hr&gt;</span></code></pre>
+
+<h2>Inline Text Formatting</h2>
+<pre><code><span class="tag">&lt;strong&gt;</span>Bold — semantically important<span class="tag">&lt;/strong&gt;</span>
+<span class="tag">&lt;b&gt;</span>Bold — stylistic only (no importance)<span class="tag">&lt;/b&gt;</span>
+
+<span class="tag">&lt;em&gt;</span>Italic — stress emphasis (semantic)<span class="tag">&lt;/em&gt;</span>
+<span class="tag">&lt;i&gt;</span>Italic — stylistic or technical terms<span class="tag">&lt;/i&gt;</span>
+
+<span class="tag">&lt;u&gt;</span>Underlined text<span class="tag">&lt;/u&gt;</span>
+<span class="tag">&lt;s&gt;</span>Strikethrough — no longer accurate<span class="tag">&lt;/s&gt;</span>
+<span class="tag">&lt;del&gt;</span>Deleted text (shows red in some browsers)<span class="tag">&lt;/del&gt;</span>
+<span class="tag">&lt;ins&gt;</span>Inserted text<span class="tag">&lt;/ins&gt;</span>
+
+<span class="tag">&lt;mark&gt;</span>Highlighted / marked text<span class="tag">&lt;/mark&gt;</span>
+<span class="tag">&lt;small&gt;</span>Smaller font — fine print<span class="tag">&lt;/small&gt;</span>
+
+<span class="tag">&lt;sup&gt;</span>Superscript<span class="tag">&lt;/sup&gt;</span>  <span class="cmt">&lt;!-- e.g. x² --&gt;</span>
+<span class="tag">&lt;sub&gt;</span>Subscript<span class="tag">&lt;/sub&gt;</span>    <span class="cmt">&lt;!-- e.g. H₂O --&gt;</span>
+
+<span class="tag">&lt;code&gt;</span>Inline code snippet<span class="tag">&lt;/code&gt;</span>
+<span class="tag">&lt;kbd&gt;</span>Ctrl<span class="tag">&lt;/kbd&gt;</span> + <span class="tag">&lt;kbd&gt;</span>C<span class="tag">&lt;/kbd&gt;</span>  <span class="cmt">&lt;!-- keyboard input --&gt;</span>
+<span class="tag">&lt;samp&gt;</span>Program output<span class="tag">&lt;/samp&gt;</span>
+<span class="tag">&lt;var&gt;</span>x<span class="tag">&lt;/var&gt;</span> = <span class="tag">&lt;var&gt;</span>y<span class="tag">&lt;/var&gt;</span> + 2  <span class="cmt">&lt;!-- variable --&gt;</span></code></pre>
+
+<h2>Abbreviations & Quotes</h2>
+<pre><code><span class="cmt">&lt;!-- abbr: shows full form on hover --&gt;</span>
+<span class="tag">&lt;abbr</span> <span class="attr">title</span>=<span class="val">"HyperText Markup Language"</span><span class="tag">&gt;</span>HTML<span class="tag">&lt;/abbr&gt;</span>
+
+<span class="cmt">&lt;!-- blockquote: long quote from external source --&gt;</span>
+<span class="tag">&lt;blockquote</span> <span class="attr">cite</span>=<span class="val">"https://example.com"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;p&gt;</span>This is a long quotation from somewhere.<span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;/blockquote&gt;</span>
+
+<span class="cmt">&lt;!-- q: inline short quote --&gt;</span>
+<span class="tag">&lt;p&gt;</span>He said <span class="tag">&lt;q</span> <span class="attr">cite</span>=<span class="val">"https://example.com"</span><span class="tag">&gt;</span>hello<span class="tag">&lt;/q&gt;</span> and left.<span class="tag">&lt;/p&gt;</span>
+
+<span class="cmt">&lt;!-- cite: title of creative work --&gt;</span>
+<span class="tag">&lt;cite&gt;</span>The Great Gatsby<span class="tag">&lt;/cite&gt;</span></code></pre>
+
+<h2>Preformatted & Code Blocks</h2>
+<pre><code><span class="cmt">&lt;!-- pre: preserves whitespace and line breaks --&gt;</span>
+<span class="tag">&lt;pre&gt;</span>
+  This  text
+    preserves    spacing
+      and newlines.
+<span class="tag">&lt;/pre&gt;</span>
+
+<span class="cmt">&lt;!-- pre + code: best practice for code blocks --&gt;</span>
+<span class="tag">&lt;pre&gt;&lt;code&gt;</span>
+function hello() {
+  console.log("world");
+}
+<span class="tag">&lt;/code&gt;&lt;/pre&gt;</span></code></pre>
+
+<h2>Generic Containers</h2>
+<pre><code><span class="cmt">&lt;!-- div: block-level generic container --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"container"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;p&gt;</span>Block-level content here<span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+
+<span class="cmt">&lt;!-- span: inline generic container --&gt;</span>
+<span class="tag">&lt;p&gt;</span>Text with <span class="tag">&lt;span</span> <span class="attr">class</span>=<span class="val">"highlight"</span><span class="tag">&gt;</span>styled word<span class="tag">&lt;/span&gt;</span> inside.<span class="tag">&lt;/p&gt;</span></code></pre>
+
+<div class="tip"><strong>Semantic tip:</strong> Use <span class="inline-code">&lt;strong&gt;</span> and <span class="inline-code">&lt;em&gt;</span> for meaning, not just visual styling. Screen readers announce them differently from <span class="inline-code">&lt;b&gt;</span> and <span class="inline-code">&lt;i&gt;</span>.</div>
+</body></html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>JS 11 – Error Handling</title><link rel="stylesheet" href="shared.css"/></head>
+<body>
+<a href="index.html" class="back">← Back to Library</a>
+<div class="page-tag js">JS · 11</div>
+<h1>Error Handling</h1>
+<p class="page-desc">try/catch/finally, throw, all Error types, custom errors, and debugging.</p>
+
+<h2>try / catch / finally</h2>
+<pre><code><span class="kw">try</span> {
+  <span class="cmt">// Code that may throw</span>
+  <span class="kw">const</span> data = JSON.<span class="fn">parse</span>(<span class="str">"invalid json"</span>);
+} <span class="kw">catch</span> (error) {
+  <span class="cmt">// Runs when error is thrown</span>
+  console.<span class="fn">error</span>(error.name);     <span class="cmt">// "SyntaxError"</span>
+  console.<span class="fn">error</span>(error.message);  <span class="cmt">// "Unexpected token i..."</span>
+  console.<span class="fn">error</span>(error.stack);    <span class="cmt">// Full stack trace</span>
+} <span class="kw">finally</span> {
+  <span class="cmt">// Always runs — even if no error, even after return</span>
+  console.<span class="fn">log</span>(<span class="str">"Cleanup done"</span>);
+}
+
+<span class="cmt">// Without catch (just ensure cleanup)</span>
+<span class="kw">try</span> {
+  <span class="fn">openConnection</span>();
+} <span class="kw">finally</span> {
+  <span class="fn">closeConnection</span>();
+}</code></pre>
+
+<h2>throw</h2>
+<pre><code><span class="cmt">// Can throw anything</span>
+<span class="kw">throw</span> <span class="str">"simple string"</span>;
+<span class="kw">throw</span> <span class="num">42</span>;
+<span class="kw">throw</span> { code: <span class="num">404</span>, message: <span class="str">"Not found"</span> };
+
+<span class="cmt">// Best practice — throw Error objects</span>
+<span class="kw">throw</span> <span class="kw">new</span> <span class="fn">Error</span>(<span class="str">"Something went wrong"</span>);
+<span class="kw">throw</span> <span class="kw">new</span> <span class="fn">TypeError</span>(<span class="str">"Expected a string"</span>);
+
+<span class="cmt">// Guard clauses</span>
+<span class="kw">function</span> <span class="fn">divide</span>(a, b) {
+  <span class="kw">if</span> (<span class="kw">typeof</span> a !== <span class="str">"number"</span>) <span class="kw">throw</span> <span class="kw">new</span> <span class="fn">TypeError</span>(<span class="str">"a must be a number"</span>);
+  <span class="kw">if</span> (b === <span class="num">0</span>) <span class="kw">throw</span> <span class="kw">new</span> <span class="fn">RangeError</span>(<span class="str">"Cannot divide by zero"</span>);
+  <span class="kw">return</span> a / b;
+}</code></pre>
+
+<h2>Built-in Error Types</h2>
+<table>
+  <tr><th>Error Type</th><th>When It Occurs</th></tr>
+  <tr><td><code>Error</code></td><td>Base class — general errors</td></tr>
+  <tr><td><code>SyntaxError</code></td><td>Invalid JS syntax, bad JSON</td></tr>
+  <tr><td><code>TypeError</code></td><td>Wrong type used (null.property, not a function)</td></tr>
+  <tr><td><code>RangeError</code></td><td>Value out of valid range (array length negative)</td></tr>
+  <tr><td><code>ReferenceError</code></td><td>Accessing undeclared variable</td></tr>
+  <tr><td><code>URIError</code></td><td>Bad URI encode/decode</td></tr>
+  <tr><td><code>EvalError</code></td><td>eval() misuse (rare)</td></tr>
+  <tr><td><code>AggregateError</code></td><td>Multiple errors (Promise.any failure)</td></tr>
+</table>
+
+<h2>Custom Error Classes</h2>
+<pre><code><span class="kw">class</span> <span class="fn">ValidationError</span> <span class="kw">extends</span> <span class="fn">Error</span> {
+  <span class="fn">constructor</span>(message, field) {
+    <span class="kw">super</span>(message);
+    <span class="kw">this</span>.name = <span class="str">"ValidationError"</span>;
+    <span class="kw">this</span>.field = field;
+  }
+}
+
+<span class="kw">class</span> <span class="fn">HttpError</span> <span class="kw">extends</span> <span class="fn">Error</span> {
+  <span class="fn">constructor</span>(status, message) {
+    <span class="kw">super</span>(message);
+    <span class="kw">this</span>.name = <span class="str">"HttpError"</span>;
+    <span class="kw">this</span>.status = status;
+  }
+}
+
+<span class="cmt">// Usage</span>
+<span class="kw">try</span> {
+  <span class="kw">throw</span> <span class="kw">new</span> <span class="fn">ValidationError</span>(<span class="str">"Name is required"</span>, <span class="str">"name"</span>);
+} <span class="kw">catch</span> (e) {
+  <span class="kw">if</span> (e <span class="kw">instanceof</span> <span class="fn">ValidationError</span>) {
+    console.<span class="fn">log</span>(<span class="str">`Field: ${e.field}`</span>);
+  } <span class="kw">else if</span> (e <span class="kw">instanceof</span> <span class="fn">HttpError</span>) {
+    console.<span class="fn">log</span>(<span class="str">`Status: ${e.status}`</span>);
+  } <span class="kw">else</span> {
+    <span class="kw">throw</span> e;  <span class="cmt">// rethrow unknown errors</span>
+  }
+}</code></pre>
+
+<h2>Async Error Handling</h2>
+<pre><code><span class="cmt">// async/await — use try/catch</span>
+<span class="kw">async function</span> <span class="fn">fetchUser</span>(id) {
+  <span class="kw">try</span> {
+    <span class="kw">const</span> res = <span class="kw">await</span> <span class="fn">fetch</span>(<span class="str">`/api/users/${id}`</span>);
+    <span class="kw">if</span> (!res.ok) <span class="kw">throw</span> <span class="kw">new</span> <span class="fn">HttpError</span>(res.status, res.statusText);
+    <span class="kw">return</span> <span class="kw">await</span> res.<span class="fn">json</span>();
+  } <span class="kw">catch</span> (err) {
+    <span class="kw">if</span> (err <span class="kw">instanceof</span> <span class="fn">HttpError</span> &amp;&amp; err.status === <span class="num">404</span>) {
+      <span class="kw">return</span> <span class="kw">null</span>;   <span class="cmt">// recover gracefully</span>
+    }
+    <span class="kw">throw</span> err;       <span class="cmt">// rethrow others</span>
+  }
+}
+
+<span class="cmt">// Global handlers</span>
+window.<span class="fn">addEventListener</span>(<span class="str">"error"</span>, (e) =&gt; {
+  console.<span class="fn">error</span>(<span class="str">"Uncaught:"</span>, e.error);
+});
+window.<span class="fn">addEventListener</span>(<span class="str">"unhandledrejection"</span>, (e) =&gt; {
+  console.<span class="fn">error</span>(<span class="str">"Unhandled Promise rejection:"</span>, e.reason);
+  e.<span class="fn">preventDefault</span>();  <span class="cmt">// prevent default browser logging</span>
+});</code></pre>
+
+<h2>Debugging Tips</h2>
+<pre><code>console.<span class="fn">log</span>(<span class="str">"value:"</span>, x);
+console.<span class="fn">error</span>(<span class="str">"Error!"</span>, err);
+console.<span class="fn">warn</span>(<span class="str">"Warning"</span>);
+console.<span class="fn">info</span>(<span class="str">"Info"</span>);
+console.<span class="fn">table</span>(arrayOrObject);    <span class="cmt">// pretty table</span>
+console.<span class="fn">dir</span>(element);            <span class="cmt">// DOM element properties</span>
+console.<span class="fn">group</span>(<span class="str">"Group"</span>); console.<span class="fn">groupEnd</span>();
+console.<span class="fn">time</span>(<span class="str">"label"</span>); console.<span class="fn">timeEnd</span>(<span class="str">"label"</span>);  <span class="cmt">// measure time</span>
+console.<span class="fn">count</span>(<span class="str">"label"</span>);   <span class="cmt">// count calls</span>
+console.<span class="fn">assert</span>(x &gt; <span class="num">0</span>, <span class="str">"x must be positive"</span>);
+console.<span class="fn">trace</span>();           <span class="cmt">// print stack trace</span>
+
+debugger;  <span class="cmt">// pause execution in DevTools</span></code></pre>
+</body></html>

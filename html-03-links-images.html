@@ -1,0 +1,95 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>HTML 03 – Links & Images</title><link rel="stylesheet" href="shared.css"/></head>
+<body>
+<a href="index.html" class="back">← Back to Library</a>
+<div class="page-tag html">HTML · 03</div>
+<h1>Links & Images</h1>
+<p class="page-desc">Anchor tags, image embedding, responsive images, and figure elements.</p>
+
+<h2>Anchor Tag — All Variations</h2>
+<pre><code><span class="cmt">&lt;!-- External link --&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"https://example.com"</span><span class="tag">&gt;</span>Visit Example<span class="tag">&lt;/a&gt;</span>
+
+<span class="cmt">&lt;!-- Open in new tab (+ rel for security) --&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"https://example.com"</span>
+   <span class="attr">target</span>=<span class="val">"_blank"</span>
+   <span class="attr">rel</span>=<span class="val">"noopener noreferrer"</span><span class="tag">&gt;</span>Open in new tab<span class="tag">&lt;/a&gt;</span>
+
+<span class="cmt">&lt;!-- Internal page link --&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"about.html"</span><span class="tag">&gt;</span>About page<span class="tag">&lt;/a&gt;</span>
+
+<span class="cmt">&lt;!-- Anchor to section on same page --&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"#section-id"</span><span class="tag">&gt;</span>Jump to section<span class="tag">&lt;/a&gt;</span>
+<span class="tag">&lt;h2</span> <span class="attr">id</span>=<span class="val">"section-id"</span><span class="tag">&gt;</span>Target Section<span class="tag">&lt;/h2&gt;</span>
+
+<span class="cmt">&lt;!-- Email link --&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"mailto:user@example.com?subject=Hello&amp;body=Hi there"</span><span class="tag">&gt;</span>Send Email<span class="tag">&lt;/a&gt;</span>
+
+<span class="cmt">&lt;!-- Phone link --&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"tel:+15550001234"</span><span class="tag">&gt;</span>Call us<span class="tag">&lt;/a&gt;</span>
+
+<span class="cmt">&lt;!-- Download link --&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"file.pdf"</span> <span class="attr">download</span>=<span class="val">"my-file.pdf"</span><span class="tag">&gt;</span>Download PDF<span class="tag">&lt;/a&gt;</span>
+
+<span class="cmt">&lt;!-- Image as link --&gt;</span>
+<span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"https://example.com"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="val">"logo.png"</span> <span class="attr">alt</span>=<span class="val">"Go to Example"</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;/a&gt;</span></code></pre>
+
+<h2>Image Element</h2>
+<pre><code><span class="cmt">&lt;!-- Basic image (src and alt are required) --&gt;</span>
+<span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="val">"photo.jpg"</span> <span class="attr">alt</span>=<span class="val">"A scenic mountain view"</span><span class="tag">/&gt;</span>
+
+<span class="cmt">&lt;!-- With explicit width/height (prevents layout shift) --&gt;</span>
+<span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="val">"photo.jpg"</span> <span class="attr">alt</span>=<span class="val">"Photo"</span> <span class="attr">width</span>=<span class="val">"800"</span> <span class="attr">height</span>=<span class="val">"600"</span><span class="tag">/&gt;</span>
+
+<span class="cmt">&lt;!-- Lazy loading (only loads when near viewport) --&gt;</span>
+<span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="val">"photo.jpg"</span> <span class="attr">alt</span>=<span class="val">"Photo"</span> <span class="attr">loading</span>=<span class="val">"lazy"</span><span class="tag">/&gt;</span>
+
+<span class="cmt">&lt;!-- Decorative image (empty alt = ignored by screen readers) --&gt;</span>
+<span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="val">"divider.svg"</span> <span class="attr">alt</span>=<span class="val">""</span> <span class="attr">role</span>=<span class="val">"presentation"</span><span class="tag">/&gt;</span></code></pre>
+
+<h2>Responsive Images — srcset & sizes</h2>
+<pre><code><span class="cmt">&lt;!-- srcset: list image variants by width --&gt;</span>
+<span class="tag">&lt;img</span>
+  <span class="attr">src</span>=<span class="val">"photo-800.jpg"</span>
+  <span class="attr">srcset</span>=<span class="val">"photo-400.jpg 400w,
+          photo-800.jpg 800w,
+          photo-1600.jpg 1600w"</span>
+  <span class="attr">sizes</span>=<span class="val">"(max-width: 600px) 100vw,
+         (max-width: 1200px) 50vw,
+         800px"</span>
+  <span class="attr">alt</span>=<span class="val">"Responsive photo"</span><span class="tag">/&gt;</span></code></pre>
+
+<h2>Picture Element (Art Direction)</h2>
+<pre><code><span class="cmt">&lt;!-- picture: different image for different screens --&gt;</span>
+<span class="tag">&lt;picture&gt;</span>
+  <span class="cmt">&lt;!-- Modern format first (WebP) --&gt;</span>
+  <span class="tag">&lt;source</span> <span class="attr">srcset</span>=<span class="val">"photo.webp"</span> <span class="attr">type</span>=<span class="val">"image/webp"</span><span class="tag">/&gt;</span>
+
+  <span class="cmt">&lt;!-- Mobile crop --&gt;</span>
+  <span class="tag">&lt;source</span> <span class="attr">media</span>=<span class="val">"(max-width: 600px)"</span> <span class="attr">srcset</span>=<span class="val">"photo-portrait.jpg"</span><span class="tag">/&gt;</span>
+
+  <span class="cmt">&lt;!-- Fallback --&gt;</span>
+  <span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="val">"photo.jpg"</span> <span class="attr">alt</span>=<span class="val">"Photo"</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;/picture&gt;</span></code></pre>
+
+<h2>Figure & Figcaption</h2>
+<pre><code><span class="tag">&lt;figure&gt;</span>
+  <span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="val">"chart.png"</span> <span class="attr">alt</span>=<span class="val">"Sales chart for Q4 2024"</span><span class="tag">/&gt;</span>
+  <span class="tag">&lt;figcaption&gt;</span>Figure 1: Q4 2024 sales by region<span class="tag">&lt;/figcaption&gt;</span>
+<span class="tag">&lt;/figure&gt;</span></code></pre>
+
+<div class="tip"><strong>Accessibility:</strong> Always write meaningful <span class="inline-code">alt</span> text describing the image's content and purpose. Avoid "image of..." or "photo of..." — just describe what's there.</div>
+
+<h2>Image Format Cheat Sheet</h2>
+<table>
+  <tr><th>Format</th><th>Best For</th><th>Notes</th></tr>
+  <tr><td><code>jpg/jpeg</code></td><td>Photos</td><td>Lossy, small file size</td></tr>
+  <tr><td><code>png</code></td><td>Logos, transparency</td><td>Lossless, larger</td></tr>
+  <tr><td><code>webp</code></td><td>Everything</td><td>Modern, small, supports transparency</td></tr>
+  <tr><td><code>svg</code></td><td>Icons, logos</td><td>Vector, scales infinitely</td></tr>
+  <tr><td><code>gif</code></td><td>Simple animation</td><td>Avoid — use video instead</td></tr>
+  <tr><td><code>avif</code></td><td>Photos</td><td>Newest format, best compression</td></tr>
+</table>
+</body></html>

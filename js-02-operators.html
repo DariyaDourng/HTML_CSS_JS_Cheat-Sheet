@@ -1,0 +1,127 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>JS 02 – Operators</title><link rel="stylesheet" href="shared.css"/></head>
+<body>
+<a href="index.html" class="back">← Back to Library</a>
+<div class="page-tag js">JS · 02</div>
+<h1>Operators</h1>
+<p class="page-desc">Every JavaScript operator — arithmetic, comparison, logical, assignment, and modern operators.</p>
+
+<h2>Arithmetic Operators</h2>
+<pre><code><span class="num">10</span> + <span class="num">3</span>   <span class="cmt">// 13  — addition</span>
+<span class="num">10</span> - <span class="num">3</span>   <span class="cmt">// 7   — subtraction</span>
+<span class="num">10</span> * <span class="num">3</span>   <span class="cmt">// 30  — multiplication</span>
+<span class="num">10</span> / <span class="num">3</span>   <span class="cmt">// 3.333... — division</span>
+<span class="num">10</span> % <span class="num">3</span>   <span class="cmt">// 1   — modulus (remainder)</span>
+<span class="num">2</span> ** <span class="num">10</span>  <span class="cmt">// 1024 — exponentiation (ES2016)</span>
+
+<span class="cmt">// Increment / decrement</span>
+<span class="kw">let</span> a = <span class="num">5</span>;
+a++;      <span class="cmt">// returns 5, then a becomes 6 (post-increment)</span>
+++a;      <span class="cmt">// a becomes 7, returns 7 (pre-increment)</span>
+a--;      <span class="cmt">// returns 7, then a becomes 6</span>
+--a;      <span class="cmt">// a becomes 5, returns 5</span>
+
+<span class="cmt">// String concatenation with +</span>
+<span class="str">"Hello"</span> + <span class="str">" "</span> + <span class="str">"World"</span>  <span class="cmt">// "Hello World"</span>
+<span class="str">"Value: "</span> + <span class="num">42</span>           <span class="cmt">// "Value: 42" (number coerced to string)</span></code></pre>
+
+<h2>Comparison Operators</h2>
+<pre><code><span class="num">5</span> ==  <span class="str">"5"</span>    <span class="cmt">// true  — loose equality (coerces types)</span>
+<span class="num">5</span> === <span class="str">"5"</span>    <span class="cmt">// false — strict equality (no coercion)</span>
+<span class="num">5</span> !=  <span class="str">"5"</span>    <span class="cmt">// false — loose inequality</span>
+<span class="num">5</span> !== <span class="str">"5"</span>    <span class="cmt">// true  — strict inequality ← prefer this</span>
+
+<span class="num">5</span> &gt;  <span class="num">3</span>       <span class="cmt">// true</span>
+<span class="num">5</span> &lt;  <span class="num">3</span>       <span class="cmt">// false</span>
+<span class="num">5</span> &gt;= <span class="num">5</span>       <span class="cmt">// true</span>
+<span class="num">5</span> &lt;= <span class="num">4</span>       <span class="cmt">// false</span>
+
+<span class="cmt">// Tricky equality cases</span>
+<span class="kw">null</span> == <span class="kw">undefined</span>   <span class="cmt">// true  (special case)</span>
+<span class="kw">null</span> === <span class="kw">undefined</span>  <span class="cmt">// false</span>
+NaN === NaN         <span class="cmt">// false (NaN is never equal to anything)</span>
+<span class="fn">isNaN</span>(NaN)          <span class="cmt">// true</span>
+Number.<span class="fn">isNaN</span>(NaN)   <span class="cmt">// true (stricter)</span></code></pre>
+
+<h2>Logical Operators</h2>
+<pre><code><span class="kw">true</span> &amp;&amp; <span class="kw">true</span>   <span class="cmt">// true  — AND</span>
+<span class="kw">true</span> &amp;&amp; <span class="kw">false</span>  <span class="cmt">// false</span>
+<span class="kw">false</span> || <span class="kw">true</span>  <span class="cmt">// true  — OR</span>
+!<span class="kw">true</span>          <span class="cmt">// false — NOT</span>
+!!<span class="str">"hello"</span>       <span class="cmt">// true  — double NOT = coerce to boolean</span>
+
+<span class="cmt">// Short-circuit evaluation</span>
+<span class="kw">const</span> a = <span class="kw">null</span>;
+<span class="kw">const</span> b = a &amp;&amp; a.name;   <span class="cmt">// null — stops at a (falsy)</span>
+<span class="kw">const</span> c = a || <span class="str">"default"</span>; <span class="cmt">// "default" — a is falsy, uses right side</span>
+<span class="kw">const</span> d = <span class="str">""</span> || <span class="str">"fallback"</span>; <span class="cmt">// "fallback" — "" is falsy</span>
+
+<span class="cmt">// Practical patterns</span>
+<span class="kw">const</span> name = user &amp;&amp; user.name;         <span class="cmt">// safe property access</span>
+<span class="kw">const</span> display = name || <span class="str">"Anonymous"</span>;   <span class="cmt">// default value</span></code></pre>
+
+<h2>Nullish Coalescing & Optional Chaining</h2>
+<pre><code><span class="cmt">// ?? — nullish coalescing (ES2020)</span>
+<span class="cmt">// Returns right side only if left is null or undefined</span>
+<span class="kw">const</span> a = <span class="kw">null</span> ?? <span class="str">"default"</span>;    <span class="cmt">// "default"</span>
+<span class="kw">const</span> b = <span class="num">0</span>    ?? <span class="str">"default"</span>;    <span class="cmt">// 0  ← unlike ||, 0 is NOT replaced</span>
+<span class="kw">const</span> c = <span class="str">""</span>   ?? <span class="str">"default"</span>;    <span class="cmt">// ""  ← empty string kept</span>
+
+<span class="cmt">// ??= — nullish assignment</span>
+<span class="kw">let</span> x = <span class="kw">null</span>;
+x ??= <span class="str">"value"</span>;  <span class="cmt">// x becomes "value" (only assigns if null/undefined)</span>
+
+<span class="cmt">// ?. — optional chaining (ES2020)</span>
+<span class="kw">const</span> user = <span class="kw">null</span>;
+user?.name;         <span class="cmt">// undefined (no error)</span>
+user?.address?.city; <span class="cmt">// undefined</span>
+user?.<span class="fn">greet</span>();      <span class="cmt">// undefined (no error)</span>
+arr?.[<span class="num">0</span>];           <span class="cmt">// safe array access</span></code></pre>
+
+<h2>Assignment Operators</h2>
+<pre><code><span class="kw">let</span> x = <span class="num">10</span>;
+x += <span class="num">5</span>;   <span class="cmt">// x = x + 5  → 15</span>
+x -= <span class="num">3</span>;   <span class="cmt">// x = x - 3  → 12</span>
+x *= <span class="num">2</span>;   <span class="cmt">// x = x * 2  → 24</span>
+x /= <span class="num">4</span>;   <span class="cmt">// x = x / 4  → 6</span>
+x %= <span class="num">4</span>;   <span class="cmt">// x = x % 4  → 2</span>
+x **= <span class="num">3</span>;  <span class="cmt">// x = x ** 3 → 8</span>
+x &amp;&amp;= <span class="num">5</span>; <span class="cmt">// x = x &amp;&amp; 5  → 5 (logical AND assign)</span>
+x ||= <span class="num">9</span>; <span class="cmt">// x = x || 9  → 5 (x is truthy, no change)</span>
+x ??= <span class="num">9</span>; <span class="cmt">// x = x ?? 9  → 5 (x not null/undefined)</span></code></pre>
+
+<h2>Bitwise Operators</h2>
+<pre><code><span class="num">5</span> &amp;  <span class="num">3</span>   <span class="cmt">// 1  — AND</span>
+<span class="num">5</span> |  <span class="num">3</span>   <span class="cmt">// 7  — OR</span>
+<span class="num">5</span> ^  <span class="num">3</span>   <span class="cmt">// 6  — XOR</span>
+~<span class="num">5</span>       <span class="cmt">// -6 — NOT</span>
+<span class="num">5</span> &lt;&lt; <span class="num">1</span>   <span class="cmt">// 10 — left shift</span>
+<span class="num">5</span> &gt;&gt; <span class="num">1</span>   <span class="cmt">// 2  — right shift</span>
+<span class="num">5</span> &gt;&gt;&gt; <span class="num">1</span>  <span class="cmt">// 2  — unsigned right shift</span></code></pre>
+
+<h2>Other Operators</h2>
+<pre><code><span class="cmt">// Ternary (conditional)</span>
+<span class="kw">const</span> result = condition ? <span class="str">"yes"</span> : <span class="str">"no"</span>;
+<span class="kw">const</span> label = score &gt;= <span class="num">60</span> ? <span class="str">"Pass"</span> : <span class="str">"Fail"</span>;
+
+<span class="cmt">// Comma operator (rarely used)</span>
+<span class="kw">let</span> a = (<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>); <span class="cmt">// a = 3 (last value)</span>
+
+<span class="cmt">// void operator</span>
+<span class="kw">void</span> <span class="num">0</span>;   <span class="cmt">// undefined</span>
+
+<span class="cmt">// in operator — check property in object</span>
+<span class="str">"name"</span> <span class="kw">in</span> { name: <span class="str">"Alice"</span> };  <span class="cmt">// true</span>
+
+<span class="cmt">// instanceof — check prototype chain</span>
+[] <span class="kw">instanceof</span> Array;    <span class="cmt">// true</span>
+[] <span class="kw">instanceof</span> Object;   <span class="cmt">// true</span>
+
+<span class="cmt">// delete — remove object property</span>
+<span class="kw">const</span> obj = { a: <span class="num">1</span>, b: <span class="num">2</span> };
+<span class="kw">delete</span> obj.a;   <span class="cmt">// { b: 2 }</span>
+
+<span class="cmt">// Spread operator</span>
+<span class="kw">const</span> arr = [<span class="num">1</span>, <span class="num">2</span>, ...[<span class="num">3</span>, <span class="num">4</span>]];  <span class="cmt">// [1, 2, 3, 4]</span>
+<span class="kw">const</span> obj2 = { ...obj, c: <span class="num">3</span> };   <span class="cmt">// { b: 2, c: 3 }</span></code></pre>
+</body></html>

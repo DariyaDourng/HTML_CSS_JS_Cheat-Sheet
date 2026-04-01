@@ -1,0 +1,81 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>CSS 03 – Typography</title><link rel="stylesheet" href="shared.css"/></head>
+<body>
+<a href="index.html" class="back">← Back to Library</a>
+<div class="page-tag css">CSS · 03</div>
+<h1>Typography</h1>
+<p class="page-desc">All CSS font and text properties — from font-family to text transforms.</p>
+
+<h2>Font Properties</h2>
+<pre><code><span class="sel">.text</span> {
+  <span class="prop">font-family</span>: <span class="str">'Georgia'</span>, serif;
+  <span class="prop">font-family</span>: <span class="str">'Roboto'</span>, <span class="str">'Helvetica Neue'</span>, sans-serif;
+  <span class="prop">font-size</span>: <span class="unit">16px</span>;        <span class="cmt">/* px, rem, em, %, vw */</span>
+  <span class="prop">font-size</span>: <span class="unit">1rem</span>;        <span class="cmt">/* relative to root (html) */</span>
+  <span class="prop">font-size</span>: <span class="unit">1.2em</span>;       <span class="cmt">/* relative to parent */</span>
+  <span class="prop">font-weight</span>: normal;    <span class="cmt">/* 400 */</span>
+  <span class="prop">font-weight</span>: bold;      <span class="cmt">/* 700 */</span>
+  <span class="prop">font-weight</span>: <span class="num">300</span>;        <span class="cmt">/* light */</span>
+  <span class="prop">font-weight</span>: <span class="num">900</span>;        <span class="cmt">/* black */</span>
+  <span class="prop">font-style</span>: normal | italic | oblique;
+  <span class="prop">font-variant</span>: normal | small-caps;
+  <span class="prop">font-stretch</span>: condensed | normal | expanded;
+
+  <span class="cmt">/* Shorthand: style variant weight size/line-height family */</span>
+  <span class="prop">font</span>: italic bold <span class="unit">1.2rem</span>/<span class="num">1.5</span> <span class="str">'Georgia'</span>, serif;
+}</code></pre>
+
+<h2>Text Properties</h2>
+<pre><code><span class="sel">.text</span> {
+  <span class="prop">color</span>: <span class="str">#333</span>;
+  <span class="prop">line-height</span>: <span class="num">1.6</span>;            <span class="cmt">/* unitless = best practice */</span>
+  <span class="prop">letter-spacing</span>: <span class="unit">0.05em</span>;      <span class="cmt">/* tracking */</span>
+  <span class="prop">word-spacing</span>: <span class="unit">0.1em</span>;
+
+  <span class="prop">text-align</span>: left | center | right | justify | start | end;
+  <span class="prop">text-transform</span>: none | uppercase | lowercase | capitalize;
+  <span class="prop">text-decoration</span>: none | underline | overline | line-through;
+  <span class="prop">text-decoration</span>: underline dotted <span class="str">red</span> <span class="unit">2px</span>;
+  <span class="prop">text-decoration-line</span>: underline;
+  <span class="prop">text-decoration-style</span>: solid | double | dotted | dashed | wavy;
+  <span class="prop">text-decoration-color</span>: <span class="str">blue</span>;
+  <span class="prop">text-decoration-thickness</span>: <span class="unit">2px</span>;
+  <span class="prop">text-underline-offset</span>: <span class="unit">4px</span>;
+
+  <span class="prop">text-indent</span>: <span class="unit">2em</span>;
+  <span class="prop">text-shadow</span>: <span class="unit">2px</span> <span class="unit">2px</span> <span class="unit">4px</span> rgba(<span class="num">0</span>,<span class="num">0</span>,<span class="num">0</span>,<span class="num">0.3</span>);
+  <span class="prop">text-shadow</span>: <span class="unit">0</span> <span class="num">0</span> <span class="unit">20px</span> cyan, <span class="unit">0</span> <span class="num">0</span> <span class="unit">40px</span> blue;  <span class="cmt">/* multiple shadows */</span>
+
+  <span class="prop">white-space</span>: normal | nowrap | pre | pre-wrap | pre-line | break-spaces;
+  <span class="prop">word-break</span>: normal | break-all | keep-all | break-word;
+  <span class="prop">overflow-wrap</span>: normal | break-word | anywhere;
+  <span class="prop">hyphens</span>: auto | manual | none;
+
+  <span class="prop">text-overflow</span>: clip | ellipsis;  <span class="cmt">/* needs overflow:hidden & white-space:nowrap */</span>
+
+  <span class="prop">writing-mode</span>: horizontal-tb | vertical-rl | vertical-lr;
+}</code></pre>
+
+<h2>@font-face — Custom Fonts</h2>
+<pre><code><span class="sel">@font-face</span> {
+  <span class="prop">font-family</span>: <span class="str">'MyFont'</span>;
+  <span class="prop">src</span>: url(<span class="str">'font.woff2'</span>) format(<span class="str">'woff2'</span>),
+       url(<span class="str">'font.woff'</span>)  format(<span class="str">'woff'</span>);
+  <span class="prop">font-weight</span>: <span class="num">400</span>;
+  <span class="prop">font-style</span>: normal;
+  <span class="prop">font-display</span>: swap;  <span class="cmt">/* show fallback while loading */</span>
+}
+
+<span class="cmt">/* Google Fonts via @import */</span>
+<span class="sel">@import</span> url(<span class="str">'https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap'</span>);</code></pre>
+
+<h2>Multi-column Text</h2>
+<pre><code><span class="sel">.article</span> {
+  <span class="prop">column-count</span>: <span class="num">3</span>;
+  <span class="prop">column-gap</span>: <span class="unit">2rem</span>;
+  <span class="prop">column-rule</span>: <span class="unit">1px</span> solid <span class="str">#ccc</span>;
+  <span class="prop">column-width</span>: <span class="unit">250px</span>;    <span class="cmt">/* auto-calculate columns */</span>
+  <span class="prop">columns</span>: <span class="num">3</span> <span class="unit">250px</span>;       <span class="cmt">/* shorthand */</span>
+}
+<span class="sel">.no-break</span> { <span class="prop">break-inside</span>: avoid; }  <span class="cmt">/* don't split this element across columns */</span></code></pre>
+</body></html>

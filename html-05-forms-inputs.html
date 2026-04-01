@@ -1,0 +1,110 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>HTML 05 – Forms & Inputs</title><link rel="stylesheet" href="shared.css"/></head>
+<body>
+<a href="index.html" class="back">← Back to Library</a>
+<div class="page-tag html">HTML · 05</div>
+<h1>Forms & Inputs</h1>
+<p class="page-desc">All form elements, every input type, validation attributes, and best practices.</p>
+
+<h2>Form Element</h2>
+<pre><code><span class="tag">&lt;form</span>
+  <span class="attr">action</span>=<span class="val">"/submit"</span>      <span class="cmt">&lt;!-- Where to send data --&gt;</span>
+  <span class="attr">method</span>=<span class="val">"post"</span>        <span class="cmt">&lt;!-- GET or POST --&gt;</span>
+  <span class="attr">enctype</span>=<span class="val">"multipart/form-data"</span>  <span class="cmt">&lt;!-- Required for file uploads --&gt;</span>
+  <span class="attr">novalidate</span>           <span class="cmt">&lt;!-- Disable browser validation --&gt;</span>
+  <span class="attr">autocomplete</span>=<span class="val">"on"</span>   <span class="cmt">&lt;!-- Enable/disable autocomplete --&gt;</span>
+<span class="tag">&gt;</span>
+  <span class="cmt">&lt;!-- form fields --&gt;</span>
+<span class="tag">&lt;/form&gt;</span></code></pre>
+
+<h2>All Input Types</h2>
+<pre><code><span class="cmt">&lt;!-- Text inputs --&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"text"</span>          <span class="attr">placeholder</span>=<span class="val">"Plain text"</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"email"</span>         <span class="attr">placeholder</span>=<span class="val">"user@email.com"</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"password"</span>      <span class="attr">placeholder</span>=<span class="val">"••••••••"</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"search"</span>        <span class="attr">placeholder</span>=<span class="val">"Search..."</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"url"</span>           <span class="attr">placeholder</span>=<span class="val">"https://..."</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"tel"</span>           <span class="attr">placeholder</span>=<span class="val">"+1 555 000 0000"</span><span class="tag">/&gt;</span>
+
+<span class="cmt">&lt;!-- Number inputs --&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"number"</span>  <span class="attr">min</span>=<span class="val">"0"</span> <span class="attr">max</span>=<span class="val">"100"</span> <span class="attr">step</span>=<span class="val">"1"</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"range"</span>   <span class="attr">min</span>=<span class="val">"0"</span> <span class="attr">max</span>=<span class="val">"100"</span> <span class="attr">value</span>=<span class="val">"50"</span><span class="tag">/&gt;</span>
+
+<span class="cmt">&lt;!-- Date/time inputs --&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"date"</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"time"</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"datetime-local"</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"month"</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"week"</span><span class="tag">/&gt;</span>
+
+<span class="cmt">&lt;!-- Other --&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"checkbox"</span> <span class="attr">checked</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"radio"</span>    <span class="attr">name</span>=<span class="val">"group"</span> <span class="attr">value</span>=<span class="val">"a"</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"color"</span>   <span class="attr">value</span>=<span class="val">"#00ffd1"</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"file"</span>    <span class="attr">accept</span>=<span class="val">"image/*"</span> <span class="attr">multiple</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"hidden"</span>  <span class="attr">name</span>=<span class="val">"token"</span> <span class="attr">value</span>=<span class="val">"abc123"</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"submit"</span>  <span class="attr">value</span>=<span class="val">"Submit"</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"reset"</span>   <span class="attr">value</span>=<span class="val">"Clear"</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"button"</span>  <span class="attr">value</span>=<span class="val">"Click Me"</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"image"</span>   <span class="attr">src</span>=<span class="val">"btn.png"</span> <span class="attr">alt</span>=<span class="val">"Submit"</span><span class="tag">/&gt;</span></code></pre>
+
+<h2>Label, Textarea, Select</h2>
+<pre><code><span class="cmt">&lt;!-- Label linked by for/id --&gt;</span>
+<span class="tag">&lt;label</span> <span class="attr">for</span>=<span class="val">"username"</span><span class="tag">&gt;</span>Username:<span class="tag">&lt;/label&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"text"</span> <span class="attr">id</span>=<span class="val">"username"</span> <span class="attr">name</span>=<span class="val">"username"</span><span class="tag">/&gt;</span>
+
+<span class="cmt">&lt;!-- Textarea --&gt;</span>
+<span class="tag">&lt;textarea</span> <span class="attr">name</span>=<span class="val">"message"</span> <span class="attr">rows</span>=<span class="val">"5"</span> <span class="attr">cols</span>=<span class="val">"40"</span>
+           <span class="attr">placeholder</span>=<span class="val">"Your message..."</span><span class="tag">&gt;&lt;/textarea&gt;</span>
+
+<span class="cmt">&lt;!-- Select dropdown --&gt;</span>
+<span class="tag">&lt;select</span> <span class="attr">name</span>=<span class="val">"country"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;option</span> <span class="attr">value</span>=<span class="val">""</span><span class="tag">&gt;</span>-- Select country --<span class="tag">&lt;/option&gt;</span>
+  <span class="tag">&lt;optgroup</span> <span class="attr">label</span>=<span class="val">"Asia"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;option</span> <span class="attr">value</span>=<span class="val">"kh"</span><span class="tag">&gt;</span>Cambodia<span class="tag">&lt;/option&gt;</span>
+    <span class="tag">&lt;option</span> <span class="attr">value</span>=<span class="val">"th"</span> <span class="attr">selected</span><span class="tag">&gt;</span>Thailand<span class="tag">&lt;/option&gt;</span>
+  <span class="tag">&lt;/optgroup&gt;</span>
+<span class="tag">&lt;/select&gt;</span>
+
+<span class="cmt">&lt;!-- Multi-select --&gt;</span>
+<span class="tag">&lt;select</span> <span class="attr">name</span>=<span class="val">"skills"</span> <span class="attr">multiple</span> <span class="attr">size</span>=<span class="val">"4"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;option</span> <span class="attr">value</span>=<span class="val">"html"</span><span class="tag">&gt;</span>HTML<span class="tag">&lt;/option&gt;</span>
+  <span class="tag">&lt;option</span> <span class="attr">value</span>=<span class="val">"css"</span><span class="tag">&gt;</span>CSS<span class="tag">&lt;/option&gt;</span>
+  <span class="tag">&lt;option</span> <span class="attr">value</span>=<span class="val">"js"</span><span class="tag">&gt;</span>JavaScript<span class="tag">&lt;/option&gt;</span>
+<span class="tag">&lt;/select&gt;</span></code></pre>
+
+<h2>Validation Attributes</h2>
+<pre><code><span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"text"</span>
+  <span class="attr">required</span>                        <span class="cmt">&lt;!-- Must be filled --&gt;</span>
+  <span class="attr">minlength</span>=<span class="val">"3"</span>                  <span class="cmt">&lt;!-- Min characters --&gt;</span>
+  <span class="attr">maxlength</span>=<span class="val">"50"</span>                 <span class="cmt">&lt;!-- Max characters --&gt;</span>
+  <span class="attr">pattern</span>=<span class="val">"[A-Za-z]{3,}"</span>        <span class="cmt">&lt;!-- Regex pattern --&gt;</span>
+  <span class="attr">title</span>=<span class="val">"3+ letters only"</span>        <span class="cmt">&lt;!-- Error message hint --&gt;</span>
+<span class="tag">/&gt;</span>
+
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"number"</span>
+  <span class="attr">min</span>=<span class="val">"18"</span> <span class="attr">max</span>=<span class="val">"99"</span>
+  <span class="attr">step</span>=<span class="val">"1"</span>
+  <span class="attr">required</span>
+<span class="tag">/&gt;</span></code></pre>
+
+<h2>Fieldset & Button Types</h2>
+<pre><code><span class="tag">&lt;fieldset&gt;</span>
+  <span class="tag">&lt;legend&gt;</span>Personal Information<span class="tag">&lt;/legend&gt;</span>
+  <span class="tag">&lt;label&gt;</span>Name: <span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"text"</span><span class="tag">/&gt;&lt;/label&gt;</span>
+<span class="tag">&lt;/fieldset&gt;</span>
+
+<span class="cmt">&lt;!-- Button types --&gt;</span>
+<span class="tag">&lt;button</span> <span class="attr">type</span>=<span class="val">"submit"</span><span class="tag">&gt;</span>Submit form<span class="tag">&lt;/button&gt;</span>
+<span class="tag">&lt;button</span> <span class="attr">type</span>=<span class="val">"reset"</span><span class="tag">&gt;</span>Reset form<span class="tag">&lt;/button&gt;</span>
+<span class="tag">&lt;button</span> <span class="attr">type</span>=<span class="val">"button"</span> <span class="attr">onclick</span>=<span class="val">"doSomething()"</span><span class="tag">&gt;</span>Click<span class="tag">&lt;/button&gt;</span>
+<span class="tag">&lt;button</span> <span class="attr">disabled</span><span class="tag">&gt;</span>Disabled<span class="tag">&lt;/button&gt;</span>
+
+<span class="cmt">&lt;!-- Datalist for autocomplete suggestions --&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">list</span>=<span class="val">"browsers"</span> <span class="attr">name</span>=<span class="val">"browser"</span> <span class="attr">placeholder</span>=<span class="val">"Pick a browser"</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;datalist</span> <span class="attr">id</span>=<span class="val">"browsers"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;option</span> <span class="attr">value</span>=<span class="val">"Chrome"</span><span class="tag">/&gt;</span>
+  <span class="tag">&lt;option</span> <span class="attr">value</span>=<span class="val">"Firefox"</span><span class="tag">/&gt;</span>
+  <span class="tag">&lt;option</span> <span class="attr">value</span>=<span class="val">"Safari"</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;/datalist&gt;</span></code></pre>
+</body></html>

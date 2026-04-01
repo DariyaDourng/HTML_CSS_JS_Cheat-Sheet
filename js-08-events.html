@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>JS 08 – Events</title><link rel="stylesheet" href="shared.css"/></head>
+<body>
+<a href="index.html" class="back">← Back to Library</a>
+<div class="page-tag js">JS · 08</div>
+<h1>Events</h1>
+<p class="page-desc">addEventListener, all event types, bubbling, delegation, and custom events.</p>
+
+<h2>addEventListener</h2>
+<pre><code><span class="cmt">// Basic usage</span>
+el.<span class="fn">addEventListener</span>(<span class="str">"click"</span>, <span class="kw">function</span>(event) {
+  console.<span class="fn">log</span>(event.target);
+});
+
+<span class="cmt">// Arrow function</span>
+btn.<span class="fn">addEventListener</span>(<span class="str">"click"</span>, (e) =&gt; {
+  e.<span class="fn">preventDefault</span>();    <span class="cmt">// stop default browser action</span>
+  e.<span class="fn">stopPropagation</span>();   <span class="cmt">// stop bubbling up</span>
+});
+
+<span class="cmt">// With options</span>
+el.<span class="fn">addEventListener</span>(<span class="str">"click"</span>, handler, {
+  once: <span class="kw">true</span>,       <span class="cmt">// fire only once then auto-remove</span>
+  capture: <span class="kw">false</span>,   <span class="cmt">// bubble phase (default)</span>
+  passive: <span class="kw">true</span>,    <span class="cmt">// will not call preventDefault (scroll perf)</span>
+});
+
+<span class="cmt">// Remove listener (needs same function reference)</span>
+<span class="kw">const</span> <span class="fn">handler</span> = () =&gt; console.<span class="fn">log</span>(<span class="str">"clicked"</span>);
+el.<span class="fn">addEventListener</span>(<span class="str">"click"</span>, handler);
+el.<span class="fn">removeEventListener</span>(<span class="str">"click"</span>, handler);</code></pre>
+
+<h2>The Event Object</h2>
+<pre><code>el.<span class="fn">addEventListener</span>(<span class="str">"click"</span>, (e) =&gt; {
+  e.type;             <span class="cmt">// "click"</span>
+  e.target;           <span class="cmt">// element that was clicked</span>
+  e.currentTarget;    <span class="cmt">// element listener is on</span>
+  e.timeStamp;        <span class="cmt">// ms since page load</span>
+  e.bubbles;          <span class="cmt">// true if event bubbles</span>
+  e.cancelable;       <span class="cmt">// true if preventDefault works</span>
+  e.<span class="fn">preventDefault</span>(); <span class="cmt">// stop default (link, form submit)</span>
+  e.<span class="fn">stopPropagation</span>();<span class="cmt">// stop bubbling</span>
+  e.<span class="fn">stopImmediatePropagation</span>(); <span class="cmt">// stop other listeners on same el</span>
+});</code></pre>
+
+<h2>Mouse Events</h2>
+<pre><code>el.<span class="fn">addEventListener</span>(<span class="str">"click"</span>, handler);
+el.<span class="fn">addEventListener</span>(<span class="str">"dblclick"</span>, handler);
+el.<span class="fn">addEventListener</span>(<span class="str">"mousedown"</span>, handler);
+el.<span class="fn">addEventListener</span>(<span class="str">"mouseup"</span>, handler);
+el.<span class="fn">addEventListener</span>(<span class="str">"mousemove"</span>, handler);
+el.<span class="fn">addEventListener</span>(<span class="str">"mouseenter"</span>, handler); <span class="cmt">// doesn't bubble</span>
+el.<span class="fn">addEventListener</span>(<span class="str">"mouseleave"</span>, handler); <span class="cmt">// doesn't bubble</span>
+el.<span class="fn">addEventListener</span>(<span class="str">"mouseover"</span>, handler);  <span class="cmt">// bubbles</span>
+el.<span class="fn">addEventListener</span>(<span class="str">"mouseout"</span>, handler);   <span class="cmt">// bubbles</span>
+el.<span class="fn">addEventListener</span>(<span class="str">"contextmenu"</span>, handler); <span class="cmt">// right-click</span>
+el.<span class="fn">addEventListener</span>(<span class="str">"wheel"</span>, handler);       <span class="cmt">// scroll wheel</span>
+
+<span class="cmt">// Mouse event properties</span>
+e.clientX; e.clientY;  <span class="cmt">// position relative to viewport</span>
+e.pageX; e.pageY;      <span class="cmt">// position relative to page</span>
+e.offsetX; e.offsetY;  <span class="cmt">// position relative to element</span>
+e.button;              <span class="cmt">// 0=left, 1=middle, 2=right</span>
+e.buttons;             <span class="cmt">// bitmask of pressed buttons</span>
+e.shiftKey; e.ctrlKey; e.altKey; e.metaKey;</code></pre>
+
+<h2>Keyboard Events</h2>
+<pre><code>document.<span class="fn">addEventListener</span>(<span class="str">"keydown"</span>, (e) =&gt; {
+  e.key;        <span class="cmt">// "Enter", "a", "ArrowUp", " ", "Escape"</span>
+  e.code;       <span class="cmt">// "KeyA", "Enter", "Space" (physical key)</span>
+  e.keyCode;    <span class="cmt">// deprecated number (avoid)</span>
+  e.ctrlKey;    <span class="cmt">// true if Ctrl held</span>
+  e.shiftKey;
+  e.altKey;
+  e.metaKey;    <span class="cmt">// Cmd on Mac</span>
+  e.repeat;     <span class="cmt">// true if key held down</span>
+
+  <span class="cmt">// Common patterns</span>
+  <span class="kw">if</span> (e.key === <span class="str">"Enter"</span>) <span class="fn">submit</span>();
+  <span class="kw">if</span> (e.key === <span class="str">"Escape"</span>) <span class="fn">closeModal</span>();
+  <span class="kw">if</span> (e.ctrlKey &amp;&amp; e.key === <span class="str">"s"</span>) { e.<span class="fn">preventDefault</span>(); <span class="fn">save</span>(); }
+});
+
+document.<span class="fn">addEventListener</span>(<span class="str">"keyup"</span>, handler);
+document.<span class="fn">addEventListener</span>(<span class="str">"keypress"</span>, handler); <span class="cmt">// deprecated</span></code></pre>
+
+<h2>Form Events</h2>
+<pre><code>form.<span class="fn">addEventListener</span>(<span class="str">"submit"</span>, (e) =&gt; {
+  e.<span class="fn">preventDefault</span>();  <span class="cmt">// stop page reload</span>
+  <span class="kw">const</span> data = <span class="kw">new</span> <span class="fn">FormData</span>(form);
+  data.<span class="fn">get</span>(<span class="str">"email"</span>);
+});
+
+input.<span class="fn">addEventListener</span>(<span class="str">"input"</span>, (e) =&gt; {      <span class="cmt">// fires on every keystroke</span>
+  console.<span class="fn">log</span>(e.target.value);
+});
+input.<span class="fn">addEventListener</span>(<span class="str">"change"</span>, handler);    <span class="cmt">// fires on commit (blur)</span>
+input.<span class="fn">addEventListener</span>(<span class="str">"focus"</span>, handler);     <span class="cmt">// element gains focus</span>
+input.<span class="fn">addEventListener</span>(<span class="str">"blur"</span>, handler);      <span class="cmt">// element loses focus</span>
+input.<span class="fn">addEventListener</span>(<span class="str">"focusin"</span>, handler);   <span class="cmt">// bubbles (unlike focus)</span>
+input.<span class="fn">addEventListener</span>(<span class="str">"focusout"</span>, handler);  <span class="cmt">// bubbles</span>
+
+select.<span class="fn">addEventListener</span>(<span class="str">"change"</span>, (e) =&gt; console.<span class="fn">log</span>(e.target.value));</code></pre>
+
+<h2>Window & Document Events</h2>
+<pre><code>window.<span class="fn">addEventListener</span>(<span class="str">"load"</span>, handler);           <span class="cmt">// all resources loaded</span>
+document.<span class="fn">addEventListener</span>(<span class="str">"DOMContentLoaded"</span>, handler); <span class="cmt">// DOM parsed</span>
+window.<span class="fn">addEventListener</span>(<span class="str">"resize"</span>, handler);
+window.<span class="fn">addEventListener</span>(<span class="str">"scroll"</span>, handler);
+window.<span class="fn">addEventListener</span>(<span class="str">"beforeunload"</span>, (e) =&gt; {
+  e.returnValue = <span class="str">""</span>;   <span class="cmt">// triggers "Leave site?" dialog</span>
+});
+window.<span class="fn">addEventListener</span>(<span class="str">"online"</span>, handler);
+window.<span class="fn">addEventListener</span>(<span class="str">"offline"</span>, handler);</code></pre>
+
+<h2>Event Delegation</h2>
+<pre><code><span class="cmt">// Listen on parent — works for dynamically added children</span>
+document.<span class="fn">querySelector</span>(<span class="str">"#list"</span>).<span class="fn">addEventListener</span>(<span class="str">"click"</span>, (e) =&gt; {
+  <span class="kw">const</span> item = e.target.<span class="fn">closest</span>(<span class="str">"li"</span>);  <span class="cmt">// find the li ancestor</span>
+  <span class="kw">if</span> (!item) <span class="kw">return</span>;
+  console.<span class="fn">log</span>(<span class="str">"Clicked:"</span>, item.textContent);
+});</code></pre>
+
+<h2>Custom Events</h2>
+<pre><code><span class="cmt">// Create and dispatch</span>
+<span class="kw">const</span> event = <span class="kw">new</span> <span class="fn">CustomEvent</span>(<span class="str">"user:login"</span>, {
+  detail: { user: <span class="str">"Alice"</span> },
+  bubbles: <span class="kw">true</span>,
+  cancelable: <span class="kw">true</span>,
+});
+document.<span class="fn">dispatchEvent</span>(event);
+
+<span class="cmt">// Listen</span>
+document.<span class="fn">addEventListener</span>(<span class="str">"user:login"</span>, (e) =&gt; {
+  console.<span class="fn">log</span>(e.detail.user);  <span class="cmt">// "Alice"</span>
+});</code></pre>
+</body></html>

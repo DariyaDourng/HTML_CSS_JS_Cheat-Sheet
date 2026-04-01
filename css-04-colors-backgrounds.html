@@ -1,0 +1,115 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>CSS 04 – Colors & Backgrounds</title><link rel="stylesheet" href="shared.css"/></head>
+<body>
+<a href="index.html" class="back">← Back to Library</a>
+<div class="page-tag css">CSS · 04</div>
+<h1>Colors & Backgrounds</h1>
+<p class="page-desc">Color formats, gradients, background properties, filters, and blend modes.</p>
+
+<h2>Color Values</h2>
+<pre><code><span class="sel">.el</span> {
+  <span class="cmt">/* Named colors */</span>
+  <span class="prop">color</span>: red;
+  <span class="prop">color</span>: transparent;
+  <span class="prop">color</span>: currentColor;   <span class="cmt">/* inherits current color value */</span>
+
+  <span class="cmt">/* Hex */</span>
+  <span class="prop">color</span>: <span class="str">#ff0000</span>;        <span class="cmt">/* RGB */</span>
+  <span class="prop">color</span>: <span class="str">#ff0000ff</span>;      <span class="cmt">/* RGBA (8 chars) */</span>
+  <span class="prop">color</span>: <span class="str">#f00</span>;           <span class="cmt">/* shorthand */</span>
+
+  <span class="cmt">/* RGB / RGBA */</span>
+  <span class="prop">color</span>: rgb(<span class="num">255</span>, <span class="num">0</span>, <span class="num">0</span>);
+  <span class="prop">color</span>: rgba(<span class="num">255</span>, <span class="num">0</span>, <span class="num">0</span>, <span class="num">0.5</span>);
+  <span class="prop">color</span>: rgb(<span class="num">255</span> <span class="num">0</span> <span class="num">0</span> / <span class="num">50%</span>);   <span class="cmt">/* modern syntax */</span>
+
+  <span class="cmt">/* HSL / HSLA */</span>
+  <span class="prop">color</span>: hsl(<span class="num">0</span>, <span class="num">100%</span>, <span class="num">50%</span>);
+  <span class="prop">color</span>: hsla(<span class="num">0</span>, <span class="num">100%</span>, <span class="num">50%</span>, <span class="num">0.5</span>);
+  <span class="prop">color</span>: hsl(<span class="num">0</span> <span class="num">100%</span> <span class="num">50%</span> / <span class="num">50%</span>);  <span class="cmt">/* modern */</span>
+
+  <span class="cmt">/* HWB, LCH, Lab, oklch (modern) */</span>
+  <span class="prop">color</span>: hwb(<span class="num">0</span> <span class="num">0%</span> <span class="num">0%</span>);
+  <span class="prop">color</span>: oklch(<span class="num">60%</span> <span class="num">0.2</span> <span class="num">30</span>);   <span class="cmt">/* perceptually uniform */</span>
+}</code></pre>
+
+<h2>Background Properties</h2>
+<pre><code><span class="sel">.el</span> {
+  <span class="prop">background-color</span>: <span class="str">#1a1a2e</span>;
+  <span class="prop">background-image</span>: url(<span class="str">'photo.jpg'</span>);
+  <span class="prop">background-repeat</span>: no-repeat | repeat | repeat-x | repeat-y | space | round;
+  <span class="prop">background-size</span>: auto | cover | contain | <span class="unit">50%</span> | <span class="unit">200px</span> <span class="unit">100px</span>;
+  <span class="prop">background-position</span>: center | top right | <span class="unit">50%</span> <span class="unit">50%</span> | <span class="unit">20px</span> <span class="unit">40px</span>;
+  <span class="prop">background-attachment</span>: scroll | fixed | local;
+  <span class="prop">background-origin</span>: padding-box | border-box | content-box;
+  <span class="prop">background-clip</span>: border-box | padding-box | content-box | text;
+
+  <span class="cmt">/* Multiple backgrounds */</span>
+  <span class="prop">background</span>:
+    url(<span class="str">'top.png'</span>) no-repeat top center,
+    url(<span class="str">'bottom.png'</span>) no-repeat bottom center,
+    <span class="str">#1a1a2e</span>;
+}</code></pre>
+
+<h2>Gradients</h2>
+<pre><code><span class="cmt">/* Linear gradient */</span>
+<span class="prop">background</span>: linear-gradient(to right, <span class="str">#ff6b6b</span>, <span class="str">#ffd166</span>);
+<span class="prop">background</span>: linear-gradient(<span class="num">135deg</span>, <span class="str">#667eea</span>, <span class="str">#764ba2</span>);
+<span class="prop">background</span>: linear-gradient(to bottom, red <span class="num">0%</span>, blue <span class="num">50%</span>, green <span class="num">100%</span>);
+
+<span class="cmt">/* Radial gradient */</span>
+<span class="prop">background</span>: radial-gradient(circle, <span class="str">#ff6b6b</span>, <span class="str">#1a1a2e</span>);
+<span class="prop">background</span>: radial-gradient(ellipse at top, cyan, transparent);
+<span class="prop">background</span>: radial-gradient(circle at <span class="unit">30%</span> <span class="unit">40%</span>, <span class="str">#fff</span> <span class="unit">10%</span>, transparent <span class="unit">60%</span>);
+
+<span class="cmt">/* Conic gradient */</span>
+<span class="prop">background</span>: conic-gradient(red, yellow, green, blue, red);
+<span class="prop">background</span>: conic-gradient(from <span class="num">0deg</span>, <span class="str">#ff6b6b</span>, <span class="str">#ffd166</span>, <span class="str">#06d6a0</span>);
+
+<span class="cmt">/* Repeating gradients */</span>
+<span class="prop">background</span>: repeating-linear-gradient(<span class="num">45deg</span>, <span class="str">#000</span> <span class="num">0</span>, <span class="str">#000</span> <span class="unit">10px</span>, <span class="str">#fff</span> <span class="unit">10px</span>, <span class="str">#fff</span> <span class="unit">20px</span>);</code></pre>
+
+<h2>Filter & Backdrop-filter</h2>
+<pre><code><span class="sel">.img</span> {
+  <span class="prop">filter</span>: blur(<span class="unit">4px</span>);
+  <span class="prop">filter</span>: brightness(<span class="num">1.2</span>);
+  <span class="prop">filter</span>: contrast(<span class="num">150%</span>);
+  <span class="prop">filter</span>: grayscale(<span class="num">100%</span>);
+  <span class="prop">filter</span>: sepia(<span class="num">80%</span>);
+  <span class="prop">filter</span>: saturate(<span class="num">2</span>);
+  <span class="prop">filter</span>: hue-rotate(<span class="num">90deg</span>);
+  <span class="prop">filter</span>: invert(<span class="num">100%</span>);
+  <span class="prop">filter</span>: opacity(<span class="num">50%</span>);
+  <span class="prop">filter</span>: drop-shadow(<span class="unit">2px</span> <span class="unit">4px</span> <span class="unit">8px</span> rgba(<span class="num">0</span>,<span class="num">0</span>,<span class="num">0</span>,<span class="num">0.5</span>));
+  <span class="prop">filter</span>: blur(<span class="unit">2px</span>) brightness(<span class="num">0.8</span>) contrast(<span class="num">120%</span>); <span class="cmt">/* chain */</span>
+}
+
+<span class="sel">.glass</span> {
+  <span class="prop">backdrop-filter</span>: blur(<span class="unit">10px</span>) saturate(<span class="num">180%</span>);  <span class="cmt">/* blur behind element */</span>
+  <span class="prop">background</span>: rgba(<span class="num">255</span>, <span class="num">255</span>, <span class="num">255</span>, <span class="num">0.1</span>);
+}</code></pre>
+
+<h2>Mix-blend-mode & Opacity</h2>
+<pre><code><span class="sel">.el</span> {
+  <span class="prop">opacity</span>: <span class="num">0.5</span>;   <span class="cmt">/* 0 = invisible, 1 = fully visible */</span>
+
+  <span class="prop">mix-blend-mode</span>: normal | multiply | screen | overlay | darken |
+                  lighten | color-dodge | color-burn | hard-light |
+                  soft-light | difference | exclusion | hue |
+                  saturation | color | luminosity;
+
+  <span class="prop">background-blend-mode</span>: multiply;  <span class="cmt">/* blend background layers */</span>
+}</code></pre>
+
+<h2>Box Shadow</h2>
+<pre><code><span class="sel">.card</span> {
+  <span class="prop">box-shadow</span>: <span class="unit">0</span> <span class="unit">4px</span> <span class="unit">12px</span> rgba(<span class="num">0</span>,<span class="num">0</span>,<span class="num">0</span>,<span class="num">0.15</span>);
+  <span class="cmt">/* offset-x | offset-y | blur | color */</span>
+  <span class="prop">box-shadow</span>: <span class="unit">2px</span> <span class="unit">2px</span> <span class="unit">5px</span> <span class="unit">1px</span> <span class="str">black</span>;
+  <span class="cmt">/* offset-x | offset-y | blur | spread | color */</span>
+  <span class="prop">box-shadow</span>: inset <span class="unit">0</span> <span class="unit">0</span> <span class="unit">10px</span> rgba(<span class="num">0</span>,<span class="num">0</span>,<span class="num">0</span>,<span class="num">0.2</span>);  <span class="cmt">/* inner shadow */</span>
+  <span class="prop">box-shadow</span>:
+    <span class="unit">0</span> <span class="unit">1px</span> <span class="unit">3px</span> rgba(<span class="num">0</span>,<span class="num">0</span>,<span class="num">0</span>,<span class="num">0.12</span>),
+    <span class="unit">0</span> <span class="unit">8px</span> <span class="unit">24px</span> rgba(<span class="num">0</span>,<span class="num">0</span>,<span class="num">0</span>,<span class="num">0.15</span>);  <span class="cmt">/* multiple shadows */</span>
+}</code></pre>
+</body></html>

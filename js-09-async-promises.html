@@ -1,0 +1,157 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>JS 09 – Async & Promises</title><link rel="stylesheet" href="shared.css"/></head>
+<body>
+<a href="index.html" class="back">← Back to Library</a>
+<div class="page-tag js">JS · 09</div>
+<h1>Async & Promises</h1>
+<p class="page-desc">Callbacks, Promises, async/await, fetch API, and error handling.</p>
+
+<h2>Callbacks (old style)</h2>
+<pre><code><span class="cmt">// Callback-based async</span>
+<span class="fn">setTimeout</span>(() =&gt; console.<span class="fn">log</span>(<span class="str">"1 second later"</span>), <span class="num">1000</span>);
+<span class="fn">setInterval</span>(() =&gt; console.<span class="fn">log</span>(<span class="str">"every second"</span>), <span class="num">1000</span>);
+
+<span class="cmt">// Callback hell (the problem)</span>
+<span class="fn">getData</span>((data) =&gt; {
+  <span class="fn">processData</span>(data, (result) =&gt; {
+    <span class="fn">saveResult</span>(result, (saved) =&gt; {
+      console.<span class="fn">log</span>(<span class="str">"done"</span>);  <span class="cmt">// hard to read and handle errors</span>
+    });
+  });
+});</code></pre>
+
+<h2>Promise</h2>
+<pre><code><span class="cmt">// Creating a Promise</span>
+<span class="kw">const</span> p = <span class="kw">new</span> <span class="fn">Promise</span>((resolve, reject) =&gt; {
+  <span class="kw">const</span> success = <span class="kw">true</span>;
+  <span class="kw">if</span> (success) {
+    <span class="fn">resolve</span>(<span class="str">"Data loaded!"</span>);
+  } <span class="kw">else</span> {
+    <span class="fn">reject</span>(<span class="kw">new</span> <span class="fn">Error</span>(<span class="str">"Failed"</span>));
+  }
+});
+
+<span class="cmt">// Consuming a Promise</span>
+p
+  .<span class="fn">then</span>((value) =&gt; {
+    console.<span class="fn">log</span>(value);   <span class="cmt">// "Data loaded!"</span>
+    <span class="kw">return</span> <span class="str">"Next"</span>;       <span class="cmt">// can chain</span>
+  })
+  .<span class="fn">then</span>((value) =&gt; {
+    console.<span class="fn">log</span>(value);   <span class="cmt">// "Next"</span>
+  })
+  .<span class="fn">catch</span>((error) =&gt; {
+    console.<span class="fn">log</span>(error);   <span class="cmt">// handles any rejection in chain</span>
+  })
+  .<span class="fn">finally</span>(() =&gt; {
+    console.<span class="fn">log</span>(<span class="str">"Always runs"</span>);
+  });</code></pre>
+
+<h2>Promise Static Methods</h2>
+<pre><code><span class="cmt">// All succeed or fail fast</span>
+Promise.<span class="fn">all</span>([p1, p2, p3])
+  .<span class="fn">then</span>(([r1, r2, r3]) =&gt; console.<span class="fn">log</span>(r1, r2, r3));
+
+<span class="cmt">// All settle (never rejects)</span>
+Promise.<span class="fn">allSettled</span>([p1, p2]).<span class="fn">then</span>((results) =&gt; {
+  results.<span class="fn">forEach</span>(({ status, value, reason }) =&gt; {
+    <span class="kw">if</span> (status === <span class="str">"fulfilled"</span>) console.<span class="fn">log</span>(value);
+    <span class="kw">else</span> console.<span class="fn">log</span>(reason);
+  });
+});
+
+<span class="cmt">// First to resolve</span>
+Promise.<span class="fn">race</span>([p1, p2]).<span class="fn">then</span>((winner) =&gt; console.<span class="fn">log</span>(winner));
+
+<span class="cmt">// First to succeed (ignores rejections)</span>
+Promise.<span class="fn">any</span>([p1, p2]).<span class="fn">then</span>((first) =&gt; console.<span class="fn">log</span>(first));
+
+<span class="cmt">// Already resolved/rejected</span>
+Promise.<span class="fn">resolve</span>(<span class="str">"value"</span>);
+Promise.<span class="fn">reject</span>(<span class="kw">new</span> <span class="fn">Error</span>(<span class="str">"oops"</span>));</code></pre>
+
+<h2>async / await</h2>
+<pre><code><span class="cmt">// async functions always return a Promise</span>
+<span class="kw">async function</span> <span class="fn">loadUser</span>(id) {
+  <span class="kw">const</span> response = <span class="kw">await</span> <span class="fn">fetch</span>(<span class="str">`/api/users/${id}`</span>);
+
+  <span class="kw">if</span> (!response.ok) {
+    <span class="kw">throw</span> <span class="kw">new</span> <span class="fn">Error</span>(<span class="str">`HTTP ${response.status}`</span>);
+  }
+
+  <span class="kw">const</span> user = <span class="kw">await</span> response.<span class="fn">json</span>();
+  <span class="kw">return</span> user;
+}
+
+<span class="cmt">// Call it</span>
+<span class="fn">loadUser</span>(<span class="num">42</span>)
+  .<span class="fn">then</span>((user) =&gt; console.<span class="fn">log</span>(user))
+  .<span class="fn">catch</span>((err) =&gt; console.<span class="fn">error</span>(err));
+
+<span class="cmt">// Or with async/await at the call site</span>
+<span class="kw">async function</span> <span class="fn">main</span>() {
+  <span class="kw">try</span> {
+    <span class="kw">const</span> user = <span class="kw">await</span> <span class="fn">loadUser</span>(<span class="num">42</span>);
+    console.<span class="fn">log</span>(user);
+  } <span class="kw">catch</span> (err) {
+    console.<span class="fn">error</span>(err);
+  }
+}</code></pre>
+
+<h2>Parallel vs Sequential</h2>
+<pre><code><span class="cmt">// Sequential — one after another (slower)</span>
+<span class="kw">const</span> a = <span class="kw">await</span> <span class="fn">fetchA</span>();
+<span class="kw">const</span> b = <span class="kw">await</span> <span class="fn">fetchB</span>();
+
+<span class="cmt">// Parallel — run at same time (faster)</span>
+<span class="kw">const</span> [a, b] = <span class="kw">await</span> Promise.<span class="fn">all</span>([<span class="fn">fetchA</span>(), <span class="fn">fetchB</span>()]);
+
+<span class="cmt">// Parallel with error handling per item</span>
+<span class="kw">const</span> results = <span class="kw">await</span> Promise.<span class="fn">allSettled</span>([<span class="fn">fetchA</span>(), <span class="fn">fetchB</span>()]);</code></pre>
+
+<h2>fetch API</h2>
+<pre><code><span class="cmt">// GET request</span>
+<span class="kw">const</span> res = <span class="kw">await</span> <span class="fn">fetch</span>(<span class="str">"https://api.example.com/data"</span>);
+<span class="kw">const</span> json = <span class="kw">await</span> res.<span class="fn">json</span>();
+<span class="cmt">// res.text(), res.blob(), res.arrayBuffer(), res.formData()</span>
+
+<span class="cmt">// POST request</span>
+<span class="kw">const</span> res = <span class="kw">await</span> <span class="fn">fetch</span>(<span class="str">"/api/users"</span>, {
+  method: <span class="str">"POST"</span>,
+  headers: { <span class="str">"Content-Type"</span>: <span class="str">"application/json"</span> },
+  body: JSON.<span class="fn">stringify</span>({ name: <span class="str">"Alice"</span> }),
+});
+
+<span class="cmt">// Check for errors (fetch doesn't throw on HTTP errors!)</span>
+<span class="kw">if</span> (!res.ok) <span class="kw">throw</span> <span class="kw">new</span> <span class="fn">Error</span>(<span class="str">`HTTP ${res.status}: ${res.statusText}`</span>);
+
+<span class="cmt">// Abort a fetch</span>
+<span class="kw">const</span> controller = <span class="kw">new</span> <span class="fn">AbortController</span>();
+<span class="fn">fetch</span>(<span class="str">"/api"</span>, { signal: controller.signal });
+controller.<span class="fn">abort</span>();   <span class="cmt">// cancel request</span>
+
+<span class="cmt">// Timeout pattern</span>
+<span class="kw">const</span> timeout = (ms) =&gt; <span class="kw">new</span> <span class="fn">Promise</span>((_, reject) =&gt;
+  <span class="fn">setTimeout</span>(() =&gt; reject(<span class="kw">new</span> <span class="fn">Error</span>(<span class="str">"Timeout"</span>)), ms)
+);
+<span class="kw">const</span> data = <span class="kw">await</span> Promise.<span class="fn">race</span>([<span class="fn">fetch</span>(<span class="str">"/api"</span>), <span class="fn">timeout</span>(<span class="num">5000</span>)]);</code></pre>
+
+<h2>Async Iteration</h2>
+<pre><code><span class="cmt">// for await...of</span>
+<span class="kw">async function</span> <span class="fn">processStream</span>() {
+  <span class="kw">const</span> response = <span class="kw">await</span> <span class="fn">fetch</span>(<span class="str">"/api/stream"</span>);
+  <span class="kw">for await</span> (<span class="kw">const</span> chunk <span class="kw">of</span> response.body) {
+    console.<span class="fn">log</span>(chunk);
+  }
+}
+
+<span class="cmt">// Async generator</span>
+<span class="kw">async function</span>* <span class="fn">paginate</span>(url) {
+  <span class="kw">while</span> (url) {
+    <span class="kw">const</span> res = <span class="kw">await</span> <span class="fn">fetch</span>(url);
+    <span class="kw">const</span> data = <span class="kw">await</span> res.<span class="fn">json</span>();
+    <span class="kw">yield</span> data.items;
+    url = data.nextPage;
+  }
+}</code></pre>
+</body></html>

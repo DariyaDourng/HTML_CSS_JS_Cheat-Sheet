@@ -1,0 +1,132 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>JS 06 – Objects</title><link rel="stylesheet" href="shared.css"/></head>
+<body>
+<a href="index.html" class="back">← Back to Library</a>
+<div class="page-tag js">JS · 06</div>
+<h1>Objects</h1>
+<p class="page-desc">Object literals, methods, this, prototypes, Object built-ins, Map, Set, and destructuring.</p>
+
+<h2>Object Literals</h2>
+<pre><code><span class="kw">const</span> person = {
+  name: <span class="str">"Alice"</span>,
+  age: <span class="num">30</span>,
+  <span class="str">"full name"</span>: <span class="str">"Alice Smith"</span>,   <span class="cmt">// quoted key with space</span>
+
+  <span class="cmt">// Shorthand property (ES6)</span>
+  <span class="cmt">// if variable name = key name:</span>
+  <span class="cmt">// const age = 30; const obj = { age }; → { age: 30 }</span>
+
+  <span class="cmt">// Method shorthand</span>
+  <span class="fn">greet</span>() {
+    <span class="kw">return</span> <span class="str">`Hi, I'm ${<span class="kw">this</span>.name}`</span>;
+  },
+
+  <span class="cmt">// Computed property name</span>
+  [<span class="str">"prop_"</span> + <span class="str">"dynamic"</span>]: <span class="num">42</span>,
+
+  <span class="cmt">// Getter</span>
+  <span class="kw">get</span> <span class="fn">upperName</span>() {
+    <span class="kw">return</span> <span class="kw">this</span>.name.<span class="fn">toUpperCase</span>();
+  },
+
+  <span class="cmt">// Setter</span>
+  <span class="kw">set</span> <span class="fn">fullAge</span>(val) {
+    <span class="kw">this</span>.age = val;
+  },
+};</code></pre>
+
+<h2>Accessing Properties</h2>
+<pre><code>person.name;         <span class="cmt">// dot notation</span>
+person[<span class="str">"name"</span>];      <span class="cmt">// bracket notation (needed for dynamic keys)</span>
+person[<span class="str">"full name"</span>]; <span class="cmt">// bracket needed for keys with spaces</span>
+
+<span class="kw">const</span> key = <span class="str">"age"</span>;
+person[key];          <span class="cmt">// dynamic access</span>
+
+<span class="cmt">// Optional chaining</span>
+person?.address?.city;  <span class="cmt">// undefined (no error if address missing)</span></code></pre>
+
+<h2>Object Built-in Methods</h2>
+<pre><code><span class="kw">const</span> obj = { a: <span class="num">1</span>, b: <span class="num">2</span>, c: <span class="num">3</span> };
+
+Object.<span class="fn">keys</span>(obj);     <span class="cmt">// ["a", "b", "c"]</span>
+Object.<span class="fn">values</span>(obj);   <span class="cmt">// [1, 2, 3]</span>
+Object.<span class="fn">entries</span>(obj);  <span class="cmt">// [["a",1], ["b",2], ["c",3]]</span>
+
+<span class="cmt">// Create object from entries</span>
+Object.<span class="fn">fromEntries</span>([[<span class="str">"a"</span>, <span class="num">1</span>], [<span class="str">"b"</span>, <span class="num">2</span>]]); <span class="cmt">// { a:1, b:2 }</span>
+Object.<span class="fn">fromEntries</span>(<span class="kw">new</span> <span class="fn">Map</span>([[<span class="str">"a"</span>, <span class="num">1</span>]]));  <span class="cmt">// { a:1 }</span>
+
+<span class="cmt">// Merge / copy objects</span>
+Object.<span class="fn">assign</span>({}, obj, { d: <span class="num">4</span> });  <span class="cmt">// { a:1, b:2, c:3, d:4 }</span>
+<span class="kw">const</span> copy = { ...obj };            <span class="cmt">// spread (shallow clone)</span>
+<span class="kw">const</span> merged = { ...obj, d: <span class="num">4</span>, a: <span class="num">99</span> }; <span class="cmt">// { a:99, b:2, c:3, d:4 }</span>
+
+<span class="cmt">// Check property exists</span>
+<span class="str">"a"</span> <span class="kw">in</span> obj;                    <span class="cmt">// true (incl. inherited)</span>
+obj.<span class="fn">hasOwnProperty</span>(<span class="str">"a"</span>);       <span class="cmt">// true (own only)</span>
+Object.<span class="fn">hasOwn</span>(obj, <span class="str">"a"</span>);       <span class="cmt">// true (modern, preferred)</span>
+
+<span class="cmt">// Freeze / seal</span>
+Object.<span class="fn">freeze</span>(obj);     <span class="cmt">// no changes allowed (shallow)</span>
+Object.<span class="fn">seal</span>(obj);       <span class="cmt">// can update but not add/delete</span>
+Object.<span class="fn">isFrozen</span>(obj);   <span class="cmt">// true</span>
+
+<span class="cmt">// Prototype</span>
+Object.<span class="fn">getPrototypeOf</span>(obj);
+Object.<span class="fn">create</span>(<span class="kw">null</span>);    <span class="cmt">// object with no prototype</span>
+
+<span class="cmt">// Property descriptors</span>
+Object.<span class="fn">defineProperty</span>(obj, <span class="str">"id"</span>, {
+  value: <span class="num">42</span>,
+  writable: <span class="kw">false</span>,
+  enumerable: <span class="kw">true</span>,
+  configurable: <span class="kw">false</span>,
+});
+Object.<span class="fn">getOwnPropertyDescriptor</span>(obj, <span class="str">"id"</span>);</code></pre>
+
+<h2>Destructuring Objects</h2>
+<pre><code><span class="kw">const</span> { name, age, city = <span class="str">"Unknown"</span> } = person;
+
+<span class="cmt">// Rename while destructuring</span>
+<span class="kw">const</span> { name: fullName, age: years } = person;
+
+<span class="cmt">// Nested destructuring</span>
+<span class="kw">const</span> { address: { city, zip } } = person;
+
+<span class="cmt">// Rest</span>
+<span class="kw">const</span> { a, ...others } = { a: <span class="num">1</span>, b: <span class="num">2</span>, c: <span class="num">3</span> };
+<span class="cmt">// a=1, others={b:2, c:3}</span>
+
+<span class="cmt">// In function params</span>
+<span class="kw">function</span> <span class="fn">render</span>({ title, body, author = <span class="str">"Anon"</span> }) {
+  <span class="kw">return</span> <span class="str">`${title} by ${author}: ${body}`</span>;
+}</code></pre>
+
+<h2>Map & Set</h2>
+<pre><code><span class="cmt">// Map — key-value pairs, any type as key</span>
+<span class="kw">const</span> map = <span class="kw">new</span> <span class="fn">Map</span>();
+map.<span class="fn">set</span>(<span class="str">"name"</span>, <span class="str">"Alice"</span>);
+map.<span class="fn">set</span>(<span class="num">42</span>, <span class="str">"number key"</span>);
+map.<span class="fn">set</span>({}, <span class="str">"object key"</span>);
+map.<span class="fn">get</span>(<span class="str">"name"</span>);    <span class="cmt">// "Alice"</span>
+map.<span class="fn">has</span>(<span class="str">"name"</span>);    <span class="cmt">// true</span>
+map.<span class="fn">delete</span>(<span class="str">"name"</span>);<span class="cmt">// removes</span>
+map.size;            <span class="cmt">// number of entries</span>
+map.<span class="fn">clear</span>();         <span class="cmt">// removes all</span>
+<span class="kw">for</span> (<span class="kw">const</span> [k, v] <span class="kw">of</span> map) console.<span class="fn">log</span>(k, v);
+
+<span class="cmt">// Set — unique values</span>
+<span class="kw">const</span> set = <span class="kw">new</span> <span class="fn">Set</span>([<span class="num">1</span>, <span class="num">2</span>, <span class="num">2</span>, <span class="num">3</span>]); <span class="cmt">// {1, 2, 3}</span>
+set.<span class="fn">add</span>(<span class="num">4</span>);
+set.<span class="fn">has</span>(<span class="num">2</span>);    <span class="cmt">// true</span>
+set.<span class="fn">delete</span>(<span class="num">1</span>);
+set.size;      <span class="cmt">// 3</span>
+
+<span class="cmt">// Remove duplicates from array</span>
+<span class="kw">const</span> unique = [...<span class="kw">new</span> <span class="fn">Set</span>([<span class="num">1</span>, <span class="num">2</span>, <span class="num">2</span>, <span class="num">3</span>])]; <span class="cmt">// [1,2,3]</span>
+
+<span class="cmt">// WeakMap & WeakSet — weakly-held references</span>
+<span class="kw">const</span> wm = <span class="kw">new</span> <span class="fn">WeakMap</span>(); <span class="cmt">// only object keys, not iterable</span>
+<span class="kw">const</span> ws = <span class="kw">new</span> <span class="fn">WeakSet</span>(); <span class="cmt">// only objects, not iterable</span></code></pre>
+</body></html>

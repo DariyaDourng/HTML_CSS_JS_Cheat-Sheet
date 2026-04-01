@@ -1,0 +1,131 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>JS 07 – DOM Manipulation</title><link rel="stylesheet" href="shared.css"/></head>
+<body>
+<a href="index.html" class="back">← Back to Library</a>
+<div class="page-tag js">JS · 07</div>
+<h1>DOM Manipulation</h1>
+<p class="page-desc">Select, create, modify, and remove DOM elements using JavaScript.</p>
+
+<h2>Selecting Elements</h2>
+<pre><code><span class="cmt">// Single element (first match)</span>
+document.<span class="fn">querySelector</span>(<span class="str">".btn"</span>);       <span class="cmt">// any CSS selector</span>
+document.<span class="fn">querySelector</span>(<span class="str">"#main"</span>);
+document.<span class="fn">querySelector</span>(<span class="str">"ul > li:first-child"</span>);
+
+<span class="cmt">// All matching elements (NodeList)</span>
+document.<span class="fn">querySelectorAll</span>(<span class="str">".card"</span>);   <span class="cmt">// returns NodeList</span>
+[...document.<span class="fn">querySelectorAll</span>(<span class="str">"p"</span>)].<span class="fn">forEach</span>(p =&gt; ...);
+
+<span class="cmt">// Legacy methods</span>
+document.<span class="fn">getElementById</span>(<span class="str">"header"</span>);
+document.<span class="fn">getElementsByClassName</span>(<span class="str">"active"</span>);  <span class="cmt">// HTMLCollection (live)</span>
+document.<span class="fn">getElementsByTagName</span>(<span class="str">"div"</span>);
+
+<span class="cmt">// Traverse the DOM</span>
+el.parentElement;
+el.children;                  <span class="cmt">// HTMLCollection of child elements</span>
+el.firstElementChild;
+el.lastElementChild;
+el.nextElementSibling;
+el.previousElementSibling;
+el.closest(<span class="str">".container"</span>);     <span class="cmt">// nearest ancestor matching selector</span>
+el.<span class="fn">matches</span>(<span class="str">".active"</span>);        <span class="cmt">// true if el matches selector</span></code></pre>
+
+<h2>Reading & Writing Content</h2>
+<pre><code><span class="cmt">// Text content</span>
+el.textContent;           <span class="cmt">// all text (safe, no HTML parsing)</span>
+el.textContent = <span class="str">"Hello"</span>; <span class="cmt">// sets text (HTML escaped)</span>
+
+<span class="cmt">// HTML content (XSS risk with user input!)</span>
+el.innerHTML;
+el.innerHTML = <span class="str">"&lt;strong&gt;Bold&lt;/strong&gt;"</span>;
+el.outerHTML;             <span class="cmt">// includes the element itself</span>
+
+<span class="cmt">// Safer alternative</span>
+el.<span class="fn">insertAdjacentHTML</span>(<span class="str">"beforeend"</span>, <span class="str">"&lt;span&gt;safe-ish&lt;/span&gt;"</span>);
+<span class="cmt">// positions: "beforebegin" | "afterbegin" | "beforeend" | "afterend"</span>
+
+<span class="cmt">// Form values</span>
+input.value;
+input.value = <span class="str">"new value"</span>;
+checkbox.checked;
+select.value;</code></pre>
+
+<h2>Attributes</h2>
+<pre><code>el.<span class="fn">getAttribute</span>(<span class="str">"href"</span>);
+el.<span class="fn">setAttribute</span>(<span class="str">"href"</span>, <span class="str">"https://example.com"</span>);
+el.<span class="fn">removeAttribute</span>(<span class="str">"disabled"</span>);
+el.<span class="fn">hasAttribute</span>(<span class="str">"hidden"</span>);     <span class="cmt">// true/false</span>
+
+<span class="cmt">// data-* attributes</span>
+el.dataset.userId;            <span class="cmt">// reads data-user-id</span>
+el.dataset.theme = <span class="str">"dark"</span>;   <span class="cmt">// sets data-theme</span>
+
+<span class="cmt">// Properties vs attributes</span>
+input.value;                  <span class="cmt">// current value (property)</span>
+input.<span class="fn">getAttribute</span>(<span class="str">"value"</span>); <span class="cmt">// initial/default value (attribute)</span></code></pre>
+
+<h2>CSS Classes & Styles</h2>
+<pre><code><span class="cmt">// classList API (recommended)</span>
+el.classList.<span class="fn">add</span>(<span class="str">"active"</span>, <span class="str">"highlight"</span>);
+el.classList.<span class="fn">remove</span>(<span class="str">"active"</span>);
+el.classList.<span class="fn">toggle</span>(<span class="str">"open"</span>);
+el.classList.<span class="fn">toggle</span>(<span class="str">"open"</span>, <span class="kw">true</span>);   <span class="cmt">// force add</span>
+el.classList.<span class="fn">replace</span>(<span class="str">"old"</span>, <span class="str">"new"</span>);
+el.classList.<span class="fn">contains</span>(<span class="str">"active"</span>);     <span class="cmt">// true/false</span>
+
+<span class="cmt">// Inline styles</span>
+el.style.color = <span class="str">"red"</span>;
+el.style.backgroundColor = <span class="str">"#fff"</span>;  <span class="cmt">// camelCase!</span>
+el.style.cssText = <span class="str">"color:red; font-size:16px"</span>;
+el.style.<span class="fn">removeProperty</span>(<span class="str">"color"</span>);
+
+<span class="cmt">// Get computed styles</span>
+<span class="fn">getComputedStyle</span>(el).color;
+<span class="fn">getComputedStyle</span>(el).<span class="fn">getPropertyValue</span>(<span class="str">"--my-var"</span>); <span class="cmt">// CSS var</span>
+
+<span class="cmt">// Set CSS variable</span>
+el.style.<span class="fn">setProperty</span>(<span class="str">"--color"</span>, <span class="str">"blue"</span>);
+document.documentElement.style.<span class="fn">setProperty</span>(<span class="str">"--primary"</span>, <span class="str">"red"</span>);</code></pre>
+
+<h2>Creating & Inserting Elements</h2>
+<pre><code><span class="cmt">// Create</span>
+<span class="kw">const</span> div = document.<span class="fn">createElement</span>(<span class="str">"div"</span>);
+div.className = <span class="str">"card"</span>;
+div.textContent = <span class="str">"Hello"</span>;
+
+<span class="cmt">// Append (move if already in DOM)</span>
+parent.<span class="fn">appendChild</span>(div);
+parent.<span class="fn">append</span>(div, <span class="str">"text"</span>, el2);  <span class="cmt">// accepts multiple + strings</span>
+parent.<span class="fn">prepend</span>(div);               <span class="cmt">// insert at beginning</span>
+
+<span class="cmt">// Insert relative to element</span>
+el.<span class="fn">before</span>(newEl);   <span class="cmt">// before el</span>
+el.<span class="fn">after</span>(newEl);    <span class="cmt">// after el</span>
+
+<span class="cmt">// insertBefore(new, reference)</span>
+parent.<span class="fn">insertBefore</span>(newEl, referenceEl);
+
+<span class="cmt">// Clone</span>
+<span class="kw">const</span> clone = el.<span class="fn">cloneNode</span>(<span class="kw">true</span>);  <span class="cmt">// true = deep clone (with children)</span>
+
+<span class="cmt">// Template element</span>
+<span class="kw">const</span> tpl = document.<span class="fn">getElementById</span>(<span class="str">"my-template"</span>);
+<span class="kw">const</span> content = tpl.content.<span class="fn">cloneNode</span>(<span class="kw">true</span>);
+document.body.<span class="fn">appendChild</span>(content);</code></pre>
+
+<h2>Removing Elements</h2>
+<pre><code>el.<span class="fn">remove</span>();                    <span class="cmt">// remove from DOM</span>
+parent.<span class="fn">removeChild</span>(child);      <span class="cmt">// legacy</span>
+el.replaceWith(newEl);           <span class="cmt">// replace with another</span>
+el.<span class="fn">replaceChildren</span>();           <span class="cmt">// remove all children</span>
+el.innerHTML = <span class="str">""</span>;             <span class="cmt">// clear children (faster)</span></code></pre>
+
+<h2>Dimensions & Position</h2>
+<pre><code>el.<span class="fn">getBoundingClientRect</span>();   <span class="cmt">// {top, left, width, height, right, bottom}</span>
+el.offsetWidth; el.offsetHeight;
+el.clientWidth; el.clientHeight; <span class="cmt">// without scrollbar</span>
+el.scrollWidth; el.scrollHeight;
+el.scrollTop;  el.scrollLeft;
+el.<span class="fn">scrollIntoView</span>({ behavior: <span class="str">"smooth"</span>, block: <span class="str">"start"</span> });</code></pre>
+</body></html>

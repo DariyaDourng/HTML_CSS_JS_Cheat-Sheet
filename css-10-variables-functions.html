@@ -1,0 +1,147 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>CSS 10 – Variables & Functions</title><link rel="stylesheet" href="shared.css"/></head>
+<body>
+<a href="index.html" class="back">← Back to Library</a>
+<div class="page-tag css">CSS · 10</div>
+<h1>CSS Variables & Functions</h1>
+<p class="page-desc">Custom properties (CSS variables), calc(), math functions, and more.</p>
+
+<h2>CSS Custom Properties (Variables)</h2>
+<pre><code><span class="cmt">/* Define variables on :root (global scope) */</span>
+<span class="sel">:root</span> {
+  <span class="prop">--color-primary</span>: <span class="str">#00ffd1</span>;
+  <span class="prop">--color-bg</span>: <span class="str">#0a0a0f</span>;
+  <span class="prop">--font-size-base</span>: <span class="unit">1rem</span>;
+  <span class="prop">--spacing-md</span>: <span class="unit">16px</span>;
+  <span class="prop">--border-radius</span>: <span class="unit">8px</span>;
+  <span class="prop">--transition</span>: <span class="num">0.2s</span> ease;
+}
+
+<span class="cmt">/* Use variables with var() */</span>
+<span class="sel">.btn</span> {
+  <span class="prop">background</span>: var(--color-primary);
+  <span class="prop">padding</span>: var(--spacing-md);
+  <span class="prop">border-radius</span>: var(--border-radius);
+  <span class="prop">transition</span>: all var(--transition);
+}
+
+<span class="cmt">/* var() with fallback */</span>
+<span class="sel">.el</span> {
+  <span class="prop">color</span>: var(--color-accent, <span class="str">red</span>);   <span class="cmt">/* use red if --color-accent not defined */</span>
+  <span class="prop">font-size</span>: var(--size, var(--font-size-base, <span class="unit">1rem</span>));  <span class="cmt">/* nested fallback */</span>
+}
+
+<span class="cmt">/* Scoped variables (override per component) */</span>
+<span class="sel">.dark-card</span> {
+  <span class="prop">--color-bg</span>: <span class="str">#1a1a2e</span>;  <span class="cmt">/* overrides root for this element and children */</span>
+  <span class="prop">background</span>: var(--color-bg);
+}
+
+<span class="cmt">/* Dynamic theming with data attributes */</span>
+<span class="sel">[data-theme="light"]</span> {
+  <span class="prop">--color-bg</span>: <span class="str">#ffffff</span>;
+  <span class="prop">--color-text</span>: <span class="str">#111111</span>;
+}
+<span class="sel">[data-theme="dark"]</span> {
+  <span class="prop">--color-bg</span>: <span class="str">#0a0a0f</span>;
+  <span class="prop">--color-text</span>: <span class="str">#e8e8f0</span>;
+}
+
+<span class="cmt">/* Update variables with JavaScript */</span>
+<span class="cmt">// document.documentElement.style.setProperty('--color-primary', '#ff6b6b');</span>
+<span class="cmt">// const val = getComputedStyle(el).getPropertyValue('--spacing-md');</span></code></pre>
+
+<h2>calc()</h2>
+<pre><code><span class="sel">.el</span> {
+  <span class="prop">width</span>: calc(<span class="unit">100%</span> - <span class="unit">32px</span>);
+  <span class="prop">height</span>: calc(<span class="unit">100vh</span> - <span class="unit">60px</span>);
+  <span class="prop">margin</span>: calc(var(--spacing-md) * <span class="num">2</span>);
+  <span class="prop">font-size</span>: calc(<span class="unit">1rem</span> + <span class="unit">0.5vw</span>);
+  <span class="prop">padding</span>: calc(<span class="unit">8px</span> + <span class="unit">1vw</span>);
+  <span class="cmt">/* Supports: + - * / */</span>
+  <span class="cmt">/* Mixed units are allowed */</span>
+}</code></pre>
+
+<h2>Math Functions</h2>
+<pre><code><span class="sel">.el</span> {
+  <span class="cmt">/* clamp(min, preferred, max) */</span>
+  <span class="prop">font-size</span>: clamp(<span class="unit">1rem</span>, <span class="unit">2.5vw</span>, <span class="unit">2rem</span>);
+  <span class="prop">width</span>: clamp(<span class="unit">280px</span>, <span class="unit">50%</span>, <span class="unit">800px</span>);
+
+  <span class="cmt">/* min() — smallest value wins */</span>
+  <span class="prop">width</span>: min(<span class="unit">90%</span>, <span class="unit">1200px</span>);
+  <span class="prop">padding</span>: min(<span class="unit">5vw</span>, <span class="unit">40px</span>);
+
+  <span class="cmt">/* max() — largest value wins */</span>
+  <span class="prop">font-size</span>: max(<span class="unit">14px</span>, <span class="unit">1vw</span>);
+  <span class="prop">padding</span>: max(<span class="unit">8px</span>, <span class="unit">2vw</span>);
+
+  <span class="cmt">/* round() — modern */</span>
+  <span class="prop">width</span>: round(<span class="unit">33.3333%</span>, <span class="unit">1px</span>);
+
+  <span class="cmt">/* abs(), sign() — modern */</span>
+  <span class="prop">margin</span>: abs(var(--offset));
+}</code></pre>
+
+<h2>counter() and counters()</h2>
+<pre><code><span class="sel">ol.custom</span> {
+  <span class="prop">counter-reset</span>: my-counter;
+  <span class="prop">list-style</span>: none;
+}
+<span class="sel">ol.custom li</span> {
+  <span class="prop">counter-increment</span>: my-counter;
+}
+<span class="sel">ol.custom li::before</span> {
+  <span class="prop">content</span>: counter(my-counter) <span class="str">". "</span>;
+  <span class="prop">color</span>: var(--color-primary);
+  <span class="prop">font-weight</span>: bold;
+}
+
+<span class="cmt">/* Nested counters */</span>
+<span class="sel">ol</span> {
+  <span class="prop">counter-reset</span>: section;
+}
+<span class="sel">li::before</span> {
+  <span class="prop">content</span>: counters(section, <span class="str">"."</span>) <span class="str">". "</span>;
+  <span class="prop">counter-increment</span>: section;
+}</code></pre>
+
+<h2>env() — Environment Variables</h2>
+<pre><code><span class="cmt">/* Safe area insets for notched phones */</span>
+<span class="sel">.fixed-nav</span> {
+  <span class="prop">padding-top</span>: env(safe-area-inset-top);
+  <span class="prop">padding-bottom</span>: env(safe-area-inset-bottom);
+  <span class="prop">padding-left</span>: env(safe-area-inset-left);
+  <span class="prop">padding-right</span>: env(safe-area-inset-right);
+}
+
+<span class="cmt">/* With fallback */</span>
+<span class="sel">.el</span> { <span class="prop">padding</span>: env(safe-area-inset-top, <span class="unit">20px</span>); }</code></pre>
+
+<h2>attr() — Read HTML Attributes</h2>
+<pre><code><span class="cmt">/* Use element's attribute value in CSS */</span>
+<span class="sel">a::after</span> {
+  <span class="prop">content</span>: <span class="str">" ("</span> attr(href) <span class="str">")"</span>;  <span class="cmt">/* shows URL after link text */</span>
+}
+<span class="sel">[data-tooltip]::after</span> {
+  <span class="prop">content</span>: attr(data-tooltip);
+}</code></pre>
+
+<h2>@layer — Cascade Layers</h2>
+<pre><code><span class="cmt">/* Declare layer order (lowest to highest priority) */</span>
+<span class="sel">@layer</span> base, components, utilities;
+
+<span class="sel">@layer</span> base {
+  <span class="sel">* </span>{ <span class="prop">box-sizing</span>: border-box; }
+  <span class="sel">body</span> { <span class="prop">margin</span>: <span class="num">0</span>; }
+}
+
+<span class="sel">@layer</span> components {
+  <span class="sel">.btn</span> { <span class="prop">padding</span>: <span class="unit">8px</span> <span class="unit">16px</span>; }
+}
+
+<span class="sel">@layer</span> utilities {
+  <span class="sel">.mt-4</span> { <span class="prop">margin-top</span>: <span class="unit">1rem</span>; }
+}
+<span class="cmt">/* utilities beats components beats base, regardless of specificity */</span></code></pre>
+</body></html>

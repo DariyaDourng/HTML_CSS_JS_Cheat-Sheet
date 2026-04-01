@@ -1,0 +1,127 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>HTML 04 – Lists & Tables</title><link rel="stylesheet" href="shared.css"/></head>
+<body>
+<a href="index.html" class="back">← Back to Library</a>
+<div class="page-tag html">HTML · 04</div>
+<h1>Lists & Tables</h1>
+<p class="page-desc">Ordered, unordered, and definition lists; full table syntax with accessibility.</p>
+
+<h2>Unordered List</h2>
+<pre><code><span class="tag">&lt;ul&gt;</span>
+  <span class="tag">&lt;li&gt;</span>Apples<span class="tag">&lt;/li&gt;</span>
+  <span class="tag">&lt;li&gt;</span>Bananas<span class="tag">&lt;/li&gt;</span>
+  <span class="tag">&lt;li&gt;</span>Cherries<span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;/ul&gt;</span></code></pre>
+
+<h2>Ordered List</h2>
+<pre><code><span class="cmt">&lt;!-- Default: 1, 2, 3... --&gt;</span>
+<span class="tag">&lt;ol&gt;</span>
+  <span class="tag">&lt;li&gt;</span>First step<span class="tag">&lt;/li&gt;</span>
+  <span class="tag">&lt;li&gt;</span>Second step<span class="tag">&lt;/li&gt;</span>
+  <span class="tag">&lt;li&gt;</span>Third step<span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;/ol&gt;</span>
+
+<span class="cmt">&lt;!-- start: begin from a specific number --&gt;</span>
+<span class="tag">&lt;ol</span> <span class="attr">start</span>=<span class="val">"5"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;li&gt;</span>Item five<span class="tag">&lt;/li&gt;</span>
+  <span class="tag">&lt;li&gt;</span>Item six<span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;/ol&gt;</span>
+
+<span class="cmt">&lt;!-- reversed: count down --&gt;</span>
+<span class="tag">&lt;ol</span> <span class="attr">reversed</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;li&gt;</span>Gold<span class="tag">&lt;/li&gt;</span>
+  <span class="tag">&lt;li&gt;</span>Silver<span class="tag">&lt;/li&gt;</span>
+  <span class="tag">&lt;li&gt;</span>Bronze<span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;/ol&gt;</span>
+
+<span class="cmt">&lt;!-- type attribute --&gt;</span>
+<span class="tag">&lt;ol</span> <span class="attr">type</span>=<span class="val">"A"</span><span class="tag">&gt;</span><span class="tag">&lt;li&gt;</span>A<span class="tag">&lt;/li&gt;</span><span class="tag">&lt;li&gt;</span>B<span class="tag">&lt;/li&gt;</span><span class="tag">&lt;/ol&gt;</span>  <span class="cmt">&lt;!-- A, B, C --&gt;</span>
+<span class="tag">&lt;ol</span> <span class="attr">type</span>=<span class="val">"a"</span><span class="tag">&gt;</span><span class="tag">&lt;li&gt;</span>a<span class="tag">&lt;/li&gt;</span><span class="tag">&lt;li&gt;</span>b<span class="tag">&lt;/li&gt;</span><span class="tag">&lt;/ol&gt;</span>  <span class="cmt">&lt;!-- a, b, c --&gt;</span>
+<span class="tag">&lt;ol</span> <span class="attr">type</span>=<span class="val">"I"</span><span class="tag">&gt;</span><span class="tag">&lt;li&gt;</span>I<span class="tag">&lt;/li&gt;</span><span class="tag">&lt;li&gt;</span>II<span class="tag">&lt;/li&gt;</span><span class="tag">&lt;/ol&gt;</span> <span class="cmt">&lt;!-- Roman numerals --&gt;</span></code></pre>
+
+<h2>Nested Lists</h2>
+<pre><code><span class="tag">&lt;ul&gt;</span>
+  <span class="tag">&lt;li&gt;</span>Fruits
+    <span class="tag">&lt;ul&gt;</span>
+      <span class="tag">&lt;li&gt;</span>Citrus
+        <span class="tag">&lt;ul&gt;</span>
+          <span class="tag">&lt;li&gt;</span>Lemon<span class="tag">&lt;/li&gt;</span>
+          <span class="tag">&lt;li&gt;</span>Orange<span class="tag">&lt;/li&gt;</span>
+        <span class="tag">&lt;/ul&gt;</span>
+      <span class="tag">&lt;/li&gt;</span>
+      <span class="tag">&lt;li&gt;</span>Berries<span class="tag">&lt;/li&gt;</span>
+    <span class="tag">&lt;/ul&gt;</span>
+  <span class="tag">&lt;/li&gt;</span>
+  <span class="tag">&lt;li&gt;</span>Vegetables<span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;/ul&gt;</span></code></pre>
+
+<h2>Definition List</h2>
+<pre><code><span class="tag">&lt;dl&gt;</span>
+  <span class="tag">&lt;dt&gt;</span>HTML<span class="tag">&lt;/dt&gt;</span>
+  <span class="tag">&lt;dd&gt;</span>HyperText Markup Language — for structure<span class="tag">&lt;/dd&gt;</span>
+
+  <span class="tag">&lt;dt&gt;</span>CSS<span class="tag">&lt;/dt&gt;</span>
+  <span class="tag">&lt;dd&gt;</span>Cascading Style Sheets — for presentation<span class="tag">&lt;/dd&gt;</span>
+
+  <span class="tag">&lt;dt&gt;</span>JS<span class="tag">&lt;/dt&gt;</span>
+  <span class="tag">&lt;dd&gt;</span>JavaScript — for behaviour<span class="tag">&lt;/dd&gt;</span>
+<span class="tag">&lt;/dl&gt;</span></code></pre>
+
+<h2>Full Table</h2>
+<pre><code><span class="tag">&lt;table&gt;</span>
+  <span class="cmt">&lt;!-- caption: accessible table title --&gt;</span>
+  <span class="tag">&lt;caption&gt;</span>Monthly Sales Data<span class="tag">&lt;/caption&gt;</span>
+
+  <span class="cmt">&lt;!-- Column grouping for styling --&gt;</span>
+  <span class="tag">&lt;colgroup&gt;</span>
+    <span class="tag">&lt;col</span> <span class="attr">span</span>=<span class="val">"1"</span> <span class="attr">style</span>=<span class="val">"background:#111"</span><span class="tag">/&gt;</span>
+    <span class="tag">&lt;col</span> <span class="attr">span</span>=<span class="val">"2"</span><span class="tag">/&gt;</span>
+  <span class="tag">&lt;/colgroup&gt;</span>
+
+  <span class="cmt">&lt;!-- Table head --&gt;</span>
+  <span class="tag">&lt;thead&gt;</span>
+    <span class="tag">&lt;tr&gt;</span>
+      <span class="tag">&lt;th</span> <span class="attr">scope</span>=<span class="val">"col"</span><span class="tag">&gt;</span>Month<span class="tag">&lt;/th&gt;</span>
+      <span class="tag">&lt;th</span> <span class="attr">scope</span>=<span class="val">"col"</span><span class="tag">&gt;</span>Sales<span class="tag">&lt;/th&gt;</span>
+      <span class="tag">&lt;th</span> <span class="attr">scope</span>=<span class="val">"col"</span><span class="tag">&gt;</span>Revenue<span class="tag">&lt;/th&gt;</span>
+    <span class="tag">&lt;/tr&gt;</span>
+  <span class="tag">&lt;/thead&gt;</span>
+
+  <span class="cmt">&lt;!-- Table body --&gt;</span>
+  <span class="tag">&lt;tbody&gt;</span>
+    <span class="tag">&lt;tr&gt;</span>
+      <span class="tag">&lt;th</span> <span class="attr">scope</span>=<span class="val">"row"</span><span class="tag">&gt;</span>January<span class="tag">&lt;/th&gt;</span>
+      <span class="tag">&lt;td&gt;</span>120<span class="tag">&lt;/td&gt;</span>
+      <span class="tag">&lt;td&gt;</span>$6,000<span class="tag">&lt;/td&gt;</span>
+    <span class="tag">&lt;/tr&gt;</span>
+    <span class="tag">&lt;tr&gt;</span>
+      <span class="tag">&lt;th</span> <span class="attr">scope</span>=<span class="val">"row"</span><span class="tag">&gt;</span>February<span class="tag">&lt;/th&gt;</span>
+      <span class="tag">&lt;td&gt;</span>98<span class="tag">&lt;/td&gt;</span>
+      <span class="tag">&lt;td&gt;</span>$4,900<span class="tag">&lt;/td&gt;</span>
+    <span class="tag">&lt;/tr&gt;</span>
+  <span class="tag">&lt;/tbody&gt;</span>
+
+  <span class="cmt">&lt;!-- Table footer --&gt;</span>
+  <span class="tag">&lt;tfoot&gt;</span>
+    <span class="tag">&lt;tr&gt;</span>
+      <span class="tag">&lt;th&gt;</span>Total<span class="tag">&lt;/th&gt;</span>
+      <span class="tag">&lt;td&gt;</span>218<span class="tag">&lt;/td&gt;</span>
+      <span class="tag">&lt;td&gt;</span>$10,900<span class="tag">&lt;/td&gt;</span>
+    <span class="tag">&lt;/tr&gt;</span>
+  <span class="tag">&lt;/tfoot&gt;</span>
+<span class="tag">&lt;/table&gt;</span></code></pre>
+
+<h2>colspan & rowspan</h2>
+<pre><code><span class="tag">&lt;table&gt;</span>
+  <span class="tag">&lt;tr&gt;</span>
+    <span class="tag">&lt;td</span> <span class="attr">colspan</span>=<span class="val">"2"</span><span class="tag">&gt;</span>Spans 2 columns<span class="tag">&lt;/td&gt;</span>
+  <span class="tag">&lt;/tr&gt;</span>
+  <span class="tag">&lt;tr&gt;</span>
+    <span class="tag">&lt;td</span> <span class="attr">rowspan</span>=<span class="val">"2"</span><span class="tag">&gt;</span>Spans 2 rows<span class="tag">&lt;/td&gt;</span>
+    <span class="tag">&lt;td&gt;</span>Cell A<span class="tag">&lt;/td&gt;</span>
+  <span class="tag">&lt;/tr&gt;</span>
+  <span class="tag">&lt;tr&gt;</span>
+    <span class="tag">&lt;td&gt;</span>Cell B<span class="tag">&lt;/td&gt;</span>
+  <span class="tag">&lt;/tr&gt;</span>
+<span class="tag">&lt;/table&gt;</span></code></pre>
+</body></html>

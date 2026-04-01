@@ -1,0 +1,96 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>HTML 06 – Semantic Elements</title><link rel="stylesheet" href="shared.css"/></head>
+<body>
+<a href="index.html" class="back">← Back to Library</a>
+<div class="page-tag html">HTML · 06</div>
+<h1>Semantic Elements</h1>
+<p class="page-desc">HTML5 semantic tags that describe the meaning of content for browsers and screen readers.</p>
+
+<h2>Page Layout Structure</h2>
+<pre><code><span class="tag">&lt;body&gt;</span>
+
+  <span class="cmt">&lt;!-- Site header / banner --&gt;</span>
+  <span class="tag">&lt;header&gt;</span>
+    <span class="tag">&lt;nav&gt;</span>  <span class="cmt">&lt;!-- Primary navigation --&gt;</span>
+      <span class="tag">&lt;ul&gt;</span>
+        <span class="tag">&lt;li&gt;&lt;a</span> <span class="attr">href</span>=<span class="val">"/"</span><span class="tag">&gt;</span>Home<span class="tag">&lt;/a&gt;&lt;/li&gt;</span>
+        <span class="tag">&lt;li&gt;&lt;a</span> <span class="attr">href</span>=<span class="val">"/about"</span><span class="tag">&gt;</span>About<span class="tag">&lt;/a&gt;&lt;/li&gt;</span>
+      <span class="tag">&lt;/ul&gt;</span>
+    <span class="tag">&lt;/nav&gt;</span>
+  <span class="tag">&lt;/header&gt;</span>
+
+  <span class="cmt">&lt;!-- Main content area (one per page) --&gt;</span>
+  <span class="tag">&lt;main&gt;</span>
+
+    <span class="cmt">&lt;!-- Standalone thematic section --&gt;</span>
+    <span class="tag">&lt;section&gt;</span>
+      <span class="tag">&lt;h2&gt;</span>Featured Posts<span class="tag">&lt;/h2&gt;</span>
+
+      <span class="cmt">&lt;!-- Self-contained, independently distributable content --&gt;</span>
+      <span class="tag">&lt;article&gt;</span>
+        <span class="tag">&lt;header&gt;</span>
+          <span class="tag">&lt;h3&gt;</span>Article Title<span class="tag">&lt;/h3&gt;</span>
+          <span class="tag">&lt;time</span> <span class="attr">datetime</span>=<span class="val">"2024-11-01"</span><span class="tag">&gt;</span>November 1, 2024<span class="tag">&lt;/time&gt;</span>
+        <span class="tag">&lt;/header&gt;</span>
+        <span class="tag">&lt;p&gt;</span>Article content...<span class="tag">&lt;/p&gt;</span>
+        <span class="tag">&lt;footer&gt;</span>
+          <span class="tag">&lt;address&gt;</span>By <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"mailto:a@b.com"</span><span class="tag">&gt;</span>Author<span class="tag">&lt;/a&gt;&lt;/address&gt;</span>
+        <span class="tag">&lt;/footer&gt;</span>
+      <span class="tag">&lt;/article&gt;</span>
+
+    <span class="tag">&lt;/section&gt;</span>
+
+    <span class="cmt">&lt;!-- Tangentially related content --&gt;</span>
+    <span class="tag">&lt;aside&gt;</span>
+      <span class="tag">&lt;h3&gt;</span>Related Links<span class="tag">&lt;/h3&gt;</span>
+    <span class="tag">&lt;/aside&gt;</span>
+
+  <span class="tag">&lt;/main&gt;</span>
+
+  <span class="cmt">&lt;!-- Site footer --&gt;</span>
+  <span class="tag">&lt;footer&gt;</span>
+    <span class="tag">&lt;p&gt;</span>&amp;copy; 2024 My Company<span class="tag">&lt;/p&gt;</span>
+  <span class="tag">&lt;/footer&gt;</span>
+
+<span class="tag">&lt;/body&gt;</span></code></pre>
+
+<h2>Interactive Elements</h2>
+<pre><code><span class="cmt">&lt;!-- details + summary: accordion / disclosure widget --&gt;</span>
+<span class="tag">&lt;details&gt;</span>
+  <span class="tag">&lt;summary&gt;</span>Click to expand<span class="tag">&lt;/summary&gt;</span>
+  <span class="tag">&lt;p&gt;</span>Hidden content revealed on click.<span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;/details&gt;</span>
+
+<span class="cmt">&lt;!-- Open by default --&gt;</span>
+<span class="tag">&lt;details</span> <span class="attr">open</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;summary&gt;</span>Already expanded<span class="tag">&lt;/summary&gt;</span>
+  <span class="tag">&lt;p&gt;</span>This is visible by default.<span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;/details&gt;</span>
+
+<span class="cmt">&lt;!-- dialog element --&gt;</span>
+<span class="tag">&lt;dialog</span> <span class="attr">id</span>=<span class="val">"myDialog"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;p&gt;</span>This is a native dialog.<span class="tag">&lt;/p&gt;</span>
+  <span class="tag">&lt;button</span> <span class="attr">onclick</span>=<span class="val">"myDialog.close()"</span><span class="tag">&gt;</span>Close<span class="tag">&lt;/button&gt;</span>
+<span class="tag">&lt;/dialog&gt;</span>
+<span class="tag">&lt;button</span> <span class="attr">onclick</span>=<span class="val">"document.getElementById('myDialog').showModal()"</span><span class="tag">&gt;</span>Open Dialog<span class="tag">&lt;/button&gt;</span>
+
+<span class="cmt">&lt;!-- progress and meter --&gt;</span>
+<span class="tag">&lt;progress</span> <span class="attr">value</span>=<span class="val">"70"</span> <span class="attr">max</span>=<span class="val">"100"</span><span class="tag">&gt;</span>70%<span class="tag">&lt;/progress&gt;</span>
+<span class="tag">&lt;meter</span> <span class="attr">value</span>=<span class="val">"0.6"</span> <span class="attr">min</span>=<span class="val">"0"</span> <span class="attr">max</span>=<span class="val">"1"</span> <span class="attr">low</span>=<span class="val">"0.25"</span> <span class="attr">high</span>=<span class="val">"0.75"</span> <span class="attr">optimum</span>=<span class="val">"1"</span><span class="tag">&gt;</span>60%<span class="tag">&lt;/meter&gt;</span></code></pre>
+
+<h2>Other Semantic Inline Elements</h2>
+<pre><code><span class="cmt">&lt;!-- time: machine-readable date/time --&gt;</span>
+<span class="tag">&lt;time</span> <span class="attr">datetime</span>=<span class="val">"2024-12-25T00:00"</span><span class="tag">&gt;</span>Christmas Day<span class="tag">&lt;/time&gt;</span>
+
+<span class="cmt">&lt;!-- data: machine-readable value --&gt;</span>
+<span class="tag">&lt;data</span> <span class="attr">value</span>=<span class="val">"42"</span><span class="tag">&gt;</span>Forty-two<span class="tag">&lt;/data&gt;</span>
+
+<span class="cmt">&lt;!-- address: contact information --&gt;</span>
+<span class="tag">&lt;address&gt;</span>
+  123 Main Street, Phnom Penh, Cambodia<span class="tag">&lt;br&gt;</span>
+  <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="val">"tel:+85512345678"</span><span class="tag">&gt;</span>+855 12 345 678<span class="tag">&lt;/a&gt;</span>
+<span class="tag">&lt;/address&gt;</span>
+
+<span class="cmt">&lt;!-- ruby: East Asian text annotation --&gt;</span>
+<span class="tag">&lt;ruby&gt;</span>漢<span class="tag">&lt;rt&gt;</span>かん<span class="tag">&lt;/rt&gt;</span>字<span class="tag">&lt;rt&gt;</span>じ<span class="tag">&lt;/rt&gt;&lt;/ruby&gt;</span></code></pre>
+</body></html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>JS 12 – Storage & Web APIs</title><link rel="stylesheet" href="shared.css"/></head>
+<body>
+<a href="index.html" class="back">← Back to Library</a>
+<div class="page-tag js">JS · 12</div>
+<h1>Storage & Web APIs</h1>
+<p class="page-desc">localStorage, sessionStorage, JSON, URL, Clipboard, Geolocation, IntersectionObserver, and more.</p>
+
+<h2>localStorage & sessionStorage</h2>
+<pre><code><span class="cmt">// localStorage — persists after browser close</span>
+localStorage.<span class="fn">setItem</span>(<span class="str">"key"</span>, <span class="str">"value"</span>);
+localStorage.<span class="fn">getItem</span>(<span class="str">"key"</span>);        <span class="cmt">// "value" or null</span>
+localStorage.<span class="fn">removeItem</span>(<span class="str">"key"</span>);
+localStorage.<span class="fn">clear</span>();               <span class="cmt">// remove ALL items</span>
+localStorage.length;                 <span class="cmt">// number of items</span>
+localStorage.<span class="fn">key</span>(<span class="num">0</span>);               <span class="cmt">// get key at index</span>
+
+<span class="cmt">// Store objects (must stringify)</span>
+localStorage.<span class="fn">setItem</span>(<span class="str">"user"</span>, JSON.<span class="fn">stringify</span>({ name: <span class="str">"Alice"</span>, age: <span class="num">30</span> }));
+<span class="kw">const</span> user = JSON.<span class="fn">parse</span>(localStorage.<span class="fn">getItem</span>(<span class="str">"user"</span>));
+
+<span class="cmt">// sessionStorage — cleared when tab closes</span>
+sessionStorage.<span class="fn">setItem</span>(<span class="str">"token"</span>, <span class="str">"abc123"</span>);
+sessionStorage.<span class="fn">getItem</span>(<span class="str">"token"</span>);
+
+<span class="cmt">// storage event — fires in OTHER tabs</span>
+window.<span class="fn">addEventListener</span>(<span class="str">"storage"</span>, (e) =&gt; {
+  console.<span class="fn">log</span>(e.key, e.oldValue, e.newValue);
+});</code></pre>
+
+<h2>JSON</h2>
+<pre><code><span class="cmt">// Stringify — JS to JSON string</span>
+JSON.<span class="fn">stringify</span>({ a: <span class="num">1</span>, b: [<span class="num">2</span>, <span class="num">3</span>] });
+<span class="cmt">// '{"a":1,"b":[2,3]}'</span>
+
+JSON.<span class="fn">stringify</span>(obj, <span class="kw">null</span>, <span class="num">2</span>);      <span class="cmt">// pretty print (2-space indent)</span>
+JSON.<span class="fn">stringify</span>(obj, [<span class="str">"name"</span>, <span class="str">"age"</span>]); <span class="cmt">// only include these keys</span>
+JSON.<span class="fn">stringify</span>(obj, (key, val) =&gt; {
+  <span class="kw">if</span> (key === <span class="str">"password"</span>) <span class="kw">return</span> <span class="kw">undefined</span>; <span class="cmt">// exclude</span>
+  <span class="kw">return</span> val;
+});
+
+<span class="cmt">// Parse — JSON string to JS</span>
+JSON.<span class="fn">parse</span>(<span class="str">'{"a":1}'</span>);           <span class="cmt">// { a: 1 }</span>
+JSON.<span class="fn">parse</span>(str, (key, val) =&gt; {
+  <span class="kw">if</span> (key === <span class="str">"date"</span>) <span class="kw">return</span> <span class="kw">new</span> <span class="fn">Date</span>(val); <span class="cmt">// reviver</span>
+  <span class="kw">return</span> val;
+});
+
+<span class="cmt">// Deep clone (simple objects, no functions/dates)</span>
+<span class="kw">const</span> clone = JSON.<span class="fn">parse</span>(JSON.<span class="fn">stringify</span>(obj));
+
+<span class="cmt">// structuredClone — modern deep clone (handles Date, Map, etc.)</span>
+<span class="kw">const</span> clone2 = <span class="fn">structuredClone</span>(obj);</code></pre>
+
+<h2>URL & URLSearchParams</h2>
+<pre><code><span class="kw">const</span> url = <span class="kw">new</span> <span class="fn">URL</span>(<span class="str">"https://example.com/path?a=1&b=2#section"</span>);
+url.protocol;     <span class="cmt">// "https:"</span>
+url.hostname;     <span class="cmt">// "example.com"</span>
+url.pathname;     <span class="cmt">// "/path"</span>
+url.search;       <span class="cmt">// "?a=1&b=2"</span>
+url.hash;         <span class="cmt">// "#section"</span>
+url.href;         <span class="cmt">// full URL string</span>
+
+<span class="kw">const</span> params = url.searchParams;
+params.<span class="fn">get</span>(<span class="str">"a"</span>);         <span class="cmt">// "1"</span>
+params.<span class="fn">set</span>(<span class="str">"c"</span>, <span class="str">"3"</span>);   <span class="cmt">// add/update</span>
+params.<span class="fn">append</span>(<span class="str">"a"</span>, <span class="str">"5"</span>);<span class="cmt">// add another a</span>
+params.<span class="fn">delete</span>(<span class="str">"b"</span>);      <span class="cmt">// remove</span>
+params.<span class="fn">has</span>(<span class="str">"a"</span>);         <span class="cmt">// true</span>
+params.<span class="fn">toString</span>();       <span class="cmt">// "a=1&a=5&c=3"</span>
+<span class="kw">for</span> (<span class="kw">const</span> [k, v] <span class="kw">of</span> params) console.<span class="fn">log</span>(k, v);
+
+<span class="cmt">// Build URL programmatically</span>
+<span class="kw">const</span> base = <span class="kw">new</span> <span class="fn">URL</span>(<span class="str">"https://api.example.com/search"</span>);
+base.searchParams.<span class="fn">set</span>(<span class="str">"q"</span>, <span class="str">"javascript"</span>);
+base.searchParams.<span class="fn">set</span>(<span class="str">"page"</span>, <span class="str">"1"</span>);
+<span class="fn">fetch</span>(base.<span class="fn">toString</span>());</code></pre>
+
+<h2>Clipboard API</h2>
+<pre><code><span class="cmt">// Write to clipboard</span>
+<span class="kw">await</span> navigator.clipboard.<span class="fn">writeText</span>(<span class="str">"Copied text!"</span>);
+
+<span class="cmt">// Read from clipboard</span>
+<span class="kw">const</span> text = <span class="kw">await</span> navigator.clipboard.<span class="fn">readText</span>();
+
+<span class="cmt">// Requires user gesture and permission</span></code></pre>
+
+<h2>Geolocation API</h2>
+<pre><code>navigator.geolocation.<span class="fn">getCurrentPosition</span>(
+  (position) =&gt; {
+    position.coords.latitude;
+    position.coords.longitude;
+    position.coords.accuracy;    <span class="cmt">// meters</span>
+    position.coords.altitude;
+    position.coords.speed;
+    position.timestamp;
+  },
+  (error) =&gt; {
+    error.code;     <span class="cmt">// 1=DENIED, 2=UNAVAILABLE, 3=TIMEOUT</span>
+    error.message;
+  },
+  {
+    enableHighAccuracy: <span class="kw">true</span>,
+    timeout: <span class="num">10000</span>,       <span class="cmt">// ms</span>
+    maximumAge: <span class="num">0</span>,        <span class="cmt">// don't cache</span>
+  }
+);
+
+<span class="cmt">// Watch position continuously</span>
+<span class="kw">const</span> watchId = navigator.geolocation.<span class="fn">watchPosition</span>(callback, errCallback);
+navigator.geolocation.<span class="fn">clearWatch</span>(watchId);</code></pre>
+
+<h2>IntersectionObserver</h2>
+<pre><code><span class="cmt">// Detect when elements enter/leave viewport</span>
+<span class="kw">const</span> observer = <span class="kw">new</span> <span class="fn">IntersectionObserver</span>((entries) =&gt; {
+  entries.<span class="fn">forEach</span>((entry) =&gt; {
+    <span class="kw">if</span> (entry.isIntersecting) {
+      entry.target.classList.<span class="fn">add</span>(<span class="str">"visible"</span>);
+      observer.<span class="fn">unobserve</span>(entry.target);  <span class="cmt">// stop after first</span>
+    }
+    entry.intersectionRatio;    <span class="cmt">// 0.0 to 1.0</span>
+    entry.boundingClientRect;
+  });
+}, {
+  root: <span class="kw">null</span>,           <span class="cmt">// null = viewport</span>
+  rootMargin: <span class="str">"0px"</span>,
+  threshold: [<span class="num">0</span>, <span class="num">0.5</span>, <span class="num">1</span>],  <span class="cmt">// fire at 0%, 50%, 100%</span>
+});
+
+document.<span class="fn">querySelectorAll</span>(<span class="str">".animate"</span>).<span class="fn">forEach</span>((el) =&gt; observer.<span class="fn">observe</span>(el));</code></pre>
+
+<h2>ResizeObserver & MutationObserver</h2>
+<pre><code><span class="cmt">// ResizeObserver — detect size changes</span>
+<span class="kw">const</span> ro = <span class="kw">new</span> <span class="fn">ResizeObserver</span>((entries) =&gt; {
+  entries.<span class="fn">forEach</span>(({ contentRect }) =&gt; {
+    console.<span class="fn">log</span>(contentRect.width, contentRect.height);
+  });
+});
+ro.<span class="fn">observe</span>(element);
+ro.<span class="fn">unobserve</span>(element);
+ro.<span class="fn">disconnect</span>();
+
+<span class="cmt">// MutationObserver — detect DOM changes</span>
+<span class="kw">const</span> mo = <span class="kw">new</span> <span class="fn">MutationObserver</span>((mutations) =&gt; {
+  mutations.<span class="fn">forEach</span>((mutation) =&gt; {
+    mutation.type;              <span class="cmt">// "childList" | "attributes" | "characterData"</span>
+    mutation.addedNodes;
+    mutation.removedNodes;
+    mutation.attributeName;
+  });
+});
+mo.<span class="fn">observe</span>(element, {
+  childList: <span class="kw">true</span>,      <span class="cmt">// watch children added/removed</span>
+  subtree: <span class="kw">true</span>,        <span class="cmt">// include all descendants</span>
+  attributes: <span class="kw">true</span>,     <span class="cmt">// watch attribute changes</span>
+  characterData: <span class="kw">true</span>,  <span class="cmt">// watch text content</span>
+});
+mo.<span class="fn">disconnect</span>();</code></pre>
+
+<h2>History & Navigation</h2>
+<pre><code>window.location.href;        <span class="cmt">// full URL</span>
+window.location.pathname;    <span class="cmt">// "/path"</span>
+window.location.<span class="fn">assign</span>(<span class="str">"/new"</span>);
+window.location.<span class="fn">replace</span>(<span class="str">"/new"</span>); <span class="cmt">// no history entry</span>
+window.location.<span class="fn">reload</span>();
+
+history.<span class="fn">pushState</span>({ page: <span class="num">1</span> }, <span class="str">""</span>, <span class="str">"/new-path"</span>);  <span class="cmt">// add history entry</span>
+history.<span class="fn">replaceState</span>(state, <span class="str">""</span>, <span class="str">"/path"</span>);         <span class="cmt">// replace current</span>
+history.<span class="fn">back</span>();
+history.<span class="fn">forward</span>();
+history.<span class="fn">go</span>(-<span class="num">2</span>);
+
+window.<span class="fn">addEventListener</span>(<span class="str">"popstate"</span>, (e) =&gt; {
+  console.<span class="fn">log</span>(e.state);   <span class="cmt">// state from pushState</span>
+});</code></pre>
+</body></html>

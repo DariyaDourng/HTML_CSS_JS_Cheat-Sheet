@@ -1,0 +1,130 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>JS 05 – Arrays</title><link rel="stylesheet" href="shared.css"/></head>
+<body>
+<a href="index.html" class="back">← Back to Library</a>
+<div class="page-tag js">JS · 05</div>
+<h1>Arrays</h1>
+<p class="page-desc">Create, read, mutate, iterate, and transform arrays — every built-in method.</p>
+
+<h2>Creating Arrays</h2>
+<pre><code><span class="kw">const</span> arr1 = [<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>];
+<span class="kw">const</span> arr2 = <span class="kw">new</span> <span class="fn">Array</span>(<span class="num">3</span>);          <span class="cmt">// [empty × 3]</span>
+<span class="kw">const</span> arr3 = <span class="kw">new</span> <span class="fn">Array</span>(<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>);    <span class="cmt">// [1, 2, 3]</span>
+<span class="kw">const</span> arr4 = Array.<span class="fn">from</span>({ length: <span class="num">5</span> }, (_, i) =&gt; i + <span class="num">1</span>); <span class="cmt">// [1,2,3,4,5]</span>
+<span class="kw">const</span> arr5 = Array.<span class="fn">from</span>(<span class="str">"hello"</span>);    <span class="cmt">// ['h','e','l','l','o']</span>
+<span class="kw">const</span> arr6 = Array.<span class="fn">from</span>(<span class="kw">new</span> <span class="fn">Set</span>([<span class="num">1</span>, <span class="num">2</span>, <span class="num">2</span>, <span class="num">3</span>])); <span class="cmt">// [1,2,3]</span>
+<span class="kw">const</span> arr7 = Array.<span class="fn">of</span>(<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>);     <span class="cmt">// [1, 2, 3]</span>
+<span class="kw">const</span> arr8 = [<span class="num">0</span>, ...[<span class="num">1</span>, <span class="num">2</span>], <span class="num">3</span>];    <span class="cmt">// spread: [0,1,2,3]</span></code></pre>
+
+<h2>Reading & Basic Operations</h2>
+<pre><code><span class="kw">const</span> a = [<span class="str">"a"</span>, <span class="str">"b"</span>, <span class="str">"c"</span>, <span class="str">"d"</span>];
+a[<span class="num">0</span>];           <span class="cmt">// "a"</span>
+a[a.length - <span class="num">1</span>]; <span class="cmt">// "d" — last element</span>
+a.<span class="fn">at</span>(-<span class="num">1</span>);        <span class="cmt">// "d" — modern, negative index</span>
+a.length;        <span class="cmt">// 4</span>
+Array.<span class="fn">isArray</span>(a);<span class="cmt">// true</span></code></pre>
+
+<h2>Mutating Methods (change original)</h2>
+<pre><code><span class="kw">const</span> a = [<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>];
+
+<span class="cmt">// Add / remove at end</span>
+a.<span class="fn">push</span>(<span class="num">4</span>, <span class="num">5</span>);       <span class="cmt">// [1,2,3,4,5] — returns new length</span>
+a.<span class="fn">pop</span>();            <span class="cmt">// removes & returns 5 → [1,2,3,4]</span>
+
+<span class="cmt">// Add / remove at start</span>
+a.<span class="fn">unshift</span>(<span class="num">0</span>);       <span class="cmt">// [0,1,2,3,4] — returns new length</span>
+a.<span class="fn">shift</span>();          <span class="cmt">// removes & returns 0 → [1,2,3,4]</span>
+
+<span class="cmt">// splice(start, deleteCount, ...items)</span>
+a.<span class="fn">splice</span>(<span class="num">1</span>, <span class="num">0</span>, <span class="num">99</span>);  <span class="cmt">// insert at index 1: [1,99,2,3,4]</span>
+a.<span class="fn">splice</span>(<span class="num">2</span>, <span class="num">1</span>);      <span class="cmt">// delete 1 at index 2: [1,99,3,4]</span>
+a.<span class="fn">splice</span>(<span class="num">1</span>, <span class="num">2</span>, <span class="num">10</span>, <span class="num">20</span>); <span class="cmt">// replace 2 at 1: [1,10,20,4]</span>
+
+<span class="cmt">// Sort</span>
+[<span class="num">3</span>, <span class="num">1</span>, <span class="num">2</span>].<span class="fn">sort</span>();              <span class="cmt">// [1,2,3] — lexicographic default!</span>
+[<span class="num">10</span>, <span class="num">9</span>, <span class="num">2</span>].<span class="fn">sort</span>((a, b) =&gt; a - b); <span class="cmt">// ascending [2,9,10]</span>
+[<span class="num">10</span>, <span class="num">9</span>, <span class="num">2</span>].<span class="fn">sort</span>((a, b) =&gt; b - a); <span class="cmt">// descending [10,9,2]</span>
+
+<span class="cmt">// Reverse</span>
+[<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>].<span class="fn">reverse</span>();  <span class="cmt">// [3,2,1]</span>
+
+<span class="cmt">// Fill</span>
+<span class="kw">new</span> <span class="fn">Array</span>(<span class="num">5</span>).<span class="fn">fill</span>(<span class="num">0</span>);         <span class="cmt">// [0,0,0,0,0]</span>
+[<span class="num">1</span>,<span class="num">2</span>,<span class="num">3</span>,<span class="num">4</span>].<span class="fn">fill</span>(<span class="num">0</span>, <span class="num">1</span>, <span class="num">3</span>);    <span class="cmt">// [1,0,0,4]</span>
+
+<span class="cmt">// copyWithin(target, start, end)</span>
+[<span class="num">1</span>,<span class="num">2</span>,<span class="num">3</span>,<span class="num">4</span>,<span class="num">5</span>].<span class="fn">copyWithin</span>(<span class="num">0</span>, <span class="num">3</span>); <span class="cmt">// [4,5,3,4,5]</span></code></pre>
+
+<h2>Non-Mutating Methods (return new array)</h2>
+<pre><code><span class="kw">const</span> nums = [<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>, <span class="num">4</span>, <span class="num">5</span>];
+
+<span class="cmt">// map — transform each element</span>
+nums.<span class="fn">map</span>(n =&gt; n * <span class="num">2</span>);             <span class="cmt">// [2,4,6,8,10]</span>
+
+<span class="cmt">// filter — keep matching elements</span>
+nums.<span class="fn">filter</span>(n =&gt; n % <span class="num">2</span> === <span class="num">0</span>);    <span class="cmt">// [2,4]</span>
+
+<span class="cmt">// reduce(callback, initialValue)</span>
+nums.<span class="fn">reduce</span>((acc, n) =&gt; acc + n, <span class="num">0</span>); <span class="cmt">// 15</span>
+nums.<span class="fn">reduce</span>((acc, n) =&gt; ({ ...acc, [n]: n * n }), {}); <span class="cmt">// to object</span>
+
+<span class="cmt">// reduceRight — right to left</span>
+[[<span class="num">1</span>], [<span class="num">2</span>], [<span class="num">3</span>]].<span class="fn">reduceRight</span>((acc, a) =&gt; acc.<span class="fn">concat</span>(a), []); <span class="cmt">// [3,2,1]</span>
+
+<span class="cmt">// slice(start, end) — extract subarray</span>
+nums.<span class="fn">slice</span>(<span class="num">1</span>, <span class="num">3</span>);   <span class="cmt">// [2,3]</span>
+nums.<span class="fn">slice</span>(-<span class="num">2</span>);     <span class="cmt">// [4,5]</span>
+
+<span class="cmt">// concat — merge arrays</span>
+[<span class="num">1</span>, <span class="num">2</span>].<span class="fn">concat</span>([<span class="num">3</span>, <span class="num">4</span>], [<span class="num">5</span>]); <span class="cmt">// [1,2,3,4,5]</span>
+
+<span class="cmt">// flat & flatMap</span>
+[<span class="num">1</span>, [<span class="num">2</span>, [<span class="num">3</span>]]].<span class="fn">flat</span>();           <span class="cmt">// [1,2,[3]] — depth 1</span>
+[<span class="num">1</span>, [<span class="num">2</span>, [<span class="num">3</span>]]].<span class="fn">flat</span>(Infinity);   <span class="cmt">// [1,2,3]</span>
+nums.<span class="fn">flatMap</span>(n =&gt; [n, n * <span class="num">2</span>]);  <span class="cmt">// [1,2,2,4,3,6,4,8,5,10]</span>
+
+<span class="cmt">// toSorted, toReversed, with (non-mutating, ES2023)</span>
+nums.<span class="fn">toSorted</span>((a, b) =&gt; b - a); <span class="cmt">// new sorted array</span>
+nums.<span class="fn">toReversed</span>();               <span class="cmt">// new reversed array</span>
+nums.<span class="fn">with</span>(<span class="num">2</span>, <span class="num">99</span>);                <span class="cmt">// [1,2,99,4,5] — replace at index</span></code></pre>
+
+<h2>Search Methods</h2>
+<pre><code><span class="kw">const</span> a = [<span class="num">10</span>, <span class="num">20</span>, <span class="num">30</span>, <span class="num">20</span>];
+
+a.<span class="fn">indexOf</span>(<span class="num">20</span>);          <span class="cmt">// 1  (first occurrence)</span>
+a.<span class="fn">lastIndexOf</span>(<span class="num">20</span>);      <span class="cmt">// 3  (last occurrence)</span>
+a.<span class="fn">includes</span>(<span class="num">30</span>);         <span class="cmt">// true</span>
+a.<span class="fn">find</span>(n =&gt; n &gt; <span class="num">15</span>);    <span class="cmt">// 20 (first match)</span>
+a.<span class="fn">findLast</span>(n =&gt; n &gt; <span class="num">15</span>);<span class="cmt">// 20 (last match)</span>
+a.<span class="fn">findIndex</span>(n =&gt; n &gt; <span class="num">15</span>); <span class="cmt">// 1</span>
+a.<span class="fn">findLastIndex</span>(n =&gt; n > <span class="num">15</span>); <span class="cmt">// 3</span>
+a.<span class="fn">some</span>(n =&gt; n &gt; <span class="num">25</span>);    <span class="cmt">// true (any match?)</span>
+a.<span class="fn">every</span>(n =&gt; n &gt; <span class="num">5</span>);    <span class="cmt">// true (all match?)</span></code></pre>
+
+<h2>Iteration Methods</h2>
+<pre><code>[<span class="str">"a"</span>, <span class="str">"b"</span>].<span class="fn">forEach</span>((val, idx) =&gt; console.<span class="fn">log</span>(idx, val));
+
+<span class="cmt">// entries, keys, values — return iterators</span>
+<span class="kw">for</span> (<span class="kw">const</span> [i, v] <span class="kw">of</span> [<span class="str">"a"</span>, <span class="str">"b"</span>].<span class="fn">entries</span>()) console.<span class="fn">log</span>(i, v);
+<span class="kw">for</span> (<span class="kw">const</span> k <span class="kw">of</span> [<span class="str">"a"</span>, <span class="str">"b"</span>].<span class="fn">keys</span>()) console.<span class="fn">log</span>(k);
+<span class="kw">for</span> (<span class="kw">const</span> v <span class="kw">of</span> [<span class="str">"a"</span>, <span class="str">"b"</span>].<span class="fn">values</span>()) console.<span class="fn">log</span>(v);</code></pre>
+
+<h2>String Conversion</h2>
+<pre><code>[<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>].<span class="fn">join</span>(<span class="str">", "</span>);  <span class="cmt">// "1, 2, 3"</span>
+[<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>].<span class="fn">join</span>(<span class="str">""</span>);    <span class="cmt">// "123"</span>
+[<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>].<span class="fn">toString</span>();  <span class="cmt">// "1,2,3"</span></code></pre>
+
+<h2>Destructuring</h2>
+<pre><code><span class="kw">const</span> [first, second, ...rest] = [<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>, <span class="num">4</span>, <span class="num">5</span>];
+<span class="cmt">// first=1, second=2, rest=[3,4,5]</span>
+
+<span class="cmt">// Skip elements</span>
+<span class="kw">const</span> [, b, , d] = [<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>, <span class="num">4</span>]; <span class="cmt">// b=2, d=4</span>
+
+<span class="cmt">// Default values</span>
+<span class="kw">const</span> [x = <span class="num">10</span>, y = <span class="num">20</span>] = [<span class="num">5</span>];   <span class="cmt">// x=5, y=20</span>
+
+<span class="cmt">// Swap variables</span>
+<span class="kw">let</span> a = <span class="num">1</span>, b = <span class="num">2</span>;
+[a, b] = [b, a];  <span class="cmt">// a=2, b=1</span></code></pre>
+</body></html>

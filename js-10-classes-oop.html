@@ -1,0 +1,127 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>JS 10 – Classes & OOP</title><link rel="stylesheet" href="shared.css"/></head>
+<body>
+<a href="index.html" class="back">← Back to Library</a>
+<div class="page-tag js">JS · 10</div>
+<h1>Classes & OOP</h1>
+<p class="page-desc">ES6 classes, inheritance, static methods, private fields, and prototype patterns.</p>
+
+<h2>Class Declaration</h2>
+<pre><code><span class="kw">class</span> <span class="fn">Animal</span> {
+  <span class="cmt">// Public class fields (ES2022)</span>
+  species = <span class="str">"Unknown"</span>;
+
+  <span class="cmt">// Private fields (#) — truly private</span>
+  #id;
+  #energy = <span class="num">100</span>;
+
+  <span class="cmt">// Static field</span>
+  <span class="kw">static</span> count = <span class="num">0</span>;
+
+  <span class="cmt">// Constructor</span>
+  <span class="fn">constructor</span>(name, sound) {
+    <span class="kw">this</span>.name = name;
+    <span class="kw">this</span>.sound = sound;
+    <span class="kw">this</span>.#id = ++<span class="fn">Animal</span>.count;
+  }
+
+  <span class="cmt">// Instance method</span>
+  <span class="fn">speak</span>() {
+    <span class="kw">return</span> <span class="str">`${<span class="kw">this</span>.name} says ${<span class="kw">this</span>.sound}!`</span>;
+  }
+
+  <span class="cmt">// Getter</span>
+  <span class="kw">get</span> <span class="fn">id</span>() { <span class="kw">return</span> <span class="kw">this</span>.#id; }
+
+  <span class="cmt">// Setter</span>
+  <span class="kw">set</span> <span class="fn">energy</span>(val) {
+    <span class="kw">if</span> (val &lt; <span class="num">0</span>) <span class="kw">throw</span> <span class="kw">new</span> <span class="fn">RangeError</span>(<span class="str">"Energy cannot be negative"</span>);
+    <span class="kw">this</span>.#energy = val;
+  }
+  <span class="kw">get</span> <span class="fn">energy</span>() { <span class="kw">return</span> <span class="kw">this</span>.#energy; }
+
+  <span class="cmt">// Static method — called on class, not instance</span>
+  <span class="kw">static</span> <span class="fn">getCount</span>() { <span class="kw">return</span> <span class="fn">Animal</span>.count; }
+
+  <span class="cmt">// Static factory method</span>
+  <span class="kw">static</span> <span class="fn">createCat</span>(name) { <span class="kw">return</span> <span class="kw">new</span> <span class="fn">Animal</span>(name, <span class="str">"meow"</span>); }
+
+  <span class="cmt">// Private method</span>
+  #<span class="fn">validate</span>() { <span class="kw">return</span> <span class="kw">this</span>.name.length &gt; <span class="num">0</span>; }
+
+  <span class="cmt">// toString</span>
+  <span class="fn">toString</span>() { <span class="kw">return</span> <span class="str">`Animal(${<span class="kw">this</span>.name})`</span>; }
+}
+
+<span class="cmt">// Instantiate</span>
+<span class="kw">const</span> dog = <span class="kw">new</span> <span class="fn">Animal</span>(<span class="str">"Rex"</span>, <span class="str">"woof"</span>);
+dog.<span class="fn">speak</span>();            <span class="cmt">// "Rex says woof!"</span>
+dog.id;                  <span class="cmt">// 1 (via getter)</span>
+dog.energy = <span class="num">80</span>;        <span class="cmt">// via setter</span>
+<span class="fn">Animal</span>.<span class="fn">getCount</span>();      <span class="cmt">// 1 (static)</span>
+<span class="fn">Animal</span>.<span class="fn">createCat</span>(<span class="str">"Whiskers"</span>);</code></pre>
+
+<h2>Inheritance with extends</h2>
+<pre><code><span class="kw">class</span> <span class="fn">Dog</span> <span class="kw">extends</span> <span class="fn">Animal</span> {
+  #tricks = [];
+
+  <span class="fn">constructor</span>(name, breed) {
+    <span class="kw">super</span>(name, <span class="str">"woof"</span>);  <span class="cmt">// must call super() first</span>
+    <span class="kw">this</span>.breed = breed;
+  }
+
+  <span class="cmt">// Override parent method</span>
+  <span class="fn">speak</span>() {
+    <span class="kw">return</span> <span class="str">`${<span class="kw">super</span>.<span class="fn">speak</span>()} (I'm a ${<span class="kw">this</span>.breed})`</span>;
+  }
+
+  <span class="fn">learnTrick</span>(trick) {
+    <span class="kw">this</span>.#tricks.<span class="fn">push</span>(trick);
+  }
+
+  <span class="fn">perform</span>() {
+    <span class="kw">return</span> <span class="kw">this</span>.#tricks.<span class="fn">join</span>(<span class="str">", "</span>) || <span class="str">"No tricks"</span>;
+  }
+}
+
+<span class="kw">const</span> d = <span class="kw">new</span> <span class="fn">Dog</span>(<span class="str">"Buddy"</span>, <span class="str">"Labrador"</span>);
+d.<span class="fn">speak</span>();           <span class="cmt">// "Buddy says woof! (I'm a Labrador)"</span>
+d.<span class="fn">learnTrick</span>(<span class="str">"sit"</span>);
+d <span class="kw">instanceof</span> Dog;    <span class="cmt">// true</span>
+d <span class="kw">instanceof</span> Animal; <span class="cmt">// true</span></code></pre>
+
+<h2>Mixins (simulated multiple inheritance)</h2>
+<pre><code><span class="kw">const</span> <span class="fn">Serializable</span> = (Base) =&gt; <span class="kw">class extends</span> Base {
+  <span class="fn">serialize</span>() { <span class="kw">return</span> JSON.<span class="fn">stringify</span>(<span class="kw">this</span>); }
+  <span class="kw">static</span> <span class="fn">deserialize</span>(json) { <span class="kw">return</span> Object.<span class="fn">assign</span>(<span class="kw">new</span> <span class="kw">this</span>(), JSON.<span class="fn">parse</span>(json)); }
+};
+
+<span class="kw">const</span> <span class="fn">Timestamped</span> = (Base) =&gt; <span class="kw">class extends</span> Base {
+  <span class="fn">constructor</span>(...args) {
+    <span class="kw">super</span>(...args);
+    <span class="kw">this</span>.createdAt = <span class="kw">new</span> <span class="fn">Date</span>().toISOString();
+  }
+};
+
+<span class="kw">class</span> <span class="fn">User</span> <span class="kw">extends</span> <span class="fn">Timestamped</span>(<span class="fn">Serializable</span>(<span class="fn">Animal</span>)) {
+  <span class="fn">constructor</span>(name) { <span class="kw">super</span>(name, <span class="str">"hello"</span>); }
+}</code></pre>
+
+<h2>Prototype-based OOP (pre-class)</h2>
+<pre><code><span class="cmt">// Old-style constructor function</span>
+<span class="kw">function</span> <span class="fn">Person</span>(name, age) {
+  <span class="kw">this</span>.name = name;
+  <span class="kw">this</span>.age = age;
+}
+<span class="fn">Person</span>.prototype.<span class="fn">greet</span> = <span class="kw">function</span>() {
+  <span class="kw">return</span> <span class="str">`Hi, I'm ${<span class="kw">this</span>.name}`</span>;
+};
+
+<span class="kw">const</span> p = <span class="kw">new</span> <span class="fn">Person</span>(<span class="str">"Alice"</span>, <span class="num">30</span>);
+p.<span class="fn">greet</span>();  <span class="cmt">// "Hi, I'm Alice"</span>
+
+<span class="cmt">// Prototype chain inspection</span>
+Object.<span class="fn">getPrototypeOf</span>(p) === <span class="fn">Person</span>.prototype;  <span class="cmt">// true</span>
+p.<span class="fn">hasOwnProperty</span>(<span class="str">"name"</span>);  <span class="cmt">// true</span>
+p.<span class="fn">hasOwnProperty</span>(<span class="str">"greet"</span>); <span class="cmt">// false (on prototype)</span></code></pre>
+</body></html>

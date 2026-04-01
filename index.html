@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Web Dev Reference Library</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap');
+    :root {
+      --bg: #0a0a0f;
+      --card: #12121a;
+      --border: #2a2a3a;
+      --accent1: #00ffd1;
+      --accent2: #ff6b6b;
+      --accent3: #ffd166;
+      --accent4: #a29bfe;
+      --text: #e8e8f0;
+      --muted: #7a7a9a;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--bg); color: var(--text); font-family: 'Syne', sans-serif; min-height: 100vh; padding: 40px 20px; }
+    h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; letter-spacing: -2px; margin-bottom: 8px; }
+    h1 span { color: var(--accent1); }
+    .subtitle { color: var(--muted); font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; margin-bottom: 50px; }
+    .section-title { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin: 40px 0 16px; font-family: 'JetBrains Mono', monospace; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; text-decoration: none; color: var(--text); transition: all 0.2s; position: relative; overflow: hidden; }
+    .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+    .card.html::before { background: var(--accent2); }
+    .card.css::before { background: var(--accent4); }
+    .card.js::before { background: var(--accent3); }
+    .card:hover { border-color: var(--accent1); transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,255,209,0.08); }
+    .card-tag { font-size: 0.65rem; font-family: 'JetBrains Mono', monospace; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+    .card.html .card-tag { color: var(--accent2); }
+    .card.css .card-tag { color: var(--accent4); }
+    .card.js .card-tag { color: var(--accent3); }
+    .card h2 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+    .card p { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+    .card .num { position: absolute; bottom: 20px; right: 20px; font-family: 'JetBrains Mono', monospace; font-size: 1.8rem; font-weight: 700; opacity: 0.07; }
+  </style>
+</head>
+<body>
+  <h1>Web Dev <span>Reference</span> Library</h1>
+  <p class="subtitle">// Complete HTML · CSS · JavaScript syntax & function reference</p>
+
+  <div class="section-title">── HTML Files</div>
+  <div class="grid">
+    <a href="html-01-structure-doctype.html" class="card html"><div class="card-tag">HTML · 01</div><h2>Document Structure & DOCTYPE</h2><p>DOCTYPE, html, head, body, meta tags, charset, viewport</p><span class="num">01</span></a>
+    <a href="html-02-text-elements.html" class="card html"><div class="card-tag">HTML · 02</div><h2>Text & Headings</h2><p>h1–h6, p, span, strong, em, b, i, mark, small, sup, sub, abbr</p><span class="num">02</span></a>
+    <a href="html-03-links-images.html" class="card html"><div class="card-tag">HTML · 03</div><h2>Links & Images</h2><p>anchor tags, href, target, img, src, alt, figure, picture, srcset</p><span class="num">03</span></a>
+    <a href="html-04-lists-tables.html" class="card html"><div class="card-tag">HTML · 04</div><h2>Lists & Tables</h2><p>ul, ol, li, dl, dt, dd, table, thead, tbody, tr, th, td, colspan</p><span class="num">04</span></a>
+    <a href="html-05-forms-inputs.html" class="card html"><div class="card-tag">HTML · 05</div><h2>Forms & Inputs</h2><p>form, input types, label, select, textarea, button, fieldset, validation</p><span class="num">05</span></a>
+    <a href="html-06-semantic-elements.html" class="card html"><div class="card-tag">HTML · 06</div><h2>Semantic Elements</h2><p>header, nav, main, section, article, aside, footer, details, summary</p><span class="num">06</span></a>
+    <a href="html-07-media-embed.html" class="card html"><div class="card-tag">HTML · 07</div><h2>Media & Embeds</h2><p>video, audio, iframe, embed, canvas, svg inline, source elements</p><span class="num">07</span></a>
+    <a href="html-08-attributes-global.html" class="card html"><div class="card-tag">HTML · 08</div><h2>Global Attributes</h2><p>id, class, style, data-*, aria-*, role, tabindex, hidden, contenteditable</p><span class="num">08</span></a>
+  </div>
+
+  <div class="section-title">── CSS Files</div>
+  <div class="grid">
+    <a href="css-01-selectors.html" class="card css"><div class="card-tag">CSS · 01</div><h2>Selectors</h2><p>type, class, id, attribute, pseudo-class, pseudo-element, combinators</p><span class="num">01</span></a>
+    <a href="css-02-box-model.html" class="card css"><div class="card-tag">CSS · 02</div><h2>Box Model</h2><p>margin, padding, border, width, height, box-sizing, outline, display</p><span class="num">02</span></a>
+    <a href="css-03-typography.html" class="card css"><div class="card-tag">CSS · 03</div><h2>Typography</h2><p>font-family, size, weight, line-height, letter-spacing, text-align, @font-face</p><span class="num">03</span></a>
+    <a href="css-04-colors-backgrounds.html" class="card css"><div class="card-tag">CSS · 04</div><h2>Colors & Backgrounds</h2><p>color units, gradients, background-image, opacity, filter, blend-mode</p><span class="num">04</span></a>
+    <a href="css-05-flexbox.html" class="card css"><div class="card-tag">CSS · 05</div><h2>Flexbox</h2><p>display:flex, justify-content, align-items, flex-wrap, gap, order, flex-grow</p><span class="num">05</span></a>
+    <a href="css-06-grid.html" class="card css"><div class="card-tag">CSS · 06</div><h2>CSS Grid</h2><p>grid-template, columns, rows, areas, gap, placement, auto-fill, minmax</p><span class="num">06</span></a>
+    <a href="css-07-positioning.html" class="card css"><div class="card-tag">CSS · 07</div><h2>Positioning</h2><p>static, relative, absolute, fixed, sticky, z-index, top/right/bottom/left</p><span class="num">07</span></a>
+    <a href="css-08-transitions-animations.html" class="card css"><div class="card-tag">CSS · 08</div><h2>Transitions & Animations</h2><p>transition, @keyframes, animation properties, timing functions, transforms</p><span class="num">08</span></a>
+    <a href="css-09-responsive-media.html" class="card css"><div class="card-tag">CSS · 09</div><h2>Responsive & Media Queries</h2><p>@media, breakpoints, min/max-width, clamp(), viewport units, container queries</p><span class="num">09</span></a>
+    <a href="css-10-variables-functions.html" class="card css"><div class="card-tag">CSS · 10</div><h2>Variables & Functions</h2><p>--custom-props, var(), calc(), min(), max(), clamp(), env(), counter()</p><span class="num">10</span></a>
+  </div>
+
+  <div class="section-title">── JavaScript Files</div>
+  <div class="grid">
+    <a href="js-01-variables-datatypes.html" class="card js"><div class="card-tag">JS · 01</div><h2>Variables & Data Types</h2><p>var, let, const, string, number, boolean, null, undefined, symbol, BigInt</p><span class="num">01</span></a>
+    <a href="js-02-operators.html" class="card js"><div class="card-tag">JS · 02</div><h2>Operators</h2><p>arithmetic, comparison, logical, assignment, ternary, nullish, optional chaining</p><span class="num">02</span></a>
+    <a href="js-03-control-flow.html" class="card js"><div class="card-tag">JS · 03</div><h2>Control Flow</h2><p>if/else, switch, for, while, do-while, for...of, for...in, break, continue</p><span class="num">03</span></a>
+    <a href="js-04-functions.html" class="card js"><div class="card-tag">JS · 04</div><h2>Functions</h2><p>declaration, expression, arrow, default params, rest, IIFE, closures, recursion</p><span class="num">04</span></a>
+    <a href="js-05-arrays.html" class="card js"><div class="card-tag">JS · 05</div><h2>Arrays</h2><p>create, access, map, filter, reduce, find, sort, splice, spread, destructuring</p><span class="num">05</span></a>
+    <a href="js-06-objects.html" class="card js"><div class="card-tag">JS · 06</div><h2>Objects</h2><p>literals, methods, this, prototype, spread, destructuring, Object methods</p><span class="num">06</span></a>
+    <a href="js-07-dom-manipulation.html" class="card js"><div class="card-tag">JS · 07</div><h2>DOM Manipulation</h2><p>querySelector, createElement, appendChild, classList, setAttribute, innerHTML</p><span class="num">07</span></a>
+    <a href="js-08-events.html" class="card js"><div class="card-tag">JS · 08</div><h2>Events</h2><p>addEventListener, event types, bubbling, delegation, preventDefault, CustomEvent</p><span class="num">08</span></a>
+    <a href="js-09-async-promises.html" class="card js"><div class="card-tag">JS · 09</div><h2>Async & Promises</h2><p>Promise, .then/.catch, async/await, Promise.all, fetch API, error handling</p><span class="num">09</span></a>
+    <a href="js-10-classes-oop.html" class="card js"><div class="card-tag">JS · 10</div><h2>Classes & OOP</h2><p>class, constructor, extends, super, static, getters/setters, private fields</p><span class="num">10</span></a>
+    <a href="js-11-error-handling.html" class="card js"><div class="card-tag">JS · 11</div><h2>Error Handling</h2><p>try/catch/finally, throw, Error types, custom errors, debugging tips</p><span class="num">11</span></a>
+    <a href="js-12-storage-web-api.html" class="card js"><div class="card-tag">JS · 12</div><h2>Storage & Web APIs</h2><p>localStorage, sessionStorage, JSON, URLSearchParams, Clipboard, Geolocation</p><span class="num">12</span></a>
+  </div>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>HTML 01 – Document Structure</title><link rel="stylesheet" href="shared.css"/></head>
+<body>
+<a href="index.html" class="back">← Back to Library</a>
+<div class="page-tag html">HTML · 01</div>
+<h1>Document Structure & DOCTYPE</h1>
+<p class="page-desc">The skeleton of every HTML page — from DOCTYPE declaration to closing tag.</p>
+
+<h2>The Minimal HTML5 Document</h2>
+<pre><code><span class="cmt">&lt;!-- DOCTYPE tells browser this is HTML5 --&gt;</span>
+<span class="tag">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;html</span> <span class="attr">lang</span>=<span class="val">"en"</span><span class="tag">&gt;</span>
+
+  <span class="tag">&lt;head&gt;</span>
+    <span class="cmt">&lt;!-- Character encoding (always first) --&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="val">"UTF-8"</span><span class="tag">/&gt;</span>
+
+    <span class="cmt">&lt;!-- Responsive viewport --&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="val">"viewport"</span> <span class="attr">content</span>=<span class="val">"width=device-width, initial-scale=1.0"</span><span class="tag">/&gt;</span>
+
+    <span class="cmt">&lt;!-- Page title (shown in tab) --&gt;</span>
+    <span class="tag">&lt;title&gt;</span>My Page<span class="tag">&lt;/title&gt;</span>
+  <span class="tag">&lt;/head&gt;</span>
+
+  <span class="tag">&lt;body&gt;</span>
+    <span class="cmt">&lt;!-- All visible content goes here --&gt;</span>
+    <span class="tag">&lt;h1&gt;</span>Hello, World!<span class="tag">&lt;/h1&gt;</span>
+  <span class="tag">&lt;/body&gt;</span>
+
+<span class="tag">&lt;/html&gt;</span></code></pre>
+
+<h2>Essential &lt;head&gt; Meta Tags</h2>
+<pre><code><span class="tag">&lt;head&gt;</span>
+  <span class="cmt">&lt;!-- 1. Character set --&gt;</span>
+  <span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="val">"UTF-8"</span><span class="tag">/&gt;</span>
+
+  <span class="cmt">&lt;!-- 2. IE compatibility (legacy) --&gt;</span>
+  <span class="tag">&lt;meta</span> <span class="attr">http-equiv</span>=<span class="val">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="val">"IE=edge"</span><span class="tag">/&gt;</span>
+
+  <span class="cmt">&lt;!-- 3. Viewport for mobile --&gt;</span>
+  <span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="val">"viewport"</span> <span class="attr">content</span>=<span class="val">"width=device-width, initial-scale=1.0"</span><span class="tag">/&gt;</span>
+
+  <span class="cmt">&lt;!-- 4. SEO description --&gt;</span>
+  <span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="val">"description"</span> <span class="attr">content</span>=<span class="val">"Page description for search engines"</span><span class="tag">/&gt;</span>
+
+  <span class="cmt">&lt;!-- 5. Keywords (less important now) --&gt;</span>
+  <span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="val">"keywords"</span> <span class="attr">content</span>=<span class="val">"html, css, javascript"</span><span class="tag">/&gt;</span>
+
+  <span class="cmt">&lt;!-- 6. Author --&gt;</span>
+  <span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="val">"author"</span> <span class="attr">content</span>=<span class="val">"Your Name"</span><span class="tag">/&gt;</span>
+
+  <span class="cmt">&lt;!-- 7. Open Graph (social sharing) --&gt;</span>
+  <span class="tag">&lt;meta</span> <span class="attr">property</span>=<span class="val">"og:title"</span> <span class="attr">content</span>=<span class="val">"My Page"</span><span class="tag">/&gt;</span>
+  <span class="tag">&lt;meta</span> <span class="attr">property</span>=<span class="val">"og:description"</span> <span class="attr">content</span>=<span class="val">"Description"</span><span class="tag">/&gt;</span>
+  <span class="tag">&lt;meta</span> <span class="attr">property</span>=<span class="val">"og:image"</span> <span class="attr">content</span>=<span class="val">"https://example.com/image.png"</span><span class="tag">/&gt;</span>
+
+  <span class="cmt">&lt;!-- 8. Favicon --&gt;</span>
+  <span class="tag">&lt;link</span> <span class="attr">rel</span>=<span class="val">"icon"</span> <span class="attr">href</span>=<span class="val">"favicon.ico"</span><span class="tag">/&gt;</span>
+  <span class="tag">&lt;link</span> <span class="attr">rel</span>=<span class="val">"icon"</span> <span class="attr">href</span>=<span class="val">"icon.svg"</span> <span class="attr">type</span>=<span class="val">"image/svg+xml"</span><span class="tag">/&gt;</span>
+
+  <span class="cmt">&lt;!-- 9. CSS link --&gt;</span>
+  <span class="tag">&lt;link</span> <span class="attr">rel</span>=<span class="val">"stylesheet"</span> <span class="attr">href</span>=<span class="val">"styles.css"</span><span class="tag">/&gt;</span>
+
+  <span class="cmt">&lt;!-- 10. JS (defer = run after HTML parsed) --&gt;</span>
+  <span class="tag">&lt;script</span> <span class="attr">src</span>=<span class="val">"app.js"</span> <span class="attr">defer</span><span class="tag">&gt;&lt;/script&gt;</span>
+<span class="tag">&lt;/head&gt;</span></code></pre>
+
+<h2>HTML Comments</h2>
+<pre><code><span class="cmt">&lt;!-- This is a single-line comment --&gt;</span>
+
+<span class="cmt">&lt;!--
+  This is a
+  multi-line comment
+--&gt;</span>
+
+<span class="cmt">&lt;!-- Comments are NOT shown in browser but ARE visible in page source --&gt;</span></code></pre>
+
+<div class="tip"><strong>Tip:</strong> Always put <span class="inline-code">&lt;meta charset="UTF-8"&gt;</span> as the very first element inside <span class="inline-code">&lt;head&gt;</span>, before the title, so the browser knows encoding before parsing any text.</div>
+
+<h2>HTML Entities (Special Characters)</h2>
+<table>
+  <tr><th>Character</th><th>Entity Name</th><th>Entity Number</th></tr>
+  <tr><td>&amp;</td><td><code>&amp;amp;</code></td><td><code>&amp;#38;</code></td></tr>
+  <tr><td>&lt;</td><td><code>&amp;lt;</code></td><td><code>&amp;#60;</code></td></tr>
+  <tr><td>&gt;</td><td><code>&amp;gt;</code></td><td><code>&amp;#62;</code></td></tr>
+  <tr><td>&nbsp;</td><td><code>&amp;nbsp;</code></td><td><code>&amp;#160;</code></td></tr>
+  <tr><td>&copy;</td><td><code>&amp;copy;</code></td><td><code>&amp;#169;</code></td></tr>
+  <tr><td>&trade;</td><td><code>&amp;trade;</code></td><td><code>&amp;#8482;</code></td></tr>
+  <tr><td>&euro;</td><td><code>&amp;euro;</code></td><td><code>&amp;#8364;</code></td></tr>
+  <tr><td>&quot;</td><td><code>&amp;quot;</code></td><td><code>&amp;#34;</code></td></tr>
+</table>
+</body>
+</html>

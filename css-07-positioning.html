@@ -1,0 +1,117 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>CSS 07 – Positioning</title><link rel="stylesheet" href="shared.css"/></head>
+<body>
+<a href="index.html" class="back">← Back to Library</a>
+<div class="page-tag css">CSS · 07</div>
+<h1>Positioning</h1>
+<p class="page-desc">All CSS position values, z-index, stacking contexts, and transforms.</p>
+
+<h2>Position Values</h2>
+<pre><code><span class="cmt">/* static (default) — follows document flow, top/left etc. have no effect */</span>
+<span class="sel">.el</span> { <span class="prop">position</span>: static; }
+
+<span class="cmt">/* relative — offset from its own normal position; still in flow */</span>
+<span class="sel">.el</span> {
+  <span class="prop">position</span>: relative;
+  <span class="prop">top</span>: <span class="unit">10px</span>;    <span class="cmt">/* down 10px from where it would normally be */</span>
+  <span class="prop">left</span>: <span class="unit">20px</span>;
+  <span class="cmt">/* Also creates a new stacking context for children */</span>
+}
+
+<span class="cmt">/* absolute — removed from flow; positioned relative to nearest
+   positioned (non-static) ancestor */</span>
+<span class="sel">.parent</span> { <span class="prop">position</span>: relative; }
+<span class="sel">.child</span> {
+  <span class="prop">position</span>: absolute;
+  <span class="prop">top</span>: <span class="num">0</span>;
+  <span class="prop">right</span>: <span class="num">0</span>;
+  <span class="prop">bottom</span>: <span class="num">0</span>;
+  <span class="prop">left</span>: <span class="num">0</span>;  <span class="cmt">/* fill parent */</span>
+}
+
+<span class="cmt">/* fixed — relative to viewport; stays when scrolling */</span>
+<span class="sel">.navbar</span> {
+  <span class="prop">position</span>: fixed;
+  <span class="prop">top</span>: <span class="num">0</span>;
+  <span class="prop">left</span>: <span class="num">0</span>;
+  <span class="prop">right</span>: <span class="num">0</span>;
+  <span class="prop">z-index</span>: <span class="num">100</span>;
+}
+
+<span class="cmt">/* sticky — scrolls with page until threshold, then sticks */</span>
+<span class="sel">.section-header</span> {
+  <span class="prop">position</span>: sticky;
+  <span class="prop">top</span>: <span class="unit">60px</span>;   <span class="cmt">/* sticks when within 60px of top */</span>
+  <span class="prop">z-index</span>: <span class="num">10</span>;
+}</code></pre>
+
+<h2>Inset Shorthand</h2>
+<pre><code><span class="sel">.el</span> {
+  <span class="prop">inset</span>: <span class="num">0</span>;                      <span class="cmt">/* top right bottom left = 0 */</span>
+  <span class="prop">inset</span>: <span class="unit">10px</span> <span class="unit">20px</span>;              <span class="cmt">/* top/bottom | left/right */</span>
+  <span class="prop">inset</span>: <span class="unit">10px</span> <span class="unit">20px</span> <span class="unit">30px</span> <span class="unit">40px</span>;   <span class="cmt">/* top right bottom left */</span>
+  <span class="prop">inset-block</span>: <span class="num">0</span>;                <span class="cmt">/* logical: top + bottom */</span>
+  <span class="prop">inset-inline</span>: <span class="num">0</span>;               <span class="cmt">/* logical: left + right */</span>
+}</code></pre>
+
+<h2>Z-index & Stacking Context</h2>
+<pre><code><span class="sel">.low</span>   { <span class="prop">z-index</span>: <span class="num">1</span>; }
+<span class="sel">.mid</span>   { <span class="prop">z-index</span>: <span class="num">10</span>; }
+<span class="sel">.high</span>  { <span class="prop">z-index</span>: <span class="num">100</span>; }
+<span class="sel">.modal</span> { <span class="prop">z-index</span>: <span class="num">1000</span>; }
+<span class="sel">.toast</span> { <span class="prop">z-index</span>: <span class="num">9999</span>; }
+
+<span class="cmt">/* Stacking context is created by:
+   - position + z-index (not auto)
+   - opacity < 1
+   - transform, filter, will-change
+   - isolation: isolate
+*/</span>
+<span class="sel">.isolated</span> { <span class="prop">isolation</span>: isolate; }  <span class="cmt">/* create new stacking context */</span></code></pre>
+
+<h2>Transform</h2>
+<pre><code><span class="sel">.el</span> {
+  <span class="cmt">/* Translate (move) */</span>
+  <span class="prop">transform</span>: translateX(<span class="unit">50px</span>);
+  <span class="prop">transform</span>: translateY(<span class="unit">-20px</span>);
+  <span class="prop">transform</span>: translate(<span class="unit">50px</span>, <span class="unit">-20px</span>);
+  <span class="prop">transform</span>: translate(<span class="unit">50%</span>, <span class="unit">-50%</span>);  <span class="cmt">/* % of element's own size */</span>
+  <span class="prop">translate</span>: <span class="unit">50px</span> <span class="unit">-20px</span>;             <span class="cmt">/* standalone property (modern) */</span>
+
+  <span class="cmt">/* Scale */</span>
+  <span class="prop">transform</span>: scale(<span class="num">1.5</span>);
+  <span class="prop">transform</span>: scaleX(<span class="num">2</span>) scaleY(<span class="num">0.5</span>);
+  <span class="prop">scale</span>: <span class="num">1.5</span>;  <span class="cmt">/* standalone */</span>
+
+  <span class="cmt">/* Rotate */</span>
+  <span class="prop">transform</span>: rotate(<span class="num">45deg</span>);
+  <span class="prop">transform</span>: rotate(<span class="num">0.5</span>turn);
+  <span class="prop">rotate</span>: <span class="num">45deg</span>;  <span class="cmt">/* standalone */</span>
+
+  <span class="cmt">/* Skew */</span>
+  <span class="prop">transform</span>: skew(<span class="num">15deg</span>, <span class="num">10deg</span>);
+
+  <span class="cmt">/* 3D transforms */</span>
+  <span class="prop">transform</span>: rotateX(<span class="num">45deg</span>) rotateY(<span class="num">30deg</span>);
+  <span class="prop">perspective</span>: <span class="unit">500px</span>;
+  <span class="prop">transform-style</span>: preserve-3d;
+  <span class="prop">backface-visibility</span>: hidden;
+
+  <span class="cmt">/* Chaining transforms */</span>
+  <span class="prop">transform</span>: translateY(<span class="unit">-4px</span>) scale(<span class="num">1.02</span>);
+
+  <span class="cmt">/* Origin of transform */</span>
+  <span class="prop">transform-origin</span>: center center;  <span class="cmt">/* default */</span>
+  <span class="prop">transform-origin</span>: top left;
+  <span class="prop">transform-origin</span>: <span class="unit">0%</span> <span class="unit">0%</span>;
+}</code></pre>
+
+<h2>Centering with Position + Transform</h2>
+<pre><code><span class="cmt">/* Classic absolute centering */</span>
+<span class="sel">.centered</span> {
+  <span class="prop">position</span>: absolute;
+  <span class="prop">top</span>: <span class="unit">50%</span>;
+  <span class="prop">left</span>: <span class="unit">50%</span>;
+  <span class="prop">transform</span>: translate(<span class="unit">-50%</span>, <span class="unit">-50%</span>);
+}</code></pre>
+</body></html>

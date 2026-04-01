@@ -1,0 +1,113 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>CSS 05 – Flexbox</title><link rel="stylesheet" href="shared.css"/></head>
+<body>
+<a href="index.html" class="back">← Back to Library</a>
+<div class="page-tag css">CSS · 05</div>
+<h1>Flexbox</h1>
+<p class="page-desc">Complete flexbox reference — container and item properties.</p>
+
+<h2>Flex Container Properties</h2>
+<pre><code><span class="sel">.container</span> {
+  <span class="prop">display</span>: flex;            <span class="cmt">/* or inline-flex */</span>
+
+  <span class="cmt">/* Direction of main axis */</span>
+  <span class="prop">flex-direction</span>: row;              <span class="cmt">/* → default */</span>
+  <span class="prop">flex-direction</span>: row-reverse;      <span class="cmt">/* ← */</span>
+  <span class="prop">flex-direction</span>: column;           <span class="cmt">/* ↓ */</span>
+  <span class="prop">flex-direction</span>: column-reverse;   <span class="cmt">/* ↑ */</span>
+
+  <span class="cmt">/* Wrapping */</span>
+  <span class="prop">flex-wrap</span>: nowrap;     <span class="cmt">/* single line (default) */</span>
+  <span class="prop">flex-wrap</span>: wrap;       <span class="cmt">/* wrap to new lines */</span>
+  <span class="prop">flex-wrap</span>: wrap-reverse;
+
+  <span class="cmt">/* Shorthand */</span>
+  <span class="prop">flex-flow</span>: row wrap;
+
+  <span class="cmt">/* Main axis alignment (horizontal when row) */</span>
+  <span class="prop">justify-content</span>: flex-start;    <span class="cmt">/* default */</span>
+  <span class="prop">justify-content</span>: flex-end;
+  <span class="prop">justify-content</span>: center;
+  <span class="prop">justify-content</span>: space-between;  <span class="cmt">/* gaps between items */</span>
+  <span class="prop">justify-content</span>: space-around;   <span class="cmt">/* equal space around items */</span>
+  <span class="prop">justify-content</span>: space-evenly;   <span class="cmt">/* equal space everywhere */</span>
+
+  <span class="cmt">/* Cross axis alignment (vertical when row) */</span>
+  <span class="prop">align-items</span>: stretch;      <span class="cmt">/* default - fill cross axis */</span>
+  <span class="prop">align-items</span>: flex-start;
+  <span class="prop">align-items</span>: flex-end;
+  <span class="prop">align-items</span>: center;
+  <span class="prop">align-items</span>: baseline;
+
+  <span class="cmt">/* Multi-line cross axis alignment */</span>
+  <span class="prop">align-content</span>: flex-start;
+  <span class="prop">align-content</span>: center;
+  <span class="prop">align-content</span>: space-between;
+  <span class="prop">align-content</span>: stretch;
+
+  <span class="cmt">/* Gap between items */</span>
+  <span class="prop">gap</span>: <span class="unit">16px</span>;
+  <span class="prop">row-gap</span>: <span class="unit">20px</span>;
+  <span class="prop">column-gap</span>: <span class="unit">10px</span>;
+}</code></pre>
+
+<h2>Flex Item Properties</h2>
+<pre><code><span class="sel">.item</span> {
+  <span class="cmt">/* How much item grows relative to siblings */</span>
+  <span class="prop">flex-grow</span>: <span class="num">0</span>;     <span class="cmt">/* default: don't grow */</span>
+  <span class="prop">flex-grow</span>: <span class="num">1</span>;     <span class="cmt">/* grow to fill space */</span>
+
+  <span class="cmt">/* How much item shrinks */</span>
+  <span class="prop">flex-shrink</span>: <span class="num">1</span>;   <span class="cmt">/* default: can shrink */</span>
+  <span class="prop">flex-shrink</span>: <span class="num">0</span>;   <span class="cmt">/* don't shrink */</span>
+
+  <span class="cmt">/* Initial size before growing/shrinking */</span>
+  <span class="prop">flex-basis</span>: auto; <span class="cmt">/* use width/height */</span>
+  <span class="prop">flex-basis</span>: <span class="unit">200px</span>;
+  <span class="prop">flex-basis</span>: <span class="num">0</span>;
+
+  <span class="cmt">/* Shorthand: grow shrink basis */</span>
+  <span class="prop">flex</span>: <span class="num">1</span>;           <span class="cmt">/* flex: 1 1 0 */</span>
+  <span class="prop">flex</span>: auto;        <span class="cmt">/* flex: 1 1 auto */</span>
+  <span class="prop">flex</span>: none;        <span class="cmt">/* flex: 0 0 auto */</span>
+  <span class="prop">flex</span>: <span class="num">2</span> <span class="num">1</span> <span class="unit">200px</span>;
+
+  <span class="cmt">/* Override container's align-items */</span>
+  <span class="prop">align-self</span>: auto | flex-start | flex-end | center | stretch | baseline;
+
+  <span class="cmt">/* Reorder without changing HTML */</span>
+  <span class="prop">order</span>: <span class="num">0</span>;     <span class="cmt">/* default */</span>
+  <span class="prop">order</span>: <span class="num">-1</span>;    <span class="cmt">/* move to start */</span>
+  <span class="prop">order</span>: <span class="num">1</span>;     <span class="cmt">/* move toward end */</span>
+}</code></pre>
+
+<h2>Common Flexbox Patterns</h2>
+<pre><code><span class="cmt">/* Center anything */</span>
+<span class="sel">.center</span> {
+  <span class="prop">display</span>: flex;
+  <span class="prop">justify-content</span>: center;
+  <span class="prop">align-items</span>: center;
+}
+
+<span class="cmt">/* Equal-width columns */</span>
+<span class="sel">.cols > *</span> { <span class="prop">flex</span>: <span class="num">1</span>; }
+
+<span class="cmt">/* Sticky footer */</span>
+<span class="sel">body</span> {
+  <span class="prop">display</span>: flex;
+  <span class="prop">flex-direction</span>: column;
+  <span class="prop">min-height</span>: <span class="unit">100vh</span>;
+}
+<span class="sel">main</span> { <span class="prop">flex</span>: <span class="num">1</span>; }
+
+<span class="cmt">/* Navigation bar */</span>
+<span class="sel">nav</span> {
+  <span class="prop">display</span>: flex;
+  <span class="prop">align-items</span>: center;
+  <span class="prop">justify-content</span>: space-between;
+  <span class="prop">gap</span>: <span class="unit">16px</span>;
+}
+
+<span class="cmt">/* Push last item to end */</span>
+<span class="sel">.toolbar .spacer</span> { <span class="prop">flex</span>: <span class="num">1</span>; }  <span class="cmt">/* or: margin-left: auto on last item */</span></code></pre>
+</body></html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>CSS 08 – Transitions & Animations</title><link rel="stylesheet" href="shared.css"/></head>
+<body>
+<a href="index.html" class="back">← Back to Library</a>
+<div class="page-tag css">CSS · 08</div>
+<h1>Transitions & Animations</h1>
+<p class="page-desc">CSS transitions, @keyframes, animation properties, and timing functions.</p>
+
+<h2>Transitions</h2>
+<pre><code><span class="sel">.btn</span> {
+  <span class="prop">background</span>: blue;
+
+  <span class="cmt">/* property | duration | timing-function | delay */</span>
+  <span class="prop">transition</span>: background <span class="num">0.3s</span> ease;
+  <span class="prop">transition</span>: all <span class="num">0.3s</span> ease-in-out;
+  <span class="prop">transition</span>: background <span class="num">0.3s</span> ease, transform <span class="num">0.2s</span> ease <span class="num">0.1s</span>;
+
+  <span class="cmt">/* Individual properties */</span>
+  <span class="prop">transition-property</span>: background, transform;
+  <span class="prop">transition-duration</span>: <span class="num">0.3s</span>;
+  <span class="prop">transition-timing-function</span>: ease;
+  <span class="prop">transition-delay</span>: <span class="num">0.1s</span>;
+}
+
+<span class="sel">.btn:hover</span> {
+  <span class="prop">background</span>: darkblue;
+  <span class="prop">transform</span>: scale(<span class="num">1.05</span>);
+}</code></pre>
+
+<h2>Timing Functions</h2>
+<pre><code><span class="sel">.el</span> {
+  <span class="prop">transition-timing-function</span>: ease;          <span class="cmt">/* slow-fast-slow (default) */</span>
+  <span class="prop">transition-timing-function</span>: linear;        <span class="cmt">/* constant speed */</span>
+  <span class="prop">transition-timing-function</span>: ease-in;       <span class="cmt">/* slow start */</span>
+  <span class="prop">transition-timing-function</span>: ease-out;      <span class="cmt">/* slow end */</span>
+  <span class="prop">transition-timing-function</span>: ease-in-out;   <span class="cmt">/* slow start and end */</span>
+  <span class="prop">transition-timing-function</span>: step-start;    <span class="cmt">/* instant jump */</span>
+  <span class="prop">transition-timing-function</span>: step-end;
+  <span class="prop">transition-timing-function</span>: steps(<span class="num">4</span>, end); <span class="cmt">/* 4 discrete steps */</span>
+
+  <span class="cmt">/* Custom cubic-bezier — use cubic-bezier.com */</span>
+  <span class="prop">transition-timing-function</span>: cubic-bezier(<span class="num">0.34</span>, <span class="num">1.56</span>, <span class="num">0.64</span>, <span class="num">1</span>);  <span class="cmt">/* bounce */</span>
+}</code></pre>
+
+<h2>@keyframes</h2>
+<pre><code><span class="cmt">/* Define the animation */</span>
+<span class="sel">@keyframes</span> fadeIn {
+  <span class="kw">from</span> { <span class="prop">opacity</span>: <span class="num">0</span>; <span class="prop">transform</span>: translateY(<span class="unit">20px</span>); }
+  <span class="kw">to</span>   { <span class="prop">opacity</span>: <span class="num">1</span>; <span class="prop">transform</span>: translateY(<span class="num">0</span>); }
+}
+
+<span class="sel">@keyframes</span> pulse {
+  <span class="num">0%</span>   { <span class="prop">transform</span>: scale(<span class="num">1</span>); }
+  <span class="num">50%</span>  { <span class="prop">transform</span>: scale(<span class="num">1.05</span>); }
+  <span class="num">100%</span> { <span class="prop">transform</span>: scale(<span class="num">1</span>); }
+}
+
+<span class="sel">@keyframes</span> spin {
+  <span class="kw">to</span> { <span class="prop">transform</span>: rotate(<span class="num">360deg</span>); }
+}
+
+<span class="sel">@keyframes</span> slideIn {
+  <span class="kw">from</span> { <span class="prop">transform</span>: translateX(<span class="unit">-100%</span>); }
+  <span class="kw">to</span>   { <span class="prop">transform</span>: translateX(<span class="num">0</span>); }
+}</code></pre>
+
+<h2>Animation Properties</h2>
+<pre><code><span class="sel">.el</span> {
+  <span class="cmt">/* name | duration | timing | delay | count | direction | fill-mode | play-state */</span>
+  <span class="prop">animation</span>: fadeIn <span class="num">0.5s</span> ease-out;
+  <span class="prop">animation</span>: pulse <span class="num">2s</span> ease-in-out infinite;
+  <span class="prop">animation</span>: spin <span class="num">1s</span> linear infinite;
+  <span class="prop">animation</span>: slideIn <span class="num">0.4s</span> ease-out <span class="num">0.2s</span> both;
+
+  <span class="cmt">/* Individual properties */</span>
+  <span class="prop">animation-name</span>: fadeIn;
+  <span class="prop">animation-duration</span>: <span class="num">0.5s</span>;
+  <span class="prop">animation-timing-function</span>: ease-out;
+  <span class="prop">animation-delay</span>: <span class="num">0.2s</span>;
+  <span class="prop">animation-iteration-count</span>: <span class="num">1</span> | infinite | <span class="num">3</span>;
+  <span class="prop">animation-direction</span>: normal | reverse | alternate | alternate-reverse;
+  <span class="prop">animation-fill-mode</span>: none | forwards | backwards | both;
+    <span class="cmt">/* forwards: hold last keyframe after ending */</span>
+    <span class="cmt">/* backwards: apply first keyframe during delay */</span>
+    <span class="cmt">/* both: forwards + backwards */</span>
+  <span class="prop">animation-play-state</span>: running | paused;
+
+  <span class="cmt">/* Multiple animations */</span>
+  <span class="prop">animation</span>: fadeIn <span class="num">0.5s</span> ease, pulse <span class="num">2s</span> infinite <span class="num">0.5s</span>;
+}</code></pre>
+
+<h2>Performance Tips</h2>
+<pre><code><span class="cmt">/* Only animate these properties for best performance: */</span>
+<span class="cmt">/* transform (translate, scale, rotate), opacity */</span>
+<span class="cmt">/* They are handled by the GPU compositor */</span>
+
+<span class="cmt">/* Hint browser to optimize: */</span>
+<span class="sel">.animated</span> { <span class="prop">will-change</span>: transform, opacity; }
+
+<span class="cmt">/* Respect user preferences */</span>
+<span class="sel">@media</span> (prefers-reduced-motion: reduce) {
+  <span class="sel">*</span> {
+    <span class="prop">animation-duration</span>: <span class="num">0.01ms</span> !important;
+    <span class="prop">transition-duration</span>: <span class="num">0.01ms</span> !important;
+  }
+}</code></pre>
+
+<h2>Staggered Animations</h2>
+<pre><code><span class="sel">.list-item</span>:nth-child(1) { <span class="prop">animation-delay</span>: <span class="num">0ms</span>; }
+<span class="sel">.list-item</span>:nth-child(2) { <span class="prop">animation-delay</span>: <span class="num">100ms</span>; }
+<span class="sel">.list-item</span>:nth-child(3) { <span class="prop">animation-delay</span>: <span class="num">200ms</span>; }
+<span class="sel">.list-item</span>:nth-child(4) { <span class="prop">animation-delay</span>: <span class="num">300ms</span>; }</code></pre>
+</body></html>

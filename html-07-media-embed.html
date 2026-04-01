@@ -1,0 +1,91 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>HTML 07 – Media & Embeds</title><link rel="stylesheet" href="shared.css"/></head>
+<body>
+<a href="index.html" class="back">← Back to Library</a>
+<div class="page-tag html">HTML · 07</div>
+<h1>Media & Embeds</h1>
+<p class="page-desc">Video, audio, iframes, canvas, inline SVG, and embedded content.</p>
+
+<h2>Video Element</h2>
+<pre><code><span class="cmt">&lt;!-- Basic video --&gt;</span>
+<span class="tag">&lt;video</span> <span class="attr">src</span>=<span class="val">"movie.mp4"</span> <span class="attr">controls</span><span class="tag">&gt;</span>
+  Your browser does not support the video element.
+<span class="tag">&lt;/video&gt;</span>
+
+<span class="cmt">&lt;!-- Full-featured video --&gt;</span>
+<span class="tag">&lt;video</span>
+  <span class="attr">controls</span>                       <span class="cmt">&lt;!-- Show play/pause/volume --&gt;</span>
+  <span class="attr">autoplay</span>                       <span class="cmt">&lt;!-- Autoplay (needs muted on most browsers) --&gt;</span>
+  <span class="attr">muted</span>                          <span class="cmt">&lt;!-- Start muted --&gt;</span>
+  <span class="attr">loop</span>                           <span class="cmt">&lt;!-- Loop forever --&gt;</span>
+  <span class="attr">playsinline</span>                    <span class="cmt">&lt;!-- iOS: don't fullscreen automatically --&gt;</span>
+  <span class="attr">poster</span>=<span class="val">"thumbnail.jpg"</span>         <span class="cmt">&lt;!-- Thumbnail before play --&gt;</span>
+  <span class="attr">width</span>=<span class="val">"640"</span> <span class="attr">height</span>=<span class="val">"360"</span>
+  <span class="attr">preload</span>=<span class="val">"metadata"</span>            <span class="cmt">&lt;!-- none | metadata | auto --&gt;</span>
+<span class="tag">&gt;</span>
+  <span class="tag">&lt;source</span> <span class="attr">src</span>=<span class="val">"movie.webm"</span> <span class="attr">type</span>=<span class="val">"video/webm"</span><span class="tag">/&gt;</span>
+  <span class="tag">&lt;source</span> <span class="attr">src</span>=<span class="val">"movie.mp4"</span>  <span class="attr">type</span>=<span class="val">"video/mp4"</span><span class="tag">/&gt;</span>
+  <span class="tag">&lt;track</span> <span class="attr">src</span>=<span class="val">"subs.vtt"</span> <span class="attr">kind</span>=<span class="val">"subtitles"</span> <span class="attr">srclang</span>=<span class="val">"en"</span> <span class="attr">label</span>=<span class="val">"English"</span> <span class="attr">default</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;/video&gt;</span></code></pre>
+
+<h2>Audio Element</h2>
+<pre><code><span class="tag">&lt;audio</span> <span class="attr">controls</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;source</span> <span class="attr">src</span>=<span class="val">"music.ogg"</span> <span class="attr">type</span>=<span class="val">"audio/ogg"</span><span class="tag">/&gt;</span>
+  <span class="tag">&lt;source</span> <span class="attr">src</span>=<span class="val">"music.mp3"</span> <span class="attr">type</span>=<span class="val">"audio/mpeg"</span><span class="tag">/&gt;</span>
+  <span class="tag">&lt;source</span> <span class="attr">src</span>=<span class="val">"music.wav"</span> <span class="attr">type</span>=<span class="val">"audio/wav"</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;/audio&gt;</span></code></pre>
+
+<h2>IFrame — Embedding External Content</h2>
+<pre><code><span class="cmt">&lt;!-- Basic iframe --&gt;</span>
+<span class="tag">&lt;iframe</span>
+  <span class="attr">src</span>=<span class="val">"https://example.com"</span>
+  <span class="attr">width</span>=<span class="val">"600"</span>
+  <span class="attr">height</span>=<span class="val">"400"</span>
+  <span class="attr">title</span>=<span class="val">"Embedded content"</span>       <span class="cmt">&lt;!-- Required for accessibility --&gt;</span>
+  <span class="attr">loading</span>=<span class="val">"lazy"</span>
+  <span class="attr">sandbox</span>=<span class="val">"allow-scripts allow-same-origin"</span>
+<span class="tag">&gt;&lt;/iframe&gt;</span>
+
+<span class="cmt">&lt;!-- YouTube embed --&gt;</span>
+<span class="tag">&lt;iframe</span>
+  <span class="attr">src</span>=<span class="val">"https://www.youtube.com/embed/VIDEO_ID"</span>
+  <span class="attr">width</span>=<span class="val">"560"</span> <span class="attr">height</span>=<span class="val">"315"</span>
+  <span class="attr">title</span>=<span class="val">"YouTube video"</span>
+  <span class="attr">allow</span>=<span class="val">"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"</span>
+  <span class="attr">allowfullscreen</span>
+<span class="tag">&gt;&lt;/iframe&gt;</span>
+
+<span class="cmt">&lt;!-- Google Maps embed --&gt;</span>
+<span class="tag">&lt;iframe</span>
+  <span class="attr">src</span>=<span class="val">"https://www.google.com/maps/embed?pb=..."</span>
+  <span class="attr">width</span>=<span class="val">"600"</span> <span class="attr">height</span>=<span class="val">"450"</span>
+  <span class="attr">style</span>=<span class="val">"border:0"</span>
+  <span class="attr">allowfullscreen</span>
+  <span class="attr">loading</span>=<span class="val">"lazy"</span>
+  <span class="attr">referrerpolicy</span>=<span class="val">"no-referrer-when-downgrade"</span>
+<span class="tag">&gt;&lt;/iframe&gt;</span></code></pre>
+
+<h2>Canvas Element</h2>
+<pre><code><span class="cmt">&lt;!-- Canvas: drawn via JavaScript --&gt;</span>
+<span class="tag">&lt;canvas</span> <span class="attr">id</span>=<span class="val">"myCanvas"</span> <span class="attr">width</span>=<span class="val">"400"</span> <span class="attr">height</span>=<span class="val">"200"</span><span class="tag">&gt;</span>
+  Fallback text for non-supporting browsers.
+<span class="tag">&lt;/canvas&gt;</span>
+
+<span class="tag">&lt;script&gt;</span>
+<span class="kw">const</span> canvas = document.<span class="fn">getElementById</span>(<span class="str">'myCanvas'</span>);
+<span class="kw">const</span> ctx = canvas.<span class="fn">getContext</span>(<span class="str">'2d'</span>);
+ctx.fillStyle = <span class="str">'#00ffd1'</span>;
+ctx.<span class="fn">fillRect</span>(<span class="num">10</span>, <span class="num">10</span>, <span class="num">100</span>, <span class="num">80</span>);
+<span class="tag">&lt;/script&gt;</span></code></pre>
+
+<h2>Inline SVG</h2>
+<pre><code><span class="cmt">&lt;!-- SVG embedded directly in HTML --&gt;</span>
+<span class="tag">&lt;svg</span> <span class="attr">xmlns</span>=<span class="val">"http://www.w3.org/2000/svg"</span>
+     <span class="attr">width</span>=<span class="val">"100"</span> <span class="attr">height</span>=<span class="val">"100"</span>
+     <span class="attr">viewBox</span>=<span class="val">"0 0 100 100"</span>
+     <span class="attr">aria-label</span>=<span class="val">"Green circle"</span>
+     <span class="attr">role</span>=<span class="val">"img"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;circle</span> <span class="attr">cx</span>=<span class="val">"50"</span> <span class="attr">cy</span>=<span class="val">"50"</span> <span class="attr">r</span>=<span class="val">"40"</span> <span class="attr">fill</span>=<span class="val">"#00ffd1"</span><span class="tag">/&gt;</span>
+  <span class="tag">&lt;text</span> <span class="attr">x</span>=<span class="val">"50"</span> <span class="attr">y</span>=<span class="val">"55"</span> <span class="attr">text-anchor</span>=<span class="val">"middle"</span> <span class="attr">fill</span>=<span class="val">"black"</span><span class="tag">&gt;</span>SVG<span class="tag">&lt;/text&gt;</span>
+<span class="tag">&lt;/svg&gt;</span></code></pre>
+</body></html>

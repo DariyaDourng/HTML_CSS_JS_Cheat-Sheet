@@ -1,0 +1,93 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>HTML 08 – Global Attributes</title><link rel="stylesheet" href="shared.css"/></head>
+<body>
+<a href="index.html" class="back">← Back to Library</a>
+<div class="page-tag html">HTML · 08</div>
+<h1>Global Attributes</h1>
+<p class="page-desc">Attributes that can be applied to any HTML element.</p>
+
+<h2>Core Attributes</h2>
+<pre><code><span class="cmt">&lt;!-- id: unique identifier on the page --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">id</span>=<span class="val">"main-content"</span><span class="tag">&gt;</span>...<span class="tag">&lt;/div&gt;</span>
+
+<span class="cmt">&lt;!-- class: one or more space-separated class names --&gt;</span>
+<span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="val">"text-large text-bold highlight"</span><span class="tag">&gt;</span>...<span class="tag">&lt;/p&gt;</span>
+
+<span class="cmt">&lt;!-- style: inline CSS (avoid in production) --&gt;</span>
+<span class="tag">&lt;span</span> <span class="attr">style</span>=<span class="val">"color: red; font-weight: bold;"</span><span class="tag">&gt;</span>Red bold<span class="tag">&lt;/span&gt;</span>
+
+<span class="cmt">&lt;!-- title: tooltip on hover --&gt;</span>
+<span class="tag">&lt;abbr</span> <span class="attr">title</span>=<span class="val">"As Soon As Possible"</span><span class="tag">&gt;</span>ASAP<span class="tag">&lt;/abbr&gt;</span>
+
+<span class="cmt">&lt;!-- lang: language of element content --&gt;</span>
+<span class="tag">&lt;p</span> <span class="attr">lang</span>=<span class="val">"fr"</span><span class="tag">&gt;</span>Bonjour le monde<span class="tag">&lt;/p&gt;</span>
+
+<span class="cmt">&lt;!-- dir: text direction --&gt;</span>
+<span class="tag">&lt;p</span> <span class="attr">dir</span>=<span class="val">"rtl"</span><span class="tag">&gt;</span>Right to left text<span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;p</span> <span class="attr">dir</span>=<span class="val">"auto"</span><span class="tag">&gt;</span>Auto-detected direction<span class="tag">&lt;/p&gt;</span></code></pre>
+
+<h2>data-* Custom Attributes</h2>
+<pre><code><span class="cmt">&lt;!-- Store custom data on any element --&gt;</span>
+<span class="tag">&lt;button</span>
+  <span class="attr">data-user-id</span>=<span class="val">"42"</span>
+  <span class="attr">data-action</span>=<span class="val">"delete"</span>
+  <span class="attr">data-confirm</span>=<span class="val">"Are you sure?"</span>
+<span class="tag">&gt;</span>Delete<span class="tag">&lt;/button&gt;</span>
+
+<span class="cmt">&lt;!-- Access in JavaScript --&gt;</span>
+<span class="tag">&lt;script&gt;</span>
+<span class="kw">const</span> btn = document.<span class="fn">querySelector</span>(<span class="str">'button'</span>);
+console.<span class="fn">log</span>(btn.dataset.userId);   <span class="cmt">// "42"</span>
+console.<span class="fn">log</span>(btn.dataset.action);    <span class="cmt">// "delete"</span>
+<span class="tag">&lt;/script&gt;</span></code></pre>
+
+<h2>Accessibility (ARIA) Attributes</h2>
+<pre><code><span class="cmt">&lt;!-- role: describes element's purpose --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">role</span>=<span class="val">"button"</span> <span class="attr">tabindex</span>=<span class="val">"0"</span><span class="tag">&gt;</span>Custom button<span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;nav</span> <span class="attr">role</span>=<span class="val">"navigation"</span><span class="tag">&gt;</span>...<span class="tag">&lt;/nav&gt;</span>
+
+<span class="cmt">&lt;!-- aria-label: label when no visible text --&gt;</span>
+<span class="tag">&lt;button</span> <span class="attr">aria-label</span>=<span class="val">"Close dialog"</span><span class="tag">&gt;</span>✕<span class="tag">&lt;/button&gt;</span>
+
+<span class="cmt">&lt;!-- aria-labelledby: points to another element --&gt;</span>
+<span class="tag">&lt;h2</span> <span class="attr">id</span>=<span class="val">"dialog-title"</span><span class="tag">&gt;</span>Login<span class="tag">&lt;/h2&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">aria-labelledby</span>=<span class="val">"dialog-title"</span><span class="tag">&gt;</span>...<span class="tag">&lt;/div&gt;</span>
+
+<span class="cmt">&lt;!-- aria-hidden: hide from screen readers --&gt;</span>
+<span class="tag">&lt;span</span> <span class="attr">aria-hidden</span>=<span class="val">"true"</span><span class="tag">&gt;</span>🎉<span class="tag">&lt;/span&gt;</span>
+
+<span class="cmt">&lt;!-- aria-expanded: open/closed state --&gt;</span>
+<span class="tag">&lt;button</span> <span class="attr">aria-expanded</span>=<span class="val">"false"</span> <span class="attr">aria-controls</span>=<span class="val">"menu"</span><span class="tag">&gt;</span>Toggle<span class="tag">&lt;/button&gt;</span>
+
+<span class="cmt">&lt;!-- aria-live: announce dynamic updates --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">aria-live</span>=<span class="val">"polite"</span><span class="tag">&gt;</span>Status updates here<span class="tag">&lt;/div&gt;</span>
+
+<span class="cmt">&lt;!-- aria-required + aria-invalid for forms --&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">type</span>=<span class="val">"email"</span> <span class="attr">aria-required</span>=<span class="val">"true"</span> <span class="attr">aria-invalid</span>=<span class="val">"false"</span><span class="tag">/&gt;</span></code></pre>
+
+<h2>Interactive Global Attributes</h2>
+<pre><code><span class="cmt">&lt;!-- tabindex: keyboard focus order --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">tabindex</span>=<span class="val">"0"</span><span class="tag">&gt;</span>Focusable<span class="tag">&lt;/div&gt;</span>     <span class="cmt">&lt;!-- in tab order --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">tabindex</span>=<span class="val">"-1"</span><span class="tag">&gt;</span>Focusable via JS<span class="tag">&lt;/div&gt;</span> <span class="cmt">&lt;!-- not in tab order --&gt;</span>
+
+<span class="cmt">&lt;!-- hidden: hide element --&gt;</span>
+<span class="tag">&lt;p</span> <span class="attr">hidden</span><span class="tag">&gt;</span>Not visible<span class="tag">&lt;/p&gt;</span>
+
+<span class="cmt">&lt;!-- contenteditable: make any element editable --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">contenteditable</span>=<span class="val">"true"</span><span class="tag">&gt;</span>Click to edit this text!<span class="tag">&lt;/div&gt;</span>
+
+<span class="cmt">&lt;!-- draggable --&gt;</span>
+<span class="tag">&lt;img</span> <span class="attr">src</span>=<span class="val">"icon.png"</span> <span class="attr">draggable</span>=<span class="val">"true"</span> <span class="attr">alt</span>=<span class="val">"Drag me"</span><span class="tag">/&gt;</span>
+
+<span class="cmt">&lt;!-- spellcheck --&gt;</span>
+<span class="tag">&lt;textarea</span> <span class="attr">spellcheck</span>=<span class="val">"true"</span><span class="tag">&gt;&lt;/textarea&gt;</span>
+
+<span class="cmt">&lt;!-- translate: should translators translate this? --&gt;</span>
+<span class="tag">&lt;span</span> <span class="attr">translate</span>=<span class="val">"no"</span><span class="tag">&gt;</span>Brand Name<span class="tag">&lt;/span&gt;</span></code></pre>
+
+<h2>Event Handler Attributes (inline — avoid in production)</h2>
+<pre><code><span class="tag">&lt;button</span> <span class="attr">onclick</span>=<span class="val">"alert('clicked')"</span><span class="tag">&gt;</span>Click<span class="tag">&lt;/button&gt;</span>
+<span class="tag">&lt;input</span> <span class="attr">oninput</span>=<span class="val">"console.log(this.value)"</span><span class="tag">/&gt;</span>
+<span class="tag">&lt;img</span> <span class="attr">onload</span>=<span class="val">"console.log('loaded')"</span> <span class="attr">onerror</span>=<span class="val">"this.src='fallback.png'"</span> <span class="attr">src</span>=<span class="val">"img.jpg"</span> <span class="attr">alt</span>=<span class="val">"img"</span><span class="tag">/&gt;</span>
+<span class="cmt">&lt;!-- Better practice: addEventListener() in JavaScript --&gt;</span></code></pre>
+</body></html>

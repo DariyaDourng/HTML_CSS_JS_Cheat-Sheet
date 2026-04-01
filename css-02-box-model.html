@@ -1,0 +1,108 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>CSS 02 – Box Model</title><link rel="stylesheet" href="shared.css"/></head>
+<body>
+<a href="index.html" class="back">← Back to Library</a>
+<div class="page-tag css">CSS · 02</div>
+<h1>Box Model</h1>
+<p class="page-desc">How every element is sized: content, padding, border, margin, and display modes.</p>
+
+<h2>The Box Model</h2>
+<pre><code><span class="cmt">/* content-box (default): width = content only */</span>
+<span class="sel">.box</span> {
+  <span class="prop">width</span>: <span class="unit">200px</span>;
+  <span class="prop">padding</span>: <span class="unit">20px</span>;      <span class="cmt">/* adds 40px to total */</span>
+  <span class="prop">border</span>: <span class="unit">2px</span> solid;   <span class="cmt">/* adds 4px to total */</span>
+  <span class="cmt">/* total rendered width = 266px */</span>
+}
+
+<span class="cmt">/* border-box: width INCLUDES padding + border */</span>
+<span class="sel">*</span> { <span class="prop">box-sizing</span>: border-box; }  <span class="cmt">/* recommended globally */</span>
+<span class="sel">.box</span> {
+  <span class="prop">width</span>: <span class="unit">200px</span>;
+  <span class="prop">padding</span>: <span class="unit">20px</span>;
+  <span class="prop">border</span>: <span class="unit">2px</span> solid;
+  <span class="cmt">/* total rendered width = 200px exactly */</span>
+}</code></pre>
+
+<h2>Margin</h2>
+<pre><code><span class="sel">.box</span> {
+  <span class="prop">margin</span>: <span class="unit">20px</span>;                      <span class="cmt">/* all sides */</span>
+  <span class="prop">margin</span>: <span class="unit">10px</span> <span class="unit">20px</span>;                <span class="cmt">/* top/bottom | left/right */</span>
+  <span class="prop">margin</span>: <span class="unit">10px</span> <span class="unit">20px</span> <span class="unit">30px</span>;          <span class="cmt">/* top | left/right | bottom */</span>
+  <span class="prop">margin</span>: <span class="unit">10px</span> <span class="unit">20px</span> <span class="unit">30px</span> <span class="unit">40px</span>;    <span class="cmt">/* top right bottom left (clockwise) */</span>
+  <span class="prop">margin-top</span>: <span class="unit">10px</span>;
+  <span class="prop">margin-right</span>: <span class="unit">20px</span>;
+  <span class="prop">margin-bottom</span>: <span class="unit">10px</span>;
+  <span class="prop">margin-left</span>: <span class="unit">20px</span>;
+  <span class="prop">margin</span>: <span class="num">0</span> auto;                    <span class="cmt">/* center block horizontally */</span>
+  <span class="prop">margin-inline</span>: auto;              <span class="cmt">/* logical: horizontal centering */</span>
+}</code></pre>
+
+<h2>Padding</h2>
+<pre><code><span class="sel">.box</span> {
+  <span class="prop">padding</span>: <span class="unit">16px</span>;
+  <span class="prop">padding</span>: <span class="unit">8px</span> <span class="unit">16px</span>;
+  <span class="prop">padding-block</span>: <span class="unit">12px</span>;    <span class="cmt">/* logical: top + bottom */</span>
+  <span class="prop">padding-inline</span>: <span class="unit">16px</span>;   <span class="cmt">/* logical: left + right */</span>
+}</code></pre>
+
+<h2>Border</h2>
+<pre><code><span class="sel">.box</span> {
+  <span class="prop">border</span>: <span class="unit">2px</span> solid <span class="str">#333</span>;
+  <span class="prop">border-width</span>: <span class="unit">2px</span>;
+  <span class="prop">border-style</span>: solid | dashed | dotted | double | groove | ridge | inset | outset | none;
+  <span class="prop">border-color</span>: <span class="str">red</span>;
+  <span class="prop">border-radius</span>: <span class="unit">8px</span>;           <span class="cmt">/* rounded corners */</span>
+  <span class="prop">border-radius</span>: <span class="unit">50%</span>;            <span class="cmt">/* circle (on square element) */</span>
+  <span class="prop">border-radius</span>: <span class="unit">10px</span> <span class="unit">20px</span> <span class="unit">30px</span> <span class="unit">40px</span>; <span class="cmt">/* each corner */</span>
+  <span class="prop">border-top</span>: <span class="unit">4px</span> solid blue;
+}</code></pre>
+
+<h2>Width & Height</h2>
+<pre><code><span class="sel">.box</span> {
+  <span class="prop">width</span>: <span class="unit">300px</span>;
+  <span class="prop">height</span>: <span class="unit">200px</span>;
+  <span class="prop">min-width</span>: <span class="unit">100px</span>;
+  <span class="prop">max-width</span>: <span class="unit">600px</span>;
+  <span class="prop">min-height</span>: <span class="unit">50px</span>;
+  <span class="prop">max-height</span>: <span class="unit">400px</span>;
+  <span class="prop">width</span>: <span class="unit">100%</span>;          <span class="cmt">/* % of parent */</span>
+  <span class="prop">width</span>: <span class="unit">50vw</span>;          <span class="cmt">/* 50% of viewport width */</span>
+  <span class="prop">height</span>: <span class="unit">100vh</span>;        <span class="cmt">/* full viewport height */</span>
+  <span class="prop">width</span>: fit-content;   <span class="cmt">/* shrink to content */</span>
+  <span class="prop">width</span>: min-content;
+  <span class="prop">width</span>: max-content;
+}</code></pre>
+
+<h2>Display</h2>
+<pre><code><span class="sel">.el</span> {
+  <span class="prop">display</span>: block;         <span class="cmt">/* full width, new line */</span>
+  <span class="prop">display</span>: inline;        <span class="cmt">/* flows with text, no width/height */</span>
+  <span class="prop">display</span>: inline-block;  <span class="cmt">/* inline but accepts width/height */</span>
+  <span class="prop">display</span>: flex;          <span class="cmt">/* flexbox container */</span>
+  <span class="prop">display</span>: inline-flex;
+  <span class="prop">display</span>: grid;          <span class="cmt">/* grid container */</span>
+  <span class="prop">display</span>: inline-grid;
+  <span class="prop">display</span>: none;          <span class="cmt">/* hidden, removes from layout */</span>
+  <span class="prop">display</span>: contents;      <span class="cmt">/* element itself disappears, children remain */</span>
+  <span class="prop">display</span>: table;         <span class="cmt">/* table behaviour */</span>
+  <span class="prop">display</span>: list-item;     <span class="cmt">/* behaves like li */</span>
+}
+
+<span class="cmt">/* visibility: hidden hides but keeps space */</span>
+<span class="sel">.el</span> { <span class="prop">visibility</span>: hidden; }
+
+<span class="cmt">/* overflow */</span>
+<span class="sel">.el</span> {
+  <span class="prop">overflow</span>: visible | hidden | scroll | auto | clip;
+  <span class="prop">overflow-x</span>: hidden;
+  <span class="prop">overflow-y</span>: auto;
+}</code></pre>
+
+<h2>Outline</h2>
+<pre><code><span class="sel">.el:focus</span> {
+  <span class="prop">outline</span>: <span class="unit">2px</span> solid <span class="str">#00ffd1</span>;
+  <span class="prop">outline-offset</span>: <span class="unit">4px</span>;   <span class="cmt">/* space between outline and element */</span>
+  <span class="cmt">/* outline does NOT affect layout (unlike border) */</span>
+}</code></pre>
+</body></html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>JS 04 – Functions</title><link rel="stylesheet" href="shared.css"/></head>
+<body>
+<a href="index.html" class="back">← Back to Library</a>
+<div class="page-tag js">JS · 04</div>
+<h1>Functions</h1>
+<p class="page-desc">Every function syntax — declarations, expressions, arrows, closures, generators, and more.</p>
+
+<h2>Function Declaration</h2>
+<pre><code><span class="cmt">// Hoisted — can be called before it's defined</span>
+<span class="kw">function</span> <span class="fn">greet</span>(name) {
+  <span class="kw">return</span> <span class="str">`Hello, ${name}!`</span>;
+}
+<span class="fn">greet</span>(<span class="str">"Alice"</span>);  <span class="cmt">// "Hello, Alice!"</span></code></pre>
+
+<h2>Function Expression</h2>
+<pre><code><span class="cmt">// NOT hoisted</span>
+<span class="kw">const</span> <span class="fn">greet</span> = <span class="kw">function</span>(name) {
+  <span class="kw">return</span> <span class="str">`Hello, ${name}!`</span>;
+};
+
+<span class="cmt">// Named function expression (useful in stack traces)</span>
+<span class="kw">const</span> <span class="fn">factorial</span> = <span class="kw">function</span> <span class="fn">fact</span>(n) {
+  <span class="kw">return</span> n &lt;= <span class="num">1</span> ? <span class="num">1</span> : n * <span class="fn">fact</span>(n - <span class="num">1</span>);
+};</code></pre>
+
+<h2>Arrow Functions</h2>
+<pre><code><span class="cmt">// Full arrow function</span>
+<span class="kw">const</span> <span class="fn">add</span> = (a, b) =&gt; {
+  <span class="kw">return</span> a + b;
+};
+
+<span class="cmt">// Implicit return (single expression)</span>
+<span class="kw">const</span> <span class="fn">add</span>    = (a, b) =&gt; a + b;
+<span class="kw">const</span> <span class="fn">square</span> = n =&gt; n * n;        <span class="cmt">// single param — no parens needed</span>
+<span class="kw">const</span> <span class="fn">greet</span>  = () =&gt; <span class="str">"Hello!"</span>;   <span class="cmt">// no params — parens required</span>
+
+<span class="cmt">// Return object — wrap in parens</span>
+<span class="kw">const</span> <span class="fn">makeObj</span> = (x, y) =&gt; ({ x, y });
+
+<span class="cmt">// Arrow functions do NOT have their own 'this'</span>
+<span class="cmt">// They inherit 'this' from surrounding scope</span></code></pre>
+
+<h2>Parameters</h2>
+<pre><code><span class="cmt">// Default parameters</span>
+<span class="kw">function</span> <span class="fn">greet</span>(name = <span class="str">"World"</span>, greeting = <span class="str">"Hello"</span>) {
+  <span class="kw">return</span> <span class="str">`${greeting}, ${name}!`</span>;
+}
+<span class="fn">greet</span>();                    <span class="cmt">// "Hello, World!"</span>
+<span class="fn">greet</span>(<span class="str">"Alice"</span>);             <span class="cmt">// "Hello, Alice!"</span>
+<span class="fn">greet</span>(<span class="kw">undefined</span>, <span class="str">"Hi"</span>);    <span class="cmt">// "Hi, World!" — undefined triggers default</span>
+
+<span class="cmt">// Rest parameters — collect remaining args into array</span>
+<span class="kw">function</span> <span class="fn">sum</span>(...numbers) {
+  <span class="kw">return</span> numbers.<span class="fn">reduce</span>((a, b) =&gt; a + b, <span class="num">0</span>);
+}
+<span class="fn">sum</span>(<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>, <span class="num">4</span>);  <span class="cmt">// 10</span>
+
+<span class="cmt">// Destructured parameters</span>
+<span class="kw">function</span> <span class="fn">display</span>({ name, age = <span class="num">0</span> }) {
+  console.<span class="fn">log</span>(name, age);
+}
+<span class="fn">display</span>({ name: <span class="str">"Alice"</span>, age: <span class="num">30</span> });
+
+<span class="cmt">// arguments object (non-arrow functions only)</span>
+<span class="kw">function</span> <span class="fn">legacy</span>() {
+  console.<span class="fn">log</span>(arguments);  <span class="cmt">// array-like object of all args</span>
+}</code></pre>
+
+<h2>IIFE — Immediately Invoked Function Expression</h2>
+<pre><code><span class="cmt">// Runs immediately, creates private scope</span>
+(<span class="kw">function</span>() {
+  <span class="kw">const</span> private = <span class="str">"only here"</span>;
+  console.<span class="fn">log</span>(<span class="str">"IIFE ran!"</span>);
+})();
+
+<span class="cmt">// Arrow IIFE</span>
+(() =&gt; {
+  console.<span class="fn">log</span>(<span class="str">"Arrow IIFE"</span>);
+})();</code></pre>
+
+<h2>Closures</h2>
+<pre><code><span class="cmt">// A closure remembers variables from its outer scope</span>
+<span class="kw">function</span> <span class="fn">makeCounter</span>(start = <span class="num">0</span>) {
+  <span class="kw">let</span> count = start;
+  <span class="kw">return</span> {
+    <span class="fn">increment</span>: () =&gt; ++count,
+    <span class="fn">decrement</span>: () =&gt; --count,
+    <span class="fn">value</span>: () =&gt; count,
+  };
+}
+
+<span class="kw">const</span> counter = <span class="fn">makeCounter</span>(<span class="num">10</span>);
+counter.<span class="fn">increment</span>();  <span class="cmt">// 11</span>
+counter.<span class="fn">increment</span>();  <span class="cmt">// 12</span>
+counter.<span class="fn">value</span>();      <span class="cmt">// 12</span>
+
+<span class="cmt">// Practical: memoization</span>
+<span class="kw">function</span> <span class="fn">memoize</span>(fn) {
+  <span class="kw">const</span> cache = <span class="kw">new</span> <span class="fn">Map</span>();
+  <span class="kw">return</span> (...args) =&gt; {
+    <span class="kw">const</span> key = JSON.<span class="fn">stringify</span>(args);
+    <span class="kw">if</span> (cache.<span class="fn">has</span>(key)) <span class="kw">return</span> cache.<span class="fn">get</span>(key);
+    <span class="kw">const</span> result = <span class="fn">fn</span>(...args);
+    cache.<span class="fn">set</span>(key, result);
+    <span class="kw">return</span> result;
+  };
+}</code></pre>
+
+<h2>Higher-Order Functions</h2>
+<pre><code><span class="cmt">// Functions that take or return functions</span>
+<span class="kw">function</span> <span class="fn">repeat</span>(fn, times) {
+  <span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; times; i++) <span class="fn">fn</span>(i);
+}
+<span class="fn">repeat</span>(console.log, <span class="num">3</span>);   <span class="cmt">// 0, 1, 2</span>
+
+<span class="cmt">// Currying</span>
+<span class="kw">const</span> <span class="fn">multiply</span> = a =&gt; b =&gt; a * b;
+<span class="kw">const</span> <span class="fn">double</span> = <span class="fn">multiply</span>(<span class="num">2</span>);
+<span class="fn">double</span>(<span class="num">5</span>);   <span class="cmt">// 10</span>
+<span class="fn">double</span>(<span class="num">8</span>);   <span class="cmt">// 16</span></code></pre>
+
+<h2>Generator Functions</h2>
+<pre><code><span class="kw">function</span>* <span class="fn">count</span>() {
+  <span class="kw">yield</span> <span class="num">1</span>;
+  <span class="kw">yield</span> <span class="num">2</span>;
+  <span class="kw">yield</span> <span class="num">3</span>;
+}
+
+<span class="kw">const</span> gen = <span class="fn">count</span>();
+gen.<span class="fn">next</span>();  <span class="cmt">// { value: 1, done: false }</span>
+gen.<span class="fn">next</span>();  <span class="cmt">// { value: 2, done: false }</span>
+gen.<span class="fn">next</span>();  <span class="cmt">// { value: 3, done: false }</span>
+gen.<span class="fn">next</span>();  <span class="cmt">// { value: undefined, done: true }</span>
+
+<span class="cmt">// Infinite generator</span>
+<span class="kw">function</span>* <span class="fn">ids</span>() {
+  <span class="kw">let</span> id = <span class="num">1</span>;
+  <span class="kw">while</span> (<span class="kw">true</span>) <span class="kw">yield</span> id++;
+}
+<span class="kw">const</span> idGen = <span class="fn">ids</span>();
+idGen.<span class="fn">next</span>().value;  <span class="cmt">// 1</span>
+idGen.<span class="fn">next</span>().value;  <span class="cmt">// 2</span></code></pre>
+</body></html>

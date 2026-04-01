@@ -1,0 +1,103 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>CSS 06 – CSS Grid</title><link rel="stylesheet" href="shared.css"/></head>
+<body>
+<a href="index.html" class="back">← Back to Library</a>
+<div class="page-tag css">CSS · 06</div>
+<h1>CSS Grid</h1>
+<p class="page-desc">Two-dimensional layout with CSS Grid — containers, items, areas, and responsive tricks.</p>
+
+<h2>Grid Container</h2>
+<pre><code><span class="sel">.grid</span> {
+  <span class="prop">display</span>: grid;   <span class="cmt">/* or inline-grid */</span>
+
+  <span class="cmt">/* Define columns */</span>
+  <span class="prop">grid-template-columns</span>: <span class="unit">200px</span> <span class="unit">200px</span> <span class="unit">200px</span>;
+  <span class="prop">grid-template-columns</span>: <span class="unit">1fr</span> <span class="unit">2fr</span> <span class="unit">1fr</span>;         <span class="cmt">/* fractional units */</span>
+  <span class="prop">grid-template-columns</span>: repeat(<span class="num">3</span>, <span class="unit">1fr</span>);        <span class="cmt">/* 3 equal columns */</span>
+  <span class="prop">grid-template-columns</span>: repeat(auto-fill, minmax(<span class="unit">200px</span>, <span class="unit">1fr</span>)); <span class="cmt">/* responsive */</span>
+  <span class="prop">grid-template-columns</span>: repeat(auto-fit, minmax(<span class="unit">150px</span>, <span class="unit">1fr</span>));
+  <span class="prop">grid-template-columns</span>: <span class="unit">200px</span> auto <span class="unit">100px</span>;    <span class="cmt">/* fixed-auto-fixed */</span>
+
+  <span class="cmt">/* Define rows */</span>
+  <span class="prop">grid-template-rows</span>: <span class="unit">100px</span> auto <span class="unit">100px</span>;
+  <span class="prop">grid-template-rows</span>: repeat(<span class="num">4</span>, minmax(<span class="unit">100px</span>, auto));
+
+  <span class="cmt">/* Gap */</span>
+  <span class="prop">gap</span>: <span class="unit">20px</span>;
+  <span class="prop">row-gap</span>: <span class="unit">20px</span>;
+  <span class="prop">column-gap</span>: <span class="unit">16px</span>;
+
+  <span class="cmt">/* Named template areas */</span>
+  <span class="prop">grid-template-areas</span>:
+    <span class="str">"header  header  header"</span>
+    <span class="str">"sidebar content content"</span>
+    <span class="str">"footer  footer  footer"</span>;
+
+  <span class="cmt">/* Auto-placed row/column sizes */</span>
+  <span class="prop">grid-auto-rows</span>: <span class="unit">100px</span>;
+  <span class="prop">grid-auto-columns</span>: <span class="unit">200px</span>;
+  <span class="prop">grid-auto-flow</span>: row | column | row dense | column dense;
+
+  <span class="cmt">/* Alignment */</span>
+  <span class="prop">justify-items</span>: start | end | center | stretch;
+  <span class="prop">align-items</span>: start | end | center | stretch;
+  <span class="prop">place-items</span>: center;                        <span class="cmt">/* shorthand */</span>
+  <span class="prop">justify-content</span>: start | end | center | space-between | space-around | space-evenly;
+  <span class="prop">align-content</span>: start | end | center | space-between;
+  <span class="prop">place-content</span>: center space-between;
+}</code></pre>
+
+<h2>Grid Item Properties</h2>
+<pre><code><span class="sel">.item</span> {
+  <span class="cmt">/* Place by line numbers (start / end) */</span>
+  <span class="prop">grid-column-start</span>: <span class="num">1</span>;
+  <span class="prop">grid-column-end</span>: <span class="num">3</span>;        <span class="cmt">/* span 2 columns */</span>
+  <span class="prop">grid-column</span>: <span class="num">1</span> / <span class="num">3</span>;        <span class="cmt">/* shorthand */</span>
+  <span class="prop">grid-column</span>: <span class="num">1</span> / span <span class="num">2</span>;   <span class="cmt">/* span 2 from col 1 */</span>
+  <span class="prop">grid-column</span>: span <span class="num">2</span>;       <span class="cmt">/* span 2 from auto position */</span>
+
+  <span class="prop">grid-row</span>: <span class="num">1</span> / <span class="num">3</span>;
+  <span class="prop">grid-row</span>: <span class="num">2</span> / span <span class="num">3</span>;
+
+  <span class="cmt">/* Shorthand: row-start / col-start / row-end / col-end */</span>
+  <span class="prop">grid-area</span>: <span class="num">1</span> / <span class="num">1</span> / <span class="num">3</span> / <span class="num">3</span>;
+
+  <span class="cmt">/* Named area (from grid-template-areas) */</span>
+  <span class="prop">grid-area</span>: header;
+  <span class="prop">grid-area</span>: sidebar;
+  <span class="prop">grid-area</span>: content;
+  <span class="prop">grid-area</span>: footer;
+
+  <span class="cmt">/* Self-alignment */</span>
+  <span class="prop">justify-self</span>: start | end | center | stretch;
+  <span class="prop">align-self</span>: start | end | center | stretch;
+  <span class="prop">place-self</span>: center;
+  <span class="prop">z-index</span>: <span class="num">1</span>;    <span class="cmt">/* grid items can overlap, control stacking */</span>
+}</code></pre>
+
+<h2>Common Grid Layouts</h2>
+<pre><code><span class="cmt">/* Holy Grail Layout */</span>
+<span class="sel">body</span> {
+  <span class="prop">display</span>: grid;
+  <span class="prop">grid-template</span>:
+    <span class="str">"header"</span>   <span class="unit">80px</span>
+    <span class="str">"main"</span>     auto
+    <span class="str">"footer"</span>   <span class="unit">60px</span>
+    / <span class="unit">1fr</span>;
+  <span class="prop">min-height</span>: <span class="unit">100vh</span>;
+}
+
+<span class="cmt">/* Responsive card grid */</span>
+<span class="sel">.cards</span> {
+  <span class="prop">display</span>: grid;
+  <span class="prop">grid-template-columns</span>: repeat(auto-fill, minmax(<span class="unit">250px</span>, <span class="unit">1fr</span>));
+  <span class="prop">gap</span>: <span class="unit">24px</span>;
+}
+
+<span class="cmt">/* Center item */</span>
+<span class="sel">.wrapper</span> {
+  <span class="prop">display</span>: grid;
+  <span class="prop">place-items</span>: center;
+  <span class="prop">height</span>: <span class="unit">100vh</span>;
+}</code></pre>
+</body></html>

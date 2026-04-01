@@ -1,0 +1,152 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>JS 03 – Control Flow</title><link rel="stylesheet" href="shared.css"/></head>
+<body>
+<a href="index.html" class="back">← Back to Library</a>
+<div class="page-tag js">JS · 03</div>
+<h1>Control Flow</h1>
+<p class="page-desc">if/else, switch, all loop types, break, continue, and labels.</p>
+
+<h2>if / else if / else</h2>
+<pre><code><span class="kw">if</span> (score &gt;= <span class="num">90</span>) {
+  console.<span class="fn">log</span>(<span class="str">"A"</span>);
+} <span class="kw">else if</span> (score &gt;= <span class="num">80</span>) {
+  console.<span class="fn">log</span>(<span class="str">"B"</span>);
+} <span class="kw">else if</span> (score &gt;= <span class="num">70</span>) {
+  console.<span class="fn">log</span>(<span class="str">"C"</span>);
+} <span class="kw">else</span> {
+  console.<span class="fn">log</span>(<span class="str">"Fail"</span>);
+}
+
+<span class="cmt">// Single-line (no braces — use cautiously)</span>
+<span class="kw">if</span> (x > <span class="num">0</span>) console.<span class="fn">log</span>(<span class="str">"positive"</span>);
+
+<span class="cmt">// Ternary shorthand</span>
+<span class="kw">const</span> label = x > <span class="num">0</span> ? <span class="str">"pos"</span> : <span class="str">"neg"</span>;</code></pre>
+
+<h2>switch / case</h2>
+<pre><code><span class="kw">switch</span> (day) {
+  <span class="kw">case</span> <span class="str">"Monday"</span>:
+  <span class="kw">case</span> <span class="str">"Tuesday"</span>:
+    console.<span class="fn">log</span>(<span class="str">"Weekday"</span>);
+    <span class="kw">break</span>;          <span class="cmt">// stop — without break, falls through!</span>
+
+  <span class="kw">case</span> <span class="str">"Saturday"</span>:
+  <span class="kw">case</span> <span class="str">"Sunday"</span>:
+    console.<span class="fn">log</span>(<span class="str">"Weekend"</span>);
+    <span class="kw">break</span>;
+
+  <span class="kw">default</span>:          <span class="cmt">// runs if no case matches</span>
+    console.<span class="fn">log</span>(<span class="str">"Unknown"</span>);
+}
+
+<span class="cmt">// switch uses strict equality (===)</span></code></pre>
+
+<h2>for Loop</h2>
+<pre><code><span class="cmt">// Classic for</span>
+<span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; <span class="num">5</span>; i++) {
+  console.<span class="fn">log</span>(i);  <span class="cmt">// 0, 1, 2, 3, 4</span>
+}
+
+<span class="cmt">// Counting down</span>
+<span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">10</span>; i &gt; <span class="num">0</span>; i--) {
+  console.<span class="fn">log</span>(i);
+}
+
+<span class="cmt">// Step by 2</span>
+<span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt;= <span class="num">10</span>; i += <span class="num">2</span>) {
+  console.<span class="fn">log</span>(i);  <span class="cmt">// 0, 2, 4, 6, 8, 10</span>
+}
+
+<span class="cmt">// Iterate an array (classic)</span>
+<span class="kw">const</span> fruits = [<span class="str">"apple"</span>, <span class="str">"banana"</span>, <span class="str">"cherry"</span>];
+<span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; fruits.length; i++) {
+  console.<span class="fn">log</span>(fruits[i]);
+}</code></pre>
+
+<h2>for...of — Iterate Values</h2>
+<pre><code><span class="cmt">// Arrays</span>
+<span class="kw">for</span> (<span class="kw">const</span> fruit <span class="kw">of</span> fruits) {
+  console.<span class="fn">log</span>(fruit);
+}
+
+<span class="cmt">// With index using entries()</span>
+<span class="kw">for</span> (<span class="kw">const</span> [index, fruit] <span class="kw">of</span> fruits.<span class="fn">entries</span>()) {
+  console.<span class="fn">log</span>(index, fruit);
+}
+
+<span class="cmt">// Strings</span>
+<span class="kw">for</span> (<span class="kw">const</span> char <span class="kw">of</span> <span class="str">"hello"</span>) {
+  console.<span class="fn">log</span>(char);  <span class="cmt">// h e l l o</span>
+}
+
+<span class="cmt">// Maps and Sets</span>
+<span class="kw">const</span> map = <span class="kw">new</span> <span class="fn">Map</span>([[<span class="str">"a"</span>, <span class="num">1</span>], [<span class="str">"b"</span>, <span class="num">2</span>]]);
+<span class="kw">for</span> (<span class="kw">const</span> [key, val] <span class="kw">of</span> map) {
+  console.<span class="fn">log</span>(key, val);
+}
+
+<span class="cmt">// NodeList (DOM elements)</span>
+<span class="kw">for</span> (<span class="kw">const</span> el <span class="kw">of</span> document.<span class="fn">querySelectorAll</span>(<span class="str">"p"</span>)) {
+  el.style.color = <span class="str">"red"</span>;
+}</code></pre>
+
+<h2>for...in — Iterate Object Keys</h2>
+<pre><code><span class="kw">const</span> person = { name: <span class="str">"Alice"</span>, age: <span class="num">30</span>, city: <span class="str">"Phnom Penh"</span> };
+
+<span class="kw">for</span> (<span class="kw">const</span> key <span class="kw">in</span> person) {
+  console.<span class="fn">log</span>(key, person[key]);
+}
+<span class="cmt">// name Alice</span>
+<span class="cmt">// age 30</span>
+<span class="cmt">// city Phnom Penh</span>
+
+<span class="cmt">// hasOwnProperty check (excludes inherited)</span>
+<span class="kw">for</span> (<span class="kw">const</span> key <span class="kw">in</span> person) {
+  <span class="kw">if</span> (person.<span class="fn">hasOwnProperty</span>(key)) {
+    console.<span class="fn">log</span>(key);
+  }
+}</code></pre>
+
+<h2>while Loop</h2>
+<pre><code><span class="kw">let</span> count = <span class="num">0</span>;
+<span class="kw">while</span> (count &lt; <span class="num">5</span>) {
+  console.<span class="fn">log</span>(count);
+  count++;
+}
+
+<span class="cmt">// Infinite loop with break</span>
+<span class="kw">while</span> (<span class="kw">true</span>) {
+  <span class="kw">const</span> input = <span class="fn">getInput</span>();
+  <span class="kw">if</span> (input === <span class="str">"quit"</span>) <span class="kw">break</span>;
+  <span class="fn">processInput</span>(input);
+}</code></pre>
+
+<h2>do...while Loop</h2>
+<pre><code><span class="cmt">// Always runs at least once</span>
+<span class="kw">let</span> n = <span class="num">0</span>;
+<span class="kw">do</span> {
+  console.<span class="fn">log</span>(n);
+  n++;
+} <span class="kw">while</span> (n &lt; <span class="num">3</span>);</code></pre>
+
+<h2>break, continue, Labels</h2>
+<pre><code><span class="cmt">// break — exit loop immediately</span>
+<span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; <span class="num">10</span>; i++) {
+  <span class="kw">if</span> (i === <span class="num">5</span>) <span class="kw">break</span>;
+  console.<span class="fn">log</span>(i);  <span class="cmt">// 0 1 2 3 4</span>
+}
+
+<span class="cmt">// continue — skip current iteration</span>
+<span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; <span class="num">5</span>; i++) {
+  <span class="kw">if</span> (i === <span class="num">2</span>) <span class="kw">continue</span>;
+  console.<span class="fn">log</span>(i);  <span class="cmt">// 0 1 3 4</span>
+}
+
+<span class="cmt">// Labeled break — break outer loop from inner</span>
+<span class="fn">outer</span>: <span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; <span class="num">3</span>; i++) {
+  <span class="kw">for</span> (<span class="kw">let</span> j = <span class="num">0</span>; j &lt; <span class="num">3</span>; j++) {
+    <span class="kw">if</span> (j === <span class="num">1</span>) <span class="kw">break</span> <span class="fn">outer</span>;
+    console.<span class="fn">log</span>(i, j);
+  }
+}</code></pre>
+</body></html>

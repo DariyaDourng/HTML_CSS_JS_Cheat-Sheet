@@ -1,0 +1,102 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>CSS 09 – Responsive & Media Queries</title><link rel="stylesheet" href="shared.css"/></head>
+<body>
+<a href="index.html" class="back">← Back to Library</a>
+<div class="page-tag css">CSS · 09</div>
+<h1>Responsive & Media Queries</h1>
+<p class="page-desc">@media rules, breakpoints, fluid sizing with clamp(), and container queries.</p>
+
+<h2>@media Syntax</h2>
+<pre><code><span class="cmt">/* Applies when screen is 768px or wider */</span>
+<span class="sel">@media</span> (min-width: <span class="unit">768px</span>) { }
+
+<span class="cmt">/* Applies when screen is narrower than 768px */</span>
+<span class="sel">@media</span> (max-width: <span class="unit">767px</span>) { }
+
+<span class="cmt">/* Range syntax (modern) */</span>
+<span class="sel">@media</span> (<span class="unit">768px</span> &lt;= width &lt; <span class="unit">1200px</span>) { }
+
+<span class="cmt">/* Multiple conditions (AND) */</span>
+<span class="sel">@media</span> (min-width: <span class="unit">600px</span>) and (max-width: <span class="unit">1199px</span>) { }
+
+<span class="cmt">/* OR */</span>
+<span class="sel">@media</span> (max-width: <span class="unit">600px</span>), (orientation: landscape) { }
+
+<span class="cmt">/* NOT */</span>
+<span class="sel">@media</span> not screen { }
+
+<span class="cmt">/* Media types */</span>
+<span class="sel">@media</span> screen { }   <span class="cmt">/* screens */</span>
+<span class="sel">@media</span> print  { }   <span class="cmt">/* printing */</span>
+<span class="sel">@media</span> all    { }   <span class="cmt">/* all devices */</span></code></pre>
+
+<h2>Common Breakpoints</h2>
+<pre><code><span class="cmt">/* Mobile first approach */</span>
+<span class="cmt">/* Default: mobile styles */</span>
+
+<span class="sel">@media</span> (min-width: <span class="unit">480px</span>)  { <span class="cmt">/* Small phones landscape */</span> }
+<span class="sel">@media</span> (min-width: <span class="unit">640px</span>)  { <span class="cmt">/* Small tablets */</span> }
+<span class="sel">@media</span> (min-width: <span class="unit">768px</span>)  { <span class="cmt">/* Tablets */</span> }
+<span class="sel">@media</span> (min-width: <span class="unit">1024px</span>) { <span class="cmt">/* Laptops */</span> }
+<span class="sel">@media</span> (min-width: <span class="unit">1280px</span>) { <span class="cmt">/* Desktops */</span> }
+<span class="sel">@media</span> (min-width: <span class="unit">1536px</span>) { <span class="cmt">/* Large screens */</span> }</code></pre>
+
+<h2>Other Media Features</h2>
+<pre><code><span class="sel">@media</span> (orientation: portrait)  { }
+<span class="sel">@media</span> (orientation: landscape) { }
+
+<span class="cmt">/* User prefers dark mode */</span>
+<span class="sel">@media</span> (prefers-color-scheme: dark)  {
+  <span class="sel">body</span> { <span class="prop">background</span>: <span class="str">#0a0a0f</span>; <span class="prop">color</span>: <span class="str">#f0f0f0</span>; }
+}
+<span class="sel">@media</span> (prefers-color-scheme: light) { }
+
+<span class="sel">@media</span> (prefers-reduced-motion: reduce) { }
+<span class="sel">@media</span> (prefers-contrast: high)  { }
+<span class="sel">@media</span> (hover: hover)   { }  <span class="cmt">/* pointer device with hover */</span>
+<span class="sel">@media</span> (hover: none)    { }  <span class="cmt">/* touch device */</span>
+<span class="sel">@media</span> (pointer: coarse){ }  <span class="cmt">/* finger/touch */</span>
+<span class="sel">@media</span> (pointer: fine)  { }  <span class="cmt">/* mouse/stylus */</span>
+<span class="sel">@media</span> (display-mode: standalone) { }  <span class="cmt">/* PWA installed */</span>
+<span class="sel">@media</span> print { <span class="sel">.no-print</span> { <span class="prop">display</span>: none; } }</code></pre>
+
+<h2>Fluid Sizing — clamp(), min(), max()</h2>
+<pre><code><span class="sel">.el</span> {
+  <span class="cmt">/* clamp(minimum, preferred, maximum) */</span>
+  <span class="prop">font-size</span>: clamp(<span class="unit">1rem</span>, <span class="unit">2.5vw</span>, <span class="unit">2rem</span>);
+  <span class="prop">width</span>: clamp(<span class="unit">300px</span>, <span class="unit">50%</span>, <span class="unit">800px</span>);
+  <span class="prop">padding</span>: clamp(<span class="unit">1rem</span>, <span class="unit">3vw</span>, <span class="unit">2rem</span>);
+
+  <span class="cmt">/* min(): use smaller of two values */</span>
+  <span class="prop">width</span>: min(<span class="unit">80%</span>, <span class="unit">600px</span>);
+
+  <span class="cmt">/* max(): use larger of two values */</span>
+  <span class="prop">padding</span>: max(<span class="unit">1rem</span>, <span class="unit">3vw</span>);
+}
+
+<span class="cmt">/* Viewport units */</span>
+<span class="sel">.hero</span> {
+  <span class="prop">height</span>: <span class="unit">100vh</span>;    <span class="cmt">/* full viewport height */</span>
+  <span class="prop">height</span>: <span class="unit">100svh</span>;   <span class="cmt">/* small viewport height (excludes browser chrome) */</span>
+  <span class="prop">height</span>: <span class="unit">100dvh</span>;   <span class="cmt">/* dynamic viewport height */</span>
+  <span class="prop">width</span>: <span class="unit">100vw</span>;
+  <span class="prop">font-size</span>: <span class="unit">5vw</span>;   <span class="cmt">/* 5% of viewport width */</span>
+  <span class="prop">font-size</span>: <span class="unit">2vmin</span>; <span class="cmt">/* 2% of smaller dimension */</span>
+}</code></pre>
+
+<h2>Container Queries</h2>
+<pre><code><span class="cmt">/* 1. Define a containment context */</span>
+<span class="sel">.card-container</span> {
+  <span class="prop">container-type</span>: inline-size;  <span class="cmt">/* enable width queries */</span>
+  <span class="prop">container-name</span>: card;          <span class="cmt">/* optional name */</span>
+}
+
+<span class="cmt">/* 2. Query the container size */</span>
+<span class="sel">@container</span> (min-width: <span class="unit">400px</span>) {
+  <span class="sel">.card</span> { <span class="prop">display</span>: flex; }
+}
+
+<span class="sel">@container</span> card (min-width: <span class="unit">600px</span>) {
+  <span class="sel">.card__image</span> { <span class="prop">width</span>: <span class="unit">50%</span>; }
+}</code></pre>
+</body></html>

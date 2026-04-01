@@ -1,0 +1,104 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>CSS 01 – Selectors</title><link rel="stylesheet" href="shared.css"/></head>
+<body>
+<a href="index.html" class="back">← Back to Library</a>
+<div class="page-tag css">CSS · 01</div>
+<h1>CSS Selectors</h1>
+<p class="page-desc">Every type of CSS selector — from basic to advanced combinators and pseudo-classes.</p>
+
+<h2>Basic Selectors</h2>
+<pre><code><span class="cmt">/* Universal selector */</span>
+<span class="sel">*</span> { <span class="prop">box-sizing</span>: border-box; }
+
+<span class="cmt">/* Type / element selector */</span>
+<span class="sel">p</span>  { <span class="prop">color</span>: white; }
+<span class="sel">h1</span> { <span class="prop">font-size</span>: <span class="unit">2rem</span>; }
+
+<span class="cmt">/* Class selector */</span>
+<span class="sel">.highlight</span>   { <span class="prop">background</span>: yellow; }
+<span class="sel">.btn.primary</span> { <span class="prop">color</span>: white; } <span class="cmt">/* element with BOTH classes */</span>
+
+<span class="cmt">/* ID selector (unique per page) */</span>
+<span class="sel">#header</span> { <span class="prop">position</span>: sticky; }
+
+<span class="cmt">/* Grouping selectors */</span>
+<span class="sel">h1, h2, h3</span> { <span class="prop">font-family</span>: sans-serif; }</code></pre>
+
+<h2>Attribute Selectors</h2>
+<pre><code><span class="sel">[disabled]</span>             { <span class="prop">opacity</span>: <span class="num">0.5</span>; }        <span class="cmt">/* has attribute */</span>
+<span class="sel">[type="text"]</span>          { <span class="prop">border</span>: <span class="unit">1px</span> solid; }   <span class="cmt">/* exact value */</span>
+<span class="sel">[class~="card"]</span>        { }                      <span class="cmt">/* space-separated word */</span>
+<span class="sel">[href^="https"]</span>        { }                      <span class="cmt">/* starts with */</span>
+<span class="sel">[href$=".pdf"]</span>         { }                      <span class="cmt">/* ends with */</span>
+<span class="sel">[href*="example"]</span>      { }                      <span class="cmt">/* contains */</span>
+<span class="sel">[lang|="en"]</span>           { }                      <span class="cmt">/* en or en-US etc */</span>
+<span class="sel">[data-theme="dark" i]</span>  { }                      <span class="cmt">/* case-insensitive */</span></code></pre>
+
+<h2>Combinators</h2>
+<pre><code><span class="sel">div p</span>     { }  <span class="cmt">/* Descendant: any p inside div */</span>
+<span class="sel">div > p</span>   { }  <span class="cmt">/* Child: direct p child of div */</span>
+<span class="sel">h2 + p</span>    { }  <span class="cmt">/* Adjacent sibling: p immediately after h2 */</span>
+<span class="sel">h2 ~ p</span>    { }  <span class="cmt">/* General sibling: all p after h2 (same parent) */</span></code></pre>
+
+<h2>Pseudo-Classes</h2>
+<pre><code><span class="cmt">/* User interaction */</span>
+<span class="sel">a:hover</span>    { }   <span class="cmt">/* mouse over */</span>
+<span class="sel">a:focus</span>    { }   <span class="cmt">/* keyboard focus */</span>
+<span class="sel">a:active</span>   { }   <span class="cmt">/* being clicked */</span>
+<span class="sel">a:visited</span>  { }   <span class="cmt">/* already visited */</span>
+<span class="sel">a:link</span>     { }   <span class="cmt">/* not yet visited */</span>
+<span class="sel">:focus-visible</span> { }  <span class="cmt">/* focus via keyboard only */</span>
+<span class="sel">:focus-within</span>  { }  <span class="cmt">/* element or descendant has focus */</span>
+
+<span class="cmt">/* Form states */</span>
+<span class="sel">input:checked</span>    { }
+<span class="sel">input:disabled</span>   { }
+<span class="sel">input:enabled</span>    { }
+<span class="sel">input:required</span>   { }
+<span class="sel">input:optional</span>   { }
+<span class="sel">input:valid</span>      { }
+<span class="sel">input:invalid</span>    { }
+<span class="sel">input:placeholder-shown</span> { }
+<span class="sel">input:read-only</span>  { }
+
+<span class="cmt">/* Structural */</span>
+<span class="sel">li:first-child</span>        { }  <span class="cmt">/* first li */</span>
+<span class="sel">li:last-child</span>         { }  <span class="cmt">/* last li */</span>
+<span class="sel">li:nth-child(2)</span>       { }  <span class="cmt">/* 2nd li */</span>
+<span class="sel">li:nth-child(odd)</span>     { }  <span class="cmt">/* 1, 3, 5... */</span>
+<span class="sel">li:nth-child(even)</span>    { }  <span class="cmt">/* 2, 4, 6... */</span>
+<span class="sel">li:nth-child(3n+1)</span>    { }  <span class="cmt">/* every 3rd starting at 1 */</span>
+<span class="sel">li:nth-last-child(1)</span>  { }  <span class="cmt">/* last item */</span>
+<span class="sel">p:first-of-type</span>       { }
+<span class="sel">p:last-of-type</span>        { }
+<span class="sel">p:nth-of-type(2)</span>      { }
+<span class="sel">p:only-child</span>          { }
+<span class="sel">p:only-of-type</span>        { }
+<span class="sel">:empty</span>                { }  <span class="cmt">/* no children */</span>
+<span class="sel">:root</span>                 { }  <span class="cmt">/* html element */</span>
+<span class="sel">:not(.active)</span>         { }  <span class="cmt">/* negation */</span>
+<span class="sel">:is(h1, h2, h3)</span>       { }  <span class="cmt">/* matches any in list */</span>
+<span class="sel">:where(header, footer)</span>{ }  <span class="cmt">/* like :is but zero specificity */</span>
+<span class="sel">:has(img)</span>             { }  <span class="cmt">/* parent selector! */</span></code></pre>
+
+<h2>Pseudo-Elements</h2>
+<pre><code><span class="sel">p::first-line</span>   { }     <span class="cmt">/* first rendered line */</span>
+<span class="sel">p::first-letter</span>{ }     <span class="cmt">/* first letter (drop cap) */</span>
+<span class="sel">::selection</span>    { }     <span class="cmt">/* text selected by user */</span>
+<span class="sel">::placeholder</span>  { }     <span class="cmt">/* input placeholder text */</span>
+<span class="sel">::marker</span>       { }     <span class="cmt">/* list item bullet/number */</span>
+<span class="sel">::before</span>       { <span class="prop">content</span>: <span class="str">''</span>; }  <span class="cmt">/* insert before content */</span>
+<span class="sel">::after</span>        { <span class="prop">content</span>: <span class="str">''</span>; }  <span class="cmt">/* insert after content */</span>
+<span class="sel">::backdrop</span>     { }     <span class="cmt">/* behind dialog/fullscreen */</span>
+<span class="sel">::file-selector-button</span> { }  <span class="cmt">/* file input button */</span></code></pre>
+
+<h2>Specificity (High to Low)</h2>
+<table>
+  <tr><th>Selector</th><th>Specificity</th></tr>
+  <tr><td><code>!important</code></td><td>Overrides all (avoid)</td></tr>
+  <tr><td><code>#id</code></td><td>0,1,0,0</td></tr>
+  <tr><td><code>.class</code>, <code>[attr]</code>, <code>:pseudo-class</code></td><td>0,0,1,0</td></tr>
+  <tr><td><code>element</code>, <code>::pseudo-element</code></td><td>0,0,0,1</td></tr>
+  <tr><td><code>*</code></td><td>0,0,0,0</td></tr>
+</table>
+</body></html>
